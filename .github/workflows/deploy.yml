@@ -19,7 +19,9 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd ~/portfolio.abdullahalmamun.xyz
+            cd portfolio.abdullahalmamun.xyz
+            git init
+            git remote add https://github.com/mamun724682/My-Portfolio.git
             git pull
             php -r "file_exists('.env') || copy('.env.example', '.env');"
             composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
