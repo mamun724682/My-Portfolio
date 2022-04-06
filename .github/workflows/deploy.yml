@@ -16,8 +16,8 @@ jobs:
         run: composer install --optimize-autoloader --no-dev
       - name: Generate key
         run: php artisan key:generate
-      - name: Database Migration
-        run: php artisan migrate
+#      - name: Database Migration
+#        run: php artisan migrate
       - name: Optimize clear
         run: php artisan optimize:clear
       #      - name: Directory Permissions
