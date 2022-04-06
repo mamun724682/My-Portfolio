@@ -1,31 +1,34 @@
-name: push-to-do-server
-
+name: 🚀 Deploy website on push to master
 on:
   push:
     branches: [ master ]
-
 jobs:
-  automatic-deploy:
+  web-deploy:
+    name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Install Dependencies
+        run: composer install --optimize-autoloader --no-dev
+      - name: Generate key
+        run: php artisan key:generate
+      - name: Database Migration
+        run: php artisan migrate
+      - name: Optimize clear
+        run: php artisan optimize:clear
+      #      - name: Directory Permissions
+      #        run: chmod -R 777 storage bootstrap/cache
+
+      - name: Deploy source-code
+        uses: appleboy/scp-action@master
+        env:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         with:
-          php-version: '8.0'
-      - uses: actions/checkout@v2
-      - name: Push to cpanel using ssh key
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd portfolio.abdullahalmamun.xyz
-            git init
-            git remote add master https://github.com/mamun724682/My-Portfolio.git
-            git pull
-            php -r "file_exists('.env') || copy('.env.example', '.env');"
-            composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-            php artisan key:generate
-            php artisan migrate
-            php artisan optimize:clear
-            chmod 775 -R ./storage
+          source: "*"
+          target: "portfolio.abdullahalmamun.xyz"
