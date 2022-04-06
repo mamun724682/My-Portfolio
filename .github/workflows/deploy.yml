@@ -21,8 +21,8 @@ jobs:
           script: |
             cd portfolio.abdullahalmamun.xyz
             git init
-            git remote add https://github.com/mamun724682/My-Portfolio.git
-            git pull
+            git remote add master https://github.com/mamun724682/My-Portfolio.git
+            git pull origin master
             php -r "file_exists('.env') || copy('.env.example', '.env');"
             composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
             php artisan key:generate
