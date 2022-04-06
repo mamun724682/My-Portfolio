@@ -18,7 +18,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
           script: |
             cd /home/abdullahalmamun/portfolio.abdullahalmamun.xyz
             git pull
