@@ -46,7 +46,7 @@
             <ul class="header-nav ms-3">
                 <li class="nav-item dropdown">
                     <a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        <div class="avatar avatar-md"><img class="avatar-img" src="https://coreui.io/demo/4.0/free/assets/img/avatars/8.jpg" alt="user@email.com"></div>
+                        <div class="avatar avatar-md"><img class="avatar-img" src="{{ asset('images/Mamun.jpg') }}" alt="user@email.com"></div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end pt-0">
                         <a class="dropdown-item" href="{{ route('profile.show') }}">
