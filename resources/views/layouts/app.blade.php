@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta name="theme-color" content="#ffffff">
     <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ getPageMeta('title') }} | {{ config('app.name', 'Laravel') }}</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
     @include('layouts.admin_partials.styles')
 </head>

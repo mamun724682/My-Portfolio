@@ -16,6 +16,21 @@ class ModuleController extends Controller
 
     public function index(ModuleDataTable $dataTable)
     {
+        setPageMeta('Modules');
         return $dataTable->render('modules.index');
+    }
+
+    public function create()
+    {
+        setPageMeta('Create Module');
+        return view('modules.create');
+    }
+
+    public function store(UserRequest $request)
+    {
+        if ($this->userService->updateOrCreate($request))
+            sendFlash('User created successfully', 'success');
+
+        return redirect()->route('users.index');
     }
 }
