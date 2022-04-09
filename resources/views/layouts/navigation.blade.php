@@ -17,14 +17,14 @@
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('about') }}">
-            <svg class="nav-icon">
-                <use xlink:href="{{ asset('icons/coreui.svg#cil-speedometer') }}"></use>
-            </svg>
-            {{ __('About us') }}
-        </a>
-    </li>
+{{--    <li class="nav-item">--}}
+{{--        <a class="nav-link" href="{{ route('about') }}">--}}
+{{--            <svg class="nav-icon">--}}
+{{--                <use xlink:href="{{ asset('icons/coreui.svg#cil-speedometer') }}"></use>--}}
+{{--            </svg>--}}
+{{--            {{ __('About us') }}--}}
+{{--        </a>--}}
+{{--    </li>--}}
 
     <li class="nav-group" aria-expanded="false">
         <a class="nav-link nav-group-toggle" href="#">

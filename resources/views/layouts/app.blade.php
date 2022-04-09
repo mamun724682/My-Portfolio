@@ -7,17 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>{{ config('app.name', 'Laravel') }}</title>
     <meta name="theme-color" content="#ffffff">
+    <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png">
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
 <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
     <div class="sidebar-brand d-none d-md-flex">
-        <svg class="sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
-            <use xlink:href="{{ asset('icons/brand.svg#full') }}"></use>
-        </svg>
-        <svg class="sidebar-brand-narrow" width="46" height="46" alt="CoreUI Logo">
-            <use xlink:href="{{ asset('icons/brand.svg#signet') }}"></use>
-        </svg>
+        <img src="{{ asset('images/logo_long.png') }}" alt="" class="sidebar-brand-full" width="118" height="46">
+        <img src="{{ asset('images/logo_short.png') }}" alt="" class="sidebar-brand-narrow" width="46" height="46">
     </div>
     @include('layouts.navigation')
     <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>

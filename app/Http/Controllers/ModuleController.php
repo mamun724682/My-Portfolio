@@ -6,5 +6,12 @@ use Illuminate\Http\Request;
 
 class ModuleController extends Controller
 {
-    //
+    public function __construct()
+    {
+    }
+
+    public function index()
+    {
+
+    }
 }
