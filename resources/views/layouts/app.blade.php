@@ -5,11 +5,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>{{ config('app.name', 'Laravel') }}</title>
     <meta name="theme-color" content="#ffffff">
     <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png">
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @include('layouts.admin_partials.styles')
 </head>
 <body>
 <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
@@ -17,7 +17,7 @@
         <img src="{{ asset('images/logo_long.png') }}" alt="" class="sidebar-brand-full" width="118" height="46">
         <img src="{{ asset('images/logo_short.png') }}" alt="" class="sidebar-brand-narrow" width="46" height="46">
     </div>
-    @include('layouts.navigation')
+    @include('layouts.admin_partials.navigation')
     <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
 </div>
 <div class="wrapper d-flex flex-column min-vh-100 bg-light">
@@ -81,6 +81,7 @@
                 Components</a></div>
     </footer>
 </div>
-<script src="{{ asset('js/coreui.bundle.min.js') }}"></script>
+
+@include('layouts.admin_partials.scripts')
 </body>
 </html>

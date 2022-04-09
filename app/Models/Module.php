@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Module extends Model
 {
     use HasFactory;
+
+    const IS_SINGLE = true;
+    const STATUS_ACTIVE = true;
 }

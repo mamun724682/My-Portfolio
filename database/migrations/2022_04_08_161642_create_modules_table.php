@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('parent_id')->constrained('modules')->cascadeOnDelete();
+            $table->foreignId('parent_id')->nullable()->constrained('modules')->cascadeOnDelete();
             $table->string('type', 50);
             $table->string('name');
             $table->text('description')->nullable();
