@@ -10,7 +10,6 @@
     <title>{{ getPageMeta('title') }} | {{ config('app.name', 'Laravel') }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-
     @include('layouts.admin_partials.styles')
 </head>
 <body>
