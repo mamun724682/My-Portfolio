@@ -27,8 +27,6 @@ class ModuleRequest extends FormRequest
             'type' => ['required', 'string'],
             'name' => ['required', 'string'],
             'description' => ['nullable'],
-            'is_single' => ['nullable'],
-            'status' => ['nullable'],
         ];
     }
 }

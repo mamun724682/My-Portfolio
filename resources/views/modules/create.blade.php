@@ -11,24 +11,39 @@
 
                 <div class="mb-3">
                     <label class="form-label" for="type">Type</label>
-                    <input class="form-control" id="type" name="type" type="text" placeholder="Ex: api, feature, samples...">
+                    <input class="form-control" id="type" name="type" type="text" placeholder="Ex: api, feature, samples..." required>
+                    @error('type')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="name">Name</label>
-                    <input class="form-control" id="name" name="name" type="text" placeholder="Ex: api, feature, samples...">
+                    <input class="form-control" id="name" name="name" type="text" placeholder="Enter module name" required>
+                    @error('name')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="description">Description</label>
                     <input id="description" type="hidden" name="description">
                     <trix-editor input="description" class="form-control"></trix-editor>
+                    @error('description')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-check form-switch form-check-inline mb-3">
                     <input class="form-check-input" id="single" type="checkbox" name="is_single">
                     <label class="form-check-label" for="single">Is Single</label>
+                    @error('is_single')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-check form-switch form-check-inline mb-3">
                     <input class="form-check-input" id="status" type="checkbox" name="status">
                     <label class="form-check-label" for="status">Status</label>
+                    @error('status')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <br>

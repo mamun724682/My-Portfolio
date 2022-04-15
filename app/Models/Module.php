@@ -9,6 +9,8 @@ class Module extends Model
 {
     use HasFactory;
 
+    protected $guarded = ['id'];
+
     const IS_SINGLE = true;
     const STATUS_ACTIVE = true;
 }

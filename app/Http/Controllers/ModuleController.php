@@ -29,9 +29,14 @@ class ModuleController extends Controller
 
     public function store(ModuleRequest $request)
     {
-        if ($this->userService->updateOrCreate($request))
-            sendFlash('User created successfully', 'success');
-
-        return redirect()->route('users.index');
+        try {
+            $module = $this->moduleService->updateOrCreate($request->all());
+            sendFlash('Module created successfully');
+            return redirect()->route('modules.index');
+//            return redirect()->route('modules.edit', $module->id);
+        } catch (\Exception $e) {
+            sendFlash($e->getMessage(), 'error');
+            return back()->withInput();
+        }
     }
 }
