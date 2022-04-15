@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\ModuleDataTable;
+use App\Http\Requests\ModuleRequest;
 use App\Services\ModuleService;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,7 @@ class ModuleController extends Controller
         return view('modules.create');
     }
 
-    public function store(UserRequest $request)
+    public function store(ModuleRequest $request)
     {
         if ($this->userService->updateOrCreate($request))
             sendFlash('User created successfully', 'success');

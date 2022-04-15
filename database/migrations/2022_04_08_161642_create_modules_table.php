@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('type', 50);
             $table->string('name');
             $table->text('description')->nullable();
-            $table->boolean('is_single')->default(false);
-            $table->boolean('status')->default(true);
+            $table->boolean('is_single')->default(true);
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }
