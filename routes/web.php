@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\CodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,4 +31,6 @@ Route::middleware('auth')->group(function () {
 
     // Modules
     Route::resource('modules', ModuleController::class);
+    // Codes
+    Route::resource('codes', CodeController::class);
 });

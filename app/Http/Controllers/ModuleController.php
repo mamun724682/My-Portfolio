@@ -43,6 +43,7 @@ class ModuleController extends Controller
     public function edit(Module $module)
     {
         setPageMeta('Edit Module');
+        $module->load(['childs', 'codes']);
         return view('modules.edit', compact('module'));
     }
 

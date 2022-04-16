@@ -13,4 +13,15 @@ class Module extends Model
 
     const IS_SINGLE = true;
     const STATUS_ACTIVE = true;
+
+    public function childs()
+    {
+        return $this->hasMany(Module::class, 'parent_id');
+    }
+
+    public function codes()
+    {
+        return $this->hasMany(Code::class, 'module_id');
+    }
+
 }

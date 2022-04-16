@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
             $table->foreignId('parent_id')->nullable()->constrained('modules')->cascadeOnDelete();
-            $table->string('type', 50);
+            $table->string('type', 50)->nullable();
             $table->string('name');
             $table->text('description')->nullable();
             $table->boolean('is_single')->default(true);

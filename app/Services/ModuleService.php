@@ -22,10 +22,10 @@ class ModuleService
         }
     }
 
-    public function deleteCategory($id)
+    public function delete($id)
     {
         try {
-            Category::destroy($id);
+            Module::destroy($id);
             return null;
         } catch (\Throwable $th) {
             throw $th;
