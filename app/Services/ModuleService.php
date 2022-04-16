@@ -9,7 +9,7 @@ class ModuleService
     public function updateOrCreate($data_array, $id = null)
     {
         try {
-            $data = collect($data_array)->only(['type', 'name', 'description', 'is_single', 'status'])->toArray();
+            $data = collect($data_array)->only(['parent_id', 'type', 'name', 'description', 'is_single', 'status'])->toArray();
 
             $data['is_single'] = isset($data_array['is_single']) ? 1 : 0;
             $data['status'] = isset($data_array['status']) ? 1 : 0;
