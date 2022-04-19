@@ -91,7 +91,7 @@
 
                                     @forelse($module->codes as $code)
                                         <div class="accordion-item">
-                                            <h2 class="accordion-header" id="headingSingleCode{{ $code->id }}">
+                                            <h2 class="accordion-header d-flex" id="headingSingleCode{{ $code->id }}">
                                                 <button class="accordion-button collapsed" type="button"
                                                         data-coreui-toggle="collapse" data-coreui-target="#collapseSingleCode{{ $code->id }}"
                                                         aria-expanded="false" aria-controls="collapseSingleCode{{ $code->id }}">{{ $code->name }}
@@ -100,6 +100,19 @@
                                             <div class="accordion-collapse collapse" id="collapseSingleCode{{ $code->id }}"
                                                  aria-labelledby="headingSingleCode{{ $code->id }}" data-coreui-parent="#accordionSingleCode">
                                                 <div class="accordion-body">
+
+                                                    <div class="d-flex justify-content-end">
+                                                        <div class="dropdown">
+                                                            <a class="dropdown-toggle btn btn-primary" data-coreui-toggle="dropdown" href="#" role="button" aria-expanded="false">Actions</a>
+                                                            <ul class="dropdown-menu">
+                                                                <li><a class="dropdown-item" href="{{ route('codes.edit', $code->id) }}" title="Edit"><i class="las la-edit"></i>Edit</a></li>
+                                                                <li><form action="{{ route('codes.destroy', $code->id) }}"  id="delete-form-{{ $code->id }}" method="post">
+                                                                        @csrf
+                                                                        @method('delete')
+                                                                        <button class="dropdown-item" onclick="return makeDeleteRequest(event, {{ $code->id }})"  type="submit" title="Delete"><i class="las la-trash-alt"></i> Delete</form></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
 
                                                     @if($code->description)
                                                         <label for="">Description</label>

@@ -25,4 +25,16 @@ class CodeController extends Controller
             return back()->withInput();
         }
     }
+
+    public function destroy($id)
+    {
+        try {
+            $this->codeService->delete($id);
+            sendFlash('Code sample deleted.');
+            return back();
+        } catch (\Exception $e) {
+            sendFlash($e->getMessage(), 'error');
+            return back();
+        }
+    }
 }
