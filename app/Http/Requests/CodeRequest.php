@@ -24,7 +24,7 @@ class CodeRequest extends FormRequest
     public function rules()
     {
         return [
-            "module_id"   => ['required', 'integer', 'gt:0'],
+            "module_id"   => ['nullable', 'integer', 'gt:0'],
             "name"        => ['required', 'string'],
             "description" => ['nullable', 'string'],
             "code"        => ['required', 'string'],
