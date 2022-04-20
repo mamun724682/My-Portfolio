@@ -32,7 +32,7 @@
                     @enderror
                 </div>
                 <div class="form-check form-switch form-check-inline mb-3">
-                    <input class="form-check-input" id="single" type="checkbox" name="is_single">
+                    <input class="form-check-input" id="single" type="checkbox" name="is_single" checked>
                     <label class="form-check-label" for="single">Is Single</label>
                     @error('is_single')
                     <div class="text-danger">{{ $message }}</div>
