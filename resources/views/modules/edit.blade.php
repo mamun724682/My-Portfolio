@@ -3,7 +3,7 @@
 @section('content')
     @if($module->parent_id)
         <div class="text-end mb-3">
-            <a href="{{ route('modules.edit', $module->parent_id) }}" class="btn btn-info">Add more module to parent module</a>
+            <a href="{{ route('modules.edit', $module->parent_id) }}" class="btn btn-info text-white"><i class="la la-arrow-left"></i> Back to parent module</a>
         </div>
     @endif
 
@@ -115,7 +115,7 @@
                                                                 <li><form action="{{ route('codes.destroy', $code->id) }}"  id="delete-form-{{ $code->id }}" method="post">
                                                                         @csrf
                                                                         @method('delete')
-                                                                        <button class="dropdown-item" onclick="return makeDeleteRequest(event, {{ $code->id }})"  type="submit" title="Delete"><i class="las la-trash-alt"></i> Delete</form></li>
+                                                                        <button class="dropdown-item" onclick="return makeDeleteRequest(event, {{ $code->id }})"  type="submit" title="Delete"><i class="las la-trash-alt"></i> Delete</button></form></li>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -199,42 +199,40 @@
                         </ul>
                         <div class="tab-content rounded-bottom">
                             <div class="tab-pane p-3 active preview" role="tabpanel" id="child_modules_preview">
-                                <div class="accordion" id="accordionSingleCode">
+                                <div class="accordion" id="accordionChildModule">
 
-                                    @forelse($module->codes as $code)
+                                    @forelse($module->childs as $child)
                                         <div class="accordion-item">
-                                            <h2 class="accordion-header d-flex" id="headingSingleCode{{ $code->id }}">
+                                            <h2 class="accordion-header d-flex" id="headingChildModule{{ $child->id }}">
                                                 <button class="accordion-button collapsed" type="button"
-                                                        data-coreui-toggle="collapse" data-coreui-target="#collapseSingleCode{{ $code->id }}"
-                                                        aria-expanded="false" aria-controls="collapseSingleCode{{ $code->id }}">{{ $code->name }}
+                                                        data-coreui-toggle="collapse" data-coreui-target="#collapseChildModule{{ $child->id }}"
+                                                        aria-expanded="false" aria-controls="collapseChildModule{{ $child->id }}">{{ $child->name }}
                                                 </button>
                                             </h2>
-                                            <div class="accordion-collapse collapse" id="collapseSingleCode{{ $code->id }}"
-                                                 aria-labelledby="headingSingleCode{{ $code->id }}" data-coreui-parent="#accordionSingleCode">
+                                            <div class="accordion-collapse collapse" id="collapseChildModule{{ $child->id }}"
+                                                 aria-labelledby="headingChildModule{{ $child->id }}" data-coreui-parent="#accordionChildModule">
                                                 <div class="accordion-body">
 
                                                     <div class="d-flex justify-content-end">
                                                         <div class="dropdown">
                                                             <a class="dropdown-toggle btn btn-primary" data-coreui-toggle="dropdown" href="#" role="button" aria-expanded="false">Actions</a>
                                                             <ul class="dropdown-menu">
-                                                                <li><a class="dropdown-item" href="{{ route('codes.edit', $code->id) }}" title="Edit"><i class="las la-edit"></i>Edit</a></li>
-                                                                <li><form action="{{ route('codes.destroy', $code->id) }}"  id="delete-form-{{ $code->id }}" method="post">
+                                                                <li><a class="dropdown-item" href="{{ route('modules.edit', $child->id) }}" title="Edit"><i class="las la-edit"></i>Edit</a></li>
+                                                                <li>
+                                                                    <form action="{{ route('modules.destroy', $child->id) }}"  id="delete-form-{{ $child->id.$module->id }}" method="post">
                                                                         @csrf
                                                                         @method('delete')
-                                                                        <button class="dropdown-item" onclick="return makeDeleteRequest(event, {{ $code->id }})"  type="submit" title="Delete"><i class="las la-trash-alt"></i> Delete</form></li>
+                                                                        <button class="dropdown-item" onclick="return makeDeleteRequest(event, {{ $child->id.$module->id }})"  type="submit" title="Delete"><i class="las la-trash-alt"></i> Delete </button>
+                                                                    </form>
+                                                                </li>
                                                             </ul>
                                                         </div>
                                                     </div>
 
-                                                    @if($code->description)
-                                                        <label for="">Description</label>
-                                                        <script class="language-markup" type="text/plain">
-                                                            {!! html_entity_decode($code->description) !!}
-                                                        </script>
-                                                        <label for="" class="mt-4">Code</label>
-                                                    @endif
+                                                    <div>Type: <span class="badge bg-danger">{{ ucwords($child->type) }}</span></div>
+                                                    <label for="">Description</label>
                                                     <script class="language-markup" type="text/plain">
-                                                        {!! html_entity_decode($code->code) !!}
+                                                        {!! html_entity_decode($child->description) !!}
                                                     </script>
                                                 </div>
                                             </div>
