@@ -17,29 +17,28 @@
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('modules.index') }}">
+    <li class="nav-group" aria-expanded="{{ request()->routeIs('module-categories.index') || request()->routeIs('modules*') ? 'true' : 'false' }}">
+        <a class="nav-link nav-group-toggle" href="javascript:void(0)">
             <svg class="nav-icon">
                 <use xlink:href="{{ asset('icons/coreui.svg#cil-layers') }}"></use>
             </svg>
             {{ __('Modules') }}
         </a>
-    </li>
-
-    <li class="nav-group" aria-expanded="false">
-        <a class="nav-link nav-group-toggle" href="#">
-            <svg class="nav-icon">
-                <use xlink:href="{{ asset('icons/coreui.svg#cil-star') }}"></use>
-            </svg>
-            Two-level menu
-        </a>
-        <ul class="nav-group-items" style="height: 0px;">
+        <ul class="nav-group-items" style="height: {{ request()->routeIs('module-categories.index') || request()->routeIs('modules*') ? 'auto' : '0px' }};">
             <li class="nav-item">
-                <a class="nav-link" href="#" target="_top">
+                <a class="nav-link" href="{{ route('module-categories.index') }}">
+                    <svg class="nav-icon">
+                        <use xlink:href="{{ asset('icons/coreui.svg#cil-hamburger-menu') }}"></use>
+                    </svg>
+                    Categories
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('modules*') ? 'active' : '' }}" href="{{ route('modules.index') }}">
                     <svg class="nav-icon">
                         <use xlink:href="{{ asset('icons/coreui.svg#cil-bug') }}"></use>
                     </svg>
-                    Child menu
+                    {{ __('Modules') }}
                 </a>
             </li>
         </ul>

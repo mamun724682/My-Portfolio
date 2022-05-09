@@ -13,14 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('modules', function (Blueprint $table) {
+        Schema::create('module_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('parent_id')->nullable()->constrained('modules')->cascadeOnDelete();
-            $table->unsignedBigInteger('category_id')->nullable();
             $table->string('name');
-            $table->text('description')->nullable();
-            $table->string('tags')->nullable();
-            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('modules');
+        Schema::dropIfExists('module_categories');
     }
 };

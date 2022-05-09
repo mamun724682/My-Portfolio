@@ -226,8 +226,6 @@ if (!function_exists('sendFlash')) {
     function sendFlash($message, $type = 'success')
     {
         session()->flash($type, $message);
-//        session()->put('toast_message', $message);
-//        session()->put('toast_level', $type);
     }
 }
 

@@ -15,9 +15,11 @@ use App\Http\Controllers\CodeController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+Route::redirect('/', 'login');
 
 Auth::routes();
 
@@ -29,6 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
     Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
 
+    //Module Category
+    Route::apiResource('module-categories', \App\Http\Controllers\ModuleCategoryController::class);
     // Modules
     Route::resource('modules', ModuleController::class);
     // Codes
