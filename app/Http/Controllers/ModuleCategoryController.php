@@ -19,12 +19,24 @@ class ModuleCategoryController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|string'
+            'name' => 'required|string|unique:module_categories,name'
         ]);
 
         ModuleCategory::create($data);
 
         sendFlash('Category created successfully');
+        return back();
+    }
+
+    public function update(Request $request, ModuleCategory $module_category)
+    {
+        $data = $request->validate([
+            'name' => 'required|string|unique:module_categories,name,'.$module_category->id
+        ]);
+
+        $module_category->update($data);
+
+        sendFlash('Category updated successfully');
         return back();
     }
 

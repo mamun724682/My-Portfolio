@@ -32,6 +32,16 @@
         })
     @endif
 
+    // Validation errors alert
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            Toast.fire({
+                icon: 'error',
+                title: '{{ $error }}'
+            })
+        @endforeach
+    @endif
+
     function makeDeleteRequest(
         event,
         id,
