@@ -24,9 +24,10 @@ class ModuleRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => ['required', 'string'],
+            'category_id' => ['required', 'integer', 'exists:module_categories,id'],
             'name' => ['required', 'string'],
             'description' => ['nullable'],
+            'tags' => ['nullable', 'string'],
         ];
     }
 }

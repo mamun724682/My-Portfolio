@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\ModuleDataTable;
 use App\Http\Requests\ModuleRequest;
 use App\Models\Module;
+use App\Models\ModuleCategory;
 use App\Services\ModuleService;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,8 @@ class ModuleController extends Controller
     public function create()
     {
         setPageMeta('Create Module');
-        return view('modules.create');
+        $module_categories = ModuleCategory::orderBy('name')->get();
+        return view('modules.create', compact('module_categories'));
     }
 
     public function store(ModuleRequest $request)
