@@ -46,7 +46,8 @@ class ModuleController extends Controller
     {
         setPageMeta('Edit Module');
         $module->load(['childs', 'codes']);
-        return view('modules.edit', compact('module'));
+        $module_categories = ModuleCategory::orderBy('name')->get();
+        return view('modules.edit', compact('module', 'module_categories'));
     }
 
     public function update(ModuleRequest $request, $id)

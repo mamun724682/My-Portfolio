@@ -11,8 +11,12 @@ class Module extends Model
 
     protected $guarded = ['id'];
 
-    const IS_SINGLE = true;
     const STATUS_ACTIVE = true;
+
+    public function category()
+    {
+        return $this->belongsTo(ModuleCategory::class, 'category_id');
+    }
 
     public function childs()
     {

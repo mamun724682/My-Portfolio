@@ -17,11 +17,15 @@ class ModuleDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('type', function ($data){
-                return '<span class="badge bg-danger">'.ucwords($data->type).'</span>';
+            ->editColumn('category_id', function ($data){
+                return $data->category->name;
             })
-            ->editColumn('is_single', function ($data){
-                return '<span class="badge bg-'.($data->is_single == Module::IS_SINGLE ? 'dark' : 'info').'">'.ucwords($data->is_single == Module::IS_SINGLE ? 'Yes' : 'No').'</span>';
+            ->editColumn('tags', function ($data){
+                $tags_badge = [];
+                foreach (explode(',', $data->tags) as $tag) {
+                    array_push($tags_badge, '<span class="badge bg-info">'.ucwords($tag).'</span>');
+                }
+                return join(' ', $tags_badge);
             })
             ->editColumn('status', function ($data){
                 return '<span class="badge bg-'.($data->status == Module::STATUS_ACTIVE ? 'success' : 'dark').'">'.ucwords($data->status == Module::STATUS_ACTIVE ? 'Active' : '').'</span>';
@@ -46,7 +50,7 @@ class ModuleDataTable extends DataTable
                 ';
                 return $buttons ? $return_data : '';
             })
-            ->rawColumns(['action', 'type', 'is_single', 'status'])
+            ->rawColumns(['action', 'tags', 'status'])
             ->addIndexColumn();
     }
 
@@ -97,9 +101,9 @@ class ModuleDataTable extends DataTable
                 'footer' => '',
             ],
             [
-                'title' => 'Type',
-                'name' => 'type',
-                'data' => 'type'
+                'title' => 'Category',
+                'name' => 'category_id',
+                'data' => 'category_id'
             ],
             [
                 'title' => 'Name',
@@ -107,9 +111,9 @@ class ModuleDataTable extends DataTable
                 'data' => 'name'
             ],
             [
-                'title' => 'Is Single',
-                'name' => 'is_single',
-                'data' => 'is_single'
+                'title' => 'Tags',
+                'name' => 'tags',
+                'data' => 'tags'
             ],
             [
                 'title' => 'Status',
