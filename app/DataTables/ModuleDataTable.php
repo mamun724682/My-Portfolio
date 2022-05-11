@@ -21,11 +21,9 @@ class ModuleDataTable extends DataTable
                 return $data->category->name;
             })
             ->editColumn('tags', function ($data){
-                $tags_badge = [];
-                foreach (explode(',', $data->tags) as $tag) {
-                    array_push($tags_badge, '<span class="badge bg-info">'.ucwords($tag).'</span>');
-                }
-                return join(' ', $tags_badge);
+                return collect(explode(',', $data->tags))->map(function ($tag){
+                    return '<span class="badge bg-info">'.ucwords($tag).'</span>';
+                })->join(' ');
             })
             ->editColumn('status', function ($data){
                 return '<span class="badge bg-'.($data->status == Module::STATUS_ACTIVE ? 'success' : 'dark').'">'.ucwords($data->status == Module::STATUS_ACTIVE ? 'Active' : '').'</span>';
