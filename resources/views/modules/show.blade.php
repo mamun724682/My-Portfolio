@@ -37,61 +37,63 @@
     </div>
 
     <div class="row">
-        <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-header bg-warning">
-                    <strong>
-                        <svg class="icon me-2">
-                            <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-code"></use>
-                        </svg>
-                        Code Samples
-                    </strong>
-                </div>
-                <div class="card-body">
-                    <div class="accordion" id="accordionSingleCode">
+        @if($module->codes()->count() > 0)
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-header bg-warning">
+                        <strong>
+                            <svg class="icon me-2">
+                                <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-code"></use>
+                            </svg>
+                            Code Samples
+                        </strong>
+                    </div>
+                    <div class="card-body">
+                        <div class="accordion" id="accordionSingleCode">
 
-                        @forelse($module->codes as $code)
-                            <div class="accordion-item">
-                                <h2 class="accordion-header d-flex" id="headingSingleCode{{ $code->id }}">
-                                    <button class="accordion-button collapsed bg-light" type="button"
-                                            data-coreui-toggle="collapse"
-                                            data-coreui-target="#collapseSingleCode{{ $code->id }}"
-                                            aria-expanded="false"
-                                            aria-controls="collapseSingleCode{{ $code->id }}">{{ $code->name }}
-                                    </button>
-                                </h2>
-                                <div class="accordion-collapse collapse" id="collapseSingleCode{{ $code->id }}"
-                                     aria-labelledby="headingSingleCode{{ $code->id }}"
-                                     data-coreui-parent="#accordionSingleCode">
-                                    <div class="accordion-body">
-                                        @if($code->description)
+                            @forelse($module->codes as $code)
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header d-flex" id="headingSingleCode{{ $code->id }}">
+                                        <button class="accordion-button collapsed bg-light" type="button"
+                                                data-coreui-toggle="collapse"
+                                                data-coreui-target="#collapseSingleCode{{ $code->id }}"
+                                                aria-expanded="false"
+                                                aria-controls="collapseSingleCode{{ $code->id }}">{{ $code->name }}
+                                        </button>
+                                    </h2>
+                                    <div class="accordion-collapse collapse" id="collapseSingleCode{{ $code->id }}"
+                                         aria-labelledby="headingSingleCode{{ $code->id }}"
+                                         data-coreui-parent="#accordionSingleCode">
+                                        <div class="accordion-body">
+                                            @if($code->description)
 
-                                            <strong class="border-bottom">
-                                                <i class="las la-play"></i>
-                                                Description:
-                                            </strong>
-                                            <br>
-                                            {!! html_entity_decode($code->description) !!}
-                                            <br>
-                                            <strong class="border-bottom">
-                                                <i class="las la-play"></i>
-                                                Code:
-                                            </strong>
-                                        @endif
-                                        <script class="language-markup" type="text/plain">
-                                            {!! html_entity_decode($code->code) !!}
-                                        </script>
+                                                <strong class="border-bottom">
+                                                    <i class="las la-play"></i>
+                                                    Description:
+                                                </strong>
+                                                <br>
+                                                {!! html_entity_decode($code->description) !!}
+                                                <br>
+                                                <strong class="border-bottom">
+                                                    <i class="las la-play"></i>
+                                                    Code:
+                                                </strong>
+                                            @endif
+                                            <script class="language-markup" type="text/plain">
+                                                {!! html_entity_decode($code->code) !!}
+                                            </script>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        @empty
-                            No sample code!
-                        @endforelse
+                            @empty
+                                No sample code!
+                            @endforelse
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
 
         @if(!$module->parent_id && $module->childs()->count() > 0)
             <div class="col-12">
@@ -229,28 +231,14 @@
 @endsection
 
 @push('styles')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism.css"/>
-
-    <link rel="stylesheet" href="{{ asset('plugins/tagsinput/tagsinput.css') }}"/>
 @endpush
 
 @push('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/prism.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
     <script
         src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/unescaped-markup/prism-unescaped-markup.min.js"></script>
     <script
         src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/normalize-whitespace/prism-normalize-whitespace.js"></script>
-
-    <script src="{{ asset('plugins/tagsinput/tagsinput.js') }}"></script>
-    <script>
-        $("#tags").tagsinput({
-            tagClass: function (item) {
-                return 'badge bg-info me-1';
-            },
-        })
-    </script>
 @endpush
