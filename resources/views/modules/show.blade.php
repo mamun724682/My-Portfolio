@@ -2,8 +2,10 @@
 
 @section('content')
     <div class="text-end mb-3">
-        <a href="{{ route('modules.index') }}" class="btn btn-info text-white"><i
+        <a href="{{ route('modules.index') }}" class="btn btn-primary text-white"><i
                 class="la la-arrow-left"></i> Go Back</a>
+        <a href="{{ route('modules.edit', $module->id) }}" class="btn btn-info text-white"><i
+                class="la la-edit"></i> Edit</a>
     </div>
 
     <div class="card mb-4">
