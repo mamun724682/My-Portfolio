@@ -42,6 +42,14 @@ class ModuleController extends Controller
         }
     }
 
+    public function show(Module $module)
+    {
+        setPageMeta('Show Module');
+        $module->load(['childs', 'codes']);
+        $module_categories = ModuleCategory::orderBy('name')->get();
+        return view('modules.edit', compact('module', 'module_categories'));
+    }
+
     public function edit(Module $module)
     {
         setPageMeta('Edit Module');

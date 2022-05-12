@@ -2,8 +2,9 @@
 
 @section('content')
     <div class="card mb-4">
-        <div class="card-header">
+        <div class="card-header d-flex justify-content-between">
             {{ __('Edit Code Sample') }}
+            <a href="{{ route('modules.edit', $code->module_id) }}" class="btn btn-sm btn-info text-white"><i class="la la-arrow-left"></i> Back to module edit</a>
         </div>
         <div class="card-body">
             <form action="{{ route('codes.update', $code->id) }}" method="post">
@@ -28,8 +29,8 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="code">Code<span class="text-danger">*</span></label>
-                    <input id="code" type="hidden" name="code" value="{{ old('code', $code->code) }}" required>
-                    <trix-editor input="code" class="form-control"></trix-editor>
+                    <input id="codeSample" type="hidden" name="code" value="{{ old('code', $code->code) }}" required>
+                    <trix-editor input="codeSample" class="form-control"></trix-editor>
                     @error('code')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror

@@ -17,8 +17,11 @@ class ModuleDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->editColumn('name', function ($data){
+                return '<a class="text-decoration-none" href="' . route('modules.show', $data->id) . '" title="Show">'.$data->name.'</a>';
+            })
             ->editColumn('category_id', function ($data){
-                return $data->category->name;
+                return @$data->category->name;
             })
             ->editColumn('tags', function ($data){
                 return collect(explode(',', $data->tags))->map(function ($tag){
@@ -31,6 +34,7 @@ class ModuleDataTable extends DataTable
             ->addColumn('action', function ($data) {
                 $buttons = '';
 
+                $buttons .= '<li><a class="dropdown-item" href="' . route('modules.show', $data->id) . '" title="Show"><i class="las la-eye"></i> Show</a></li>';
                 $buttons .= '<li><a class="dropdown-item" href="' . route('modules.edit', $data->id) . '" title="Edit"><i class="las la-edit"></i> Edit</a></li>';
 
                 $buttons .= '<li><form action="' . route('modules.destroy', $data->id) . '"  id="delete-form-' . $data->id . '" method="post">
@@ -48,7 +52,7 @@ class ModuleDataTable extends DataTable
                 ';
                 return $buttons ? $return_data : '';
             })
-            ->rawColumns(['action', 'tags', 'status'])
+            ->rawColumns(['action', 'name', 'tags', 'status'])
             ->addIndexColumn();
     }
 
@@ -60,7 +64,7 @@ class ModuleDataTable extends DataTable
      */
     public function query(Module $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->whereNull('parent_id');
     }
 
     /**

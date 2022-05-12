@@ -198,7 +198,7 @@
             </div>
         </div>
 
-        @if (!$module->parent_id)
+        @if(!$module->parent_id && $module->childs()->count() > 0)
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header bg-info"><strong>Child Modules</strong></div>
@@ -266,8 +266,13 @@
                                                         </div>
                                                     </div>
 
-                                                    <label for="">Description:</label>
-                                                    {!! html_entity_decode($child->description) !!}
+                                                    <div>Type: <span
+                                                            class="badge bg-danger">{{ ucwords($child->type) }}</span>
+                                                    </div>
+                                                    <label for="">Description</label>
+                                                    <script class="language-markup" type="text/plain">
+                                                        {!! html_entity_decode($child->description) !!}
+                                                    </script>
                                                 </div>
                                             </div>
                                         </div>
@@ -282,7 +287,16 @@
                                     @csrf
 
                                     <input type="hidden" name="parent_id" value="{{ $module->id }}">
+                                    <input type="hidden" name="is_single" value="1">
 
+                                    <div class="mb-3">
+                                        <label class="form-label" for="type">Type</label>
+                                        <input class="form-control" id="type" name="type" type="text"
+                                               placeholder="Ex: api, feature, samples..." required>
+                                        @error('type')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="name">Name</label>
                                         <input class="form-control" id="name" name="name" type="text"
