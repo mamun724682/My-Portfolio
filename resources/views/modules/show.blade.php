@@ -34,7 +34,9 @@
             <span class="badge bg-{{ $module->status == \App\Models\Module::STATUS_ACTIVE ? 'success' : 'dark' }}">{{ ucwords($module->status == \App\Models\Module::STATUS_ACTIVE ? 'Active' : 'In Active') }}</span>
             <br>
             <strong><i class="las la-play"></i>Description:</strong>
-            {!! $module->description !!}
+            <div class="p-3 bg-success bg-opacity-25 mb-3">
+                {!! $module->description !!}
+            </div>
         </div>
     </div>
 
@@ -97,7 +99,7 @@
             </div>
         @endif
 
-        @if(!$module->parent_id && $module->childs()->count() > 0)
+        @if($module->childs()->count() > 0)
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header bg-info">
@@ -110,120 +112,76 @@
                     </div>
                     <div class="card-body">
                         <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item"><a class="nav-link active" data-coreui-toggle="tab"
-                                                    href="#child_modules_preview"
-                                                    role="tab">
-                                    <svg class="icon me-2">
-                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>
-                                    </svg>
-                                    Preview</a></li>
-                            <li class="nav-item"><a class="nav-link" data-coreui-toggle="tab" href="#child_modules_add"
-                                                    role="tab">
-                                    <svg class="icon me-2">
-                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-layers"></use>
-                                    </svg>
-                                    Add Child Module</a></li>
+                            @foreach($module->childs as $child)
+                                <li class="nav-item">
+                                    <a @class(['nav-link', 'active' => $loop->first]) data-coreui-toggle="tab"
+                                                        href="#child_modules_preview_{{ $child->id }}"
+                                                        role="tab">
+                                        <svg class="icon me-1">
+                                            <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-layers"></use>
+                                        </svg>
+                                        {{ $child->name }}
+                                    </a>
+                                </li>
+                            @endforeach
                         </ul>
                         <div class="tab-content rounded-bottom">
-                            <div class="tab-pane p-3 active preview" role="tabpanel" id="child_modules_preview">
-                                <div class="accordion" id="accordionChildModule">
 
-                                    @forelse($module->childs as $child)
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header d-flex" id="headingChildModule{{ $child->id }}">
-                                                <button class="accordion-button collapsed bg-light" type="button"
-                                                        data-coreui-toggle="collapse"
-                                                        data-coreui-target="#collapseChildModule{{ $child->id }}"
-                                                        aria-expanded="false"
-                                                        aria-controls="collapseChildModule{{ $child->id }}">{{ $child->name }}
-                                                </button>
-                                            </h2>
-                                            <div class="accordion-collapse collapse"
-                                                 id="collapseChildModule{{ $child->id }}"
-                                                 aria-labelledby="headingChildModule{{ $child->id }}"
-                                                 data-coreui-parent="#accordionChildModule">
-                                                <div class="accordion-body">
+                            @foreach($module->childs as $child)
+                                <div @class(['tab-pane p-3', 'active preview' => $loop->first]) role="tabpanel" id="child_modules_preview_{{ $child->id }}">
 
-                                                    <div class="d-flex justify-content-end">
-                                                        <div class="dropdown">
-                                                            <a class="dropdown-toggle btn btn-primary"
-                                                               data-coreui-toggle="dropdown" href="#" role="button"
-                                                               aria-expanded="false">Actions</a>
-                                                            <ul class="dropdown-menu">
-                                                                <li><a class="dropdown-item"
-                                                                       href="{{ route('modules.edit', $child->id) }}"
-                                                                       title="Edit"><i class="las la-edit"></i>Edit</a>
-                                                                </li>
-                                                                <li>
-                                                                    <form
-                                                                        action="{{ route('modules.destroy', $child->id) }}"
-                                                                        id="delete-form-{{ $child->id.$module->id }}"
-                                                                        method="post">
-                                                                        @csrf
-                                                                        @method('delete')
-                                                                        <button class="dropdown-item"
-                                                                                onclick="return makeDeleteRequest(event, {{ $child->id.$module->id }})"
-                                                                                type="submit" title="Delete"><i
-                                                                                class="las la-trash-alt"></i> Delete
-                                                                        </button>
-                                                                    </form>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
+                                    <strong><i class="las la-play"></i>Description:</strong>
+                                    <div class="p-3 bg-info bg-opacity-25 mb-3">
+                                        {!! $child->description !!}
+                                    </div>
+
+                                    <strong><i class="las la-play"></i>Codes:</strong>
+                                    <div class="accordion" id="accordionChildModule">
+
+                                        @forelse($child->codes as $code)
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header d-flex" id="headingChildModule{{ $code->id }}">
+                                                    <button class="accordion-button collapsed bg-light" type="button"
+                                                            data-coreui-toggle="collapse"
+                                                            data-coreui-target="#collapseChildModule{{ $code->id }}"
+                                                            aria-expanded="false"
+                                                            aria-controls="collapseChildModule{{ $code->id }}">{{ $code->name }}
+                                                    </button>
+                                                </h2>
+                                                <div class="accordion-collapse collapse"
+                                                     id="collapseChildModule{{ $code->id }}"
+                                                     aria-labelledby="headingChildModule{{ $code->id }}"
+                                                     data-coreui-parent="#accordionChildModule">
+                                                    <div class="accordion-body">
+
+                                                        <strong>
+                                                            <svg class="icon me-2">
+                                                                <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-code"></use>
+                                                            </svg>
+                                                            Description:
+                                                        </strong>
+                                                        {!! $code->description !!}
+                                                        <br>
+                                                        <strong>
+                                                            <svg class="icon me-2">
+                                                                <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-code"></use>
+                                                            </svg>
+                                                            Code:
+                                                        </strong>
+                                                        <script class="language-markup" type="text/plain">
+                                                            {!! html_entity_decode($child->description) !!}
+                                                        </script>
                                                     </div>
-
-                                                    <div>Type: <span
-                                                            class="badge bg-danger">{{ ucwords($child->type) }}</span>
-                                                    </div>
-                                                    <label for="">Description</label>
-                                                    <script class="language-markup" type="text/plain">
-                                                        {!! html_entity_decode($child->description) !!}
-                                                    </script>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @empty
-                                        No data found!
-                                    @endforelse
+                                        @empty
+                                            No data found!
+                                        @endforelse
 
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane pt-1" role="tabpanel" id="child_modules_add">
-                                <form action="{{ route('modules.store') }}" method="post">
-                                    @csrf
+                            @endforeach
 
-                                    <input type="hidden" name="parent_id" value="{{ $module->id }}">
-                                    <input type="hidden" name="is_single" value="1">
-
-                                    <div class="mb-3">
-                                        <label class="form-label" for="type">Type</label>
-                                        <input class="form-control" id="type" name="type" type="text"
-                                               placeholder="Ex: api, feature, samples..." required>
-                                        @error('type')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="name">Name</label>
-                                        <input class="form-control" id="name" name="name" type="text"
-                                               placeholder="Enter module name" required>
-                                        @error('name')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="description">Description</label>
-                                        <input id="description2" type="hidden" name="description">
-                                        <trix-editor input="description2" class="form-control"></trix-editor>
-                                        @error('description')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <br>
-                                    <button class="btn btn-primary">Submit</button>
-                                </form>
-                            </div>
                         </div>
                     </div>
                 </div>

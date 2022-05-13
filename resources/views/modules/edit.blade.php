@@ -23,21 +23,23 @@
                         @csrf
                         @method('put')
 
-                        <div class="mb-3">
-                            <label class="form-label" for="category">Module Category</label>
-                            <select class="form-select" name="category_id" aria-label="Default select example">
+                        @if(!$module->parent_id)
+                            <div class="mb-3">
+                                <label class="form-label" for="category">Module Category</label>
+                                <select class="form-select" name="category_id" aria-label="Default select example">
 
-                                @forelse($module_categories as $category)
-                                    <option
-                                        value="{{ $category->id }}" @selected($module->category_id == $category->id)>{{ $category->name }}</option>
-                                @empty
-                                @endforelse
+                                    @forelse($module_categories as $category)
+                                        <option
+                                            value="{{ $category->id }}" @selected($module->category_id == $category->id)>{{ $category->name }}</option>
+                                    @empty
+                                    @endforelse
 
-                            </select>
-                            @error('category_id')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
+                                </select>
+                                @error('category_id')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        @endif
                         <div class="mb-3">
                             <label class="form-label" for="name">Name</label>
                             <input class="form-control" value="{{ $module->name }}" id="name" name="name" type="text"
@@ -54,22 +56,24 @@
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="tags">Tags</label>
-                            <input id="tags" type="text" value="{{ $module->tags }}" name="tags" data-role="tagsinput"
-                                   class="form-control" autocomplete="false">
-                            @error('tags')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-check form-switch form-check-inline mb-3">
-                            <input class="form-check-input" id="status" type="checkbox"
-                                   name="status" @checked(old('status', $module->status))>
-                            <label class="form-check-label" for="status">Status</label>
-                            @error('status')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        @if(!$module->parent_id)
+                            <div class="mb-3">
+                                <label class="form-label" for="tags">Tags</label>
+                                <input id="tags" type="text" value="{{ $module->tags }}" name="tags" data-role="tagsinput"
+                                       class="form-control" autocomplete="false">
+                                @error('tags')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-check form-switch form-check-inline mb-3">
+                                <input class="form-check-input" id="status" type="checkbox"
+                                       name="status" @checked(old('status', $module->status))>
+                                <label class="form-check-label" for="status">Status</label>
+                                @error('status')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        @endif
 
                         <br>
                         <button class="btn btn-primary">Update</button>
