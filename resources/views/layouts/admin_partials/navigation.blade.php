@@ -17,7 +17,7 @@
         </a>
     </li>
 
-    <li class="nav-group" aria-expanded="{{ request()->routeIs('module-categories.index') || request()->routeIs('modules*') ? 'true' : 'false' }}">
+    <li @class(['nav-group', 'show' => request()->routeIs('module-categories.index') || request()->routeIs('modules*')]) aria-expanded="{{ request()->routeIs('module-categories.index') || request()->routeIs('modules*') ? 'true' : 'false' }}">
         <a class="nav-link nav-group-toggle" href="javascript:void(0)">
             <svg class="nav-icon">
                 <use xlink:href="{{ asset('icons/coreui.svg#cil-layers') }}"></use>

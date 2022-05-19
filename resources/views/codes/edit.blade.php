@@ -29,8 +29,9 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="code">Code<span class="text-danger">*</span></label>
-                    <input id="codeSample" type="hidden" name="code" value="{{ old('code', $code->code) }}" required>
-                    <trix-editor input="codeSample" class="form-control"></trix-editor>
+{{--                    <input id="codeSample" type="hidden" name="code" value="{{ old('code', $code->code) }}" required>--}}
+{{--                    <trix-editor input="codeSample" class="form-control"></trix-editor>--}}
+                    <textarea name="code" id="code" class="form-control ckeditor">{!! old('code', $code->code) !!}</textarea>
                     @error('code')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -48,4 +49,11 @@
 
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.js" integrity="sha512-2RLMQRNr+D47nbLnsbEqtEmgKy67OSCpWJjJM394czt99xj3jJJJBQ43K7lJpfYAYtvekeyzqfZTx2mqoDh7vg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="//cdn.ckeditor.com/4.19.0/standard/ckeditor.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.ckeditor').ckeditor();
+        });
+    </script>
 @endpush

@@ -187,8 +187,9 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="code">Code<span class="text-danger">*</span></label>
-                                    <input id="code" type="hidden" name="code" required>
-                                    <trix-editor input="code" class="form-control"></trix-editor>
+{{--                                    <input id="code" type="hidden" name="code" required>--}}
+{{--                                    <trix-editor input="code" class="form-control"></trix-editor>--}}
+                                    <textarea name="code" class="ckeditor form-control"></textarea>
                                     @error('code')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -340,5 +341,12 @@
                 return 'badge bg-info me-1';
             },
         })
+    </script>
+
+    <script src="//cdn.ckeditor.com/4.19.0/standard/ckeditor.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.ckeditor').ckeditor();
+        });
     </script>
 @endpush

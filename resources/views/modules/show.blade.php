@@ -130,10 +130,12 @@
                             @foreach($module->childs as $child)
                                 <div @class(['tab-pane p-3', 'active preview' => $loop->first]) role="tabpanel" id="child_modules_preview_{{ $child->id }}">
 
-                                    <strong><i class="las la-play"></i>Description:</strong>
-                                    <div class="p-3 bg-info bg-opacity-25 mb-3">
-                                        {!! $child->description !!}
-                                    </div>
+                                    @if($child->description)
+                                        <strong><i class="las la-play"></i>Description:</strong>
+                                        <div class="p-3 bg-info bg-opacity-25 mb-3">
+                                            {!! $child->description !!}
+                                        </div>
+                                    @endif
 
                                     <strong><i class="las la-play"></i>Codes:</strong>
                                     <div class="accordion" id="accordionChildModule">
@@ -154,14 +156,16 @@
                                                      data-coreui-parent="#accordionChildModule">
                                                     <div class="accordion-body">
 
-                                                        <strong>
-                                                            <svg class="icon me-2">
-                                                                <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-code"></use>
-                                                            </svg>
-                                                            Description:
-                                                        </strong>
-                                                        {!! $code->description !!}
-                                                        <br>
+                                                        @if($code->description)
+                                                            <strong>
+                                                                <svg class="icon me-2">
+                                                                    <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-code"></use>
+                                                                </svg>
+                                                                Description:
+                                                            </strong>
+                                                            {!! $code->description !!}
+                                                            <br>
+                                                        @endif
                                                         <strong>
                                                             <svg class="icon me-2">
                                                                 <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-code"></use>

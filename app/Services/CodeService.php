@@ -11,7 +11,7 @@ class CodeService
         try {
             $data = collect($data_array)->only(['module_id', 'name', 'description', 'code'])->toArray();
 
-            $data['code'] = substr($data['code'], 5, -6);
+//            $data['code'] = substr($data['code'], 5, -6);
 
             $code = Code::updateOrCreate(['id' => $id], $data);
 
