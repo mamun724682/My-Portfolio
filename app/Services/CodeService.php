@@ -9,9 +9,7 @@ class CodeService
     public function updateOrCreate($data_array, $id = null)
     {
         try {
-            $data = collect($data_array)->only(['module_id', 'name', 'description', 'code'])->toArray();
-
-//            $data['code'] = substr($data['code'], 5, -6);
+            $data = collect($data_array)->only(['module_id', 'name', 'description', 'code_mode', 'code'])->toArray();
 
             $code = Code::updateOrCreate(['id' => $id], $data);
 

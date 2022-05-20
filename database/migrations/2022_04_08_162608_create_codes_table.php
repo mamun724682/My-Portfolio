@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('module_id')->constrained('modules')->cascadeOnDelete();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->string('code_mode');
             $table->longText('code')->nullable();
             $table->timestamps();
         });

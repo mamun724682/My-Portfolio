@@ -27,6 +27,7 @@ class CodeRequest extends FormRequest
             "module_id"   => ['nullable', 'integer', 'gt:0'],
             "name"        => ['required', 'string'],
             "description" => ['nullable', 'string'],
+            "code_mode"   => ['required', 'string'],
             "code"        => ['required', 'string'],
         ];
     }

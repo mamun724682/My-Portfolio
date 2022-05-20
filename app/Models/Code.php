@@ -11,6 +11,14 @@ class Code extends Model
 
     protected $guarded = ['id'];
 
+    const CODE_MODES = [
+        'css'        => 'Css',
+        'php'        => 'Php',
+        'vue'        => 'Vue',
+        'javascript' => 'Javascript',
+        'htmlmixed'  => 'Htmlmixed for xml, css & js'
+    ];
+
     public function module()
     {
         return $this->belongsTo(Module::class);
