@@ -186,10 +186,23 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3">
+                                    <label class="form-label" for="code_mode">Code Mode<span class="text-danger">*</span></label>
+                                    <select class="form-select code_mode" name="code_mode" aria-label="Default select example">
+
+                                        @forelse(\App\Models\Code::CODE_MODES as $key => $mode)
+                                            <option value="{{ $key }}">{{ $mode }}</option>
+                                        @empty
+                                        @endforelse
+
+                                    </select>
+                                    @error('code_mode')
+                                    <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
                                     <label class="form-label" for="code">Code<span class="text-danger">*</span></label>
-{{--                                    <input id="code" type="hidden" name="code" required>--}}
-{{--                                    <trix-editor input="code" class="form-control"></trix-editor>--}}
-                                    <textarea name="code" class="ckeditor form-control"></textarea>
+                                    <textarea name="code" id="code"
+                                              class="form-control codeArea">{{ old('code') }}</textarea>
                                     @error('code')
                                     <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -322,6 +335,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism.css"/>
 
     <link rel="stylesheet" href="{{ asset('plugins/tagsinput/tagsinput.css') }}"/>
+
+    {{--    Codemirror--}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/codemirror.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/theme/monokai.min.css"/>
 @endpush
 
 @push('scripts')
@@ -343,10 +360,26 @@
         })
     </script>
 
-    <script src="//cdn.ckeditor.com/4.19.0/standard/ckeditor.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.ckeditor').ckeditor();
+    {{--    Codemirror--}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/codemirror.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/php/php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/vue/vue.min.js"></script>
+
+    <script>
+        let editor = CodeMirror.fromTextArea(document.querySelector('#code'), {
+            // mode: mode, // For 'htmlmixed' mode - xml, javascript, css and htmlmixed js are required
+            theme: 'monokai'
         });
+
+        $('.code_mode').on('change', function (){
+            let mode = $(this).val()
+
+            editor.mode = mode // Assign code mode
+        }).change()
     </script>
 @endpush
