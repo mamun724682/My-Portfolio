@@ -373,6 +373,8 @@
     <script>
         let editor = CodeMirror.fromTextArea(document.querySelector('#code'), {
             // mode: mode, // For 'htmlmixed' mode - xml, javascript, css and htmlmixed js are required
+            smartIndent: true,
+            indentWithTabs: true,
             theme: 'monokai'
         });
 

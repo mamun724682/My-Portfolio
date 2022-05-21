@@ -31,7 +31,8 @@
             @endforelse
             <br>
             <strong><i class="las la-play"></i>Status:</strong>
-            <span class="badge bg-{{ $module->status == \App\Models\Module::STATUS_ACTIVE ? 'success' : 'dark' }}">{{ ucwords($module->status == \App\Models\Module::STATUS_ACTIVE ? 'Active' : 'In Active') }}</span>
+            <span
+                class="badge bg-{{ $module->status == \App\Models\Module::STATUS_ACTIVE ? 'success' : 'dark' }}">{{ ucwords($module->status == \App\Models\Module::STATUS_ACTIVE ? 'Active' : 'In Active') }}</span>
             <br>
             <strong><i class="las la-play"></i>Description:</strong>
             <div class="p-3 bg-success bg-opacity-25 mb-3">
@@ -83,9 +84,8 @@
                                                     Code:
                                                 </strong>
                                             @endif
-                                            <script class="language-markup" type="text/plain">
-                                                {!! html_entity_decode($code->code) !!}
-                                            </script>
+                                            <textarea id="sample_code_{{ $code->id }}"
+                                                      class="form-control">{{ $code->code }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -115,8 +115,8 @@
                             @foreach($module->childs as $child)
                                 <li class="nav-item">
                                     <a @class(['nav-link', 'active' => $loop->first]) data-coreui-toggle="tab"
-                                                        href="#child_modules_preview_{{ $child->id }}"
-                                                        role="tab">
+                                       href="#child_modules_preview_{{ $child->id }}"
+                                       role="tab">
                                         <svg class="icon me-1">
                                             <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-layers"></use>
                                         </svg>
@@ -128,7 +128,8 @@
                         <div class="tab-content rounded-bottom">
 
                             @foreach($module->childs as $child)
-                                <div @class(['tab-pane p-3', 'active preview' => $loop->first]) role="tabpanel" id="child_modules_preview_{{ $child->id }}">
+                                <div @class(['tab-pane p-3', 'active preview' => $loop->first]) role="tabpanel"
+                                     id="child_modules_preview_{{ $child->id }}">
 
                                     @if($child->description)
                                         <strong><i class="las la-play"></i>Description:</strong>
@@ -142,7 +143,8 @@
 
                                         @forelse($child->codes as $code)
                                             <div class="accordion-item">
-                                                <h2 class="accordion-header d-flex" id="headingChildModule{{ $code->id }}">
+                                                <h2 class="accordion-header d-flex"
+                                                    id="headingChildModule{{ $code->id }}">
                                                     <button class="accordion-button collapsed bg-light" type="button"
                                                             data-coreui-toggle="collapse"
                                                             data-coreui-target="#collapseChildModule{{ $code->id }}"
@@ -159,7 +161,8 @@
                                                         @if($code->description)
                                                             <strong>
                                                                 <svg class="icon me-2">
-                                                                    <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-code"></use>
+                                                                    <use
+                                                                        xlink:href="{{ asset('icons/coreui.svg') }}#cil-code"></use>
                                                                 </svg>
                                                                 Description:
                                                             </strong>
@@ -168,13 +171,14 @@
                                                         @endif
                                                         <strong>
                                                             <svg class="icon me-2">
-                                                                <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-code"></use>
+                                                                <use
+                                                                    xlink:href="{{ asset('icons/coreui.svg') }}#cil-code"></use>
                                                             </svg>
                                                             Code:
                                                         </strong>
-                                                        <script class="language-markup" type="text/plain">
-                                                            {!! html_entity_decode($child->description) !!}
-                                                        </script>
+                                                        <textarea name="code"
+                                                                  id="module_{{ $child->id }}_code_{{ $code->id }}"
+                                                                  class="form-control codeArea">{{ $code->code }}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -195,14 +199,55 @@
 @endsection
 
 @push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism.css"/>
+    {{--    Codemirror--}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/codemirror.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/theme/monokai.min.css"/>
 @endpush
 
 @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/prism.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
-    <script
-        src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/unescaped-markup/prism-unescaped-markup.min.js"></script>
-    <script
-        src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/normalize-whitespace/prism-normalize-whitespace.js"></script>
+    {{--    Codemirror--}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/addon/display/autorefresh.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/php/php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/vue/vue.min.js"></script>
+
+    <script>
+        function renderCodeMirror(id, mode) {
+            CodeMirror.fromTextArea(document.querySelector('#'+id), {
+                mode: mode, // For 'htmlmixed' mode - xml, javascript, css and htmlmixed js are required
+                readOnly: true,
+                smartIndent: true,
+                indentWithTabs: true,
+                autoRefresh: true,
+                theme: 'monokai'
+            });
+        }
+
+        @forelse ($module->codes as $code)
+            renderCodeMirror('sample_code_{{ $code->id }}', '{{ $code->code_mode }}')
+        @empty
+        @endforelse
+
+        @forelse ($module->childs as $child)
+            @forelse ($child->codes as $code)
+                renderCodeMirror('module_{{ $child->id }}_code_{{ $code->id }}', '{{ $code->code_mode }}')
+            @empty
+            @endforelse
+        @empty
+        @endforelse
+
+
+        document.getElementsByClassName('copy-code').onclick = function (e) {
+            if (e.which == 1) {
+                alert(1)
+                // write the text to the clipboard
+                navigator.clipboard.writeText(editor.getValue());
+            }
+        };
+    </script>
 @endpush

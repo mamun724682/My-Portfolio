@@ -91,7 +91,18 @@
         var editor = CodeMirror.fromTextArea(document.querySelector('#code'), {
             lineNumbers: true,
             mode: '{{ $code->code_mode }}', // For 'htmlmixed' mode - xml, javascript, css and htmlmixed js are required
+            smartIndent: true,
+            indentWithTabs: true,
             theme: 'monokai'
         });
+
+
+        document.getElementsByClassName('copy-code').onclick = function (e) {
+            if (e.which == 1) {
+                alert(1)
+                // write the text to the clipboard
+                navigator.clipboard.writeText(editor.getValue());
+            }
+        };
     </script>
 @endpush
