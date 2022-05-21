@@ -151,9 +151,8 @@
                                                     {!! html_entity_decode($code->description) !!}
                                                     <label for="" class="mt-4">Code</label>
                                                 @endif
-                                                <script class="language-markup" type="text/plain">
-                                                    {!! html_entity_decode($code->code) !!}
-                                                </script>
+                                                <textarea id="sample_code_{{ $code->id }}"
+                                                          class="form-control">{{ $code->code }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -332,7 +331,6 @@
 
 @push('styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism.css"/>
 
     <link rel="stylesheet" href="{{ asset('plugins/tagsinput/tagsinput.css') }}"/>
 
@@ -343,13 +341,6 @@
 
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.3.1/trix.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/prism.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
-    <script
-        src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/unescaped-markup/prism-unescaped-markup.min.js"></script>
-    <script
-        src="https://cdn.jsdelivr.net/npm/prismjs@1.24.1/plugins/normalize-whitespace/prism-normalize-whitespace.js"></script>
 
     <script src="{{ asset('plugins/tagsinput/tagsinput.js') }}"></script>
     <script>
@@ -362,6 +353,7 @@
 
     {{--    Codemirror--}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/addon/display/autorefresh.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/xml/xml.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/javascript/javascript.min.js"></script>
@@ -371,17 +363,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/vue/vue.min.js"></script>
 
     <script>
-        let editor = CodeMirror.fromTextArea(document.querySelector('#code'), {
-            // mode: mode, // For 'htmlmixed' mode - xml, javascript, css and htmlmixed js are required
-            smartIndent: true,
-            indentWithTabs: true,
-            theme: 'monokai'
-        });
+        function renderCodeMirror(id = 'code', mode = 'htmlmixed') {
+            CodeMirror.fromTextArea(document.querySelector('#'+id), {
+                mode: mode, // For 'htmlmixed' mode - xml, javascript, css and htmlmixed js are required
+                smartIndent: true,
+                indentWithTabs: true,
+                autoRefresh: true,
+                theme: 'monokai'
+            });
+        }
 
-        $('.code_mode').on('change', function (){
-            let mode = $(this).val()
+        // For adding code
+        renderCodeMirror()
 
-            editor.mode = mode // Assign code mode
-        }).change()
+        // For showing codes
+        @forelse ($module->codes as $code)
+            renderCodeMirror('sample_code_{{ $code->id }}', '{{ $code->code_mode }}')
+        @empty
+        @endforelse
     </script>
 @endpush

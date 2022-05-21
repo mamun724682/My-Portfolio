@@ -176,9 +176,8 @@
                                                             </svg>
                                                             Code:
                                                         </strong>
-                                                        <textarea name="code"
-                                                                  id="module_{{ $child->id }}_code_{{ $code->id }}"
-                                                                  class="form-control codeArea">{{ $code->code }}</textarea>
+                                                        <textarea id="module_{{ $child->id }}_code_{{ $code->id }}"
+                                                                  class="form-control">{{ $code->code }}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
