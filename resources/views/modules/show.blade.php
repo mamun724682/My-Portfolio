@@ -79,11 +79,16 @@
                                                 <br>
                                                 {!! html_entity_decode($code->description) !!}
                                                 <br>
+                                            @endif
+                                            <div class="d-flex justify-content-between flex-wrap">
                                                 <strong class="border-bottom">
                                                     <i class="las la-play"></i>
                                                     Code:
                                                 </strong>
-                                            @endif
+                                                <button class="border-0 me-3 p-0 text-info bg-transparent"
+                                                        onclick="copyToClipboard('sample_code_{{ $code->id }}')"><i
+                                                        class="las la-clipboard-list h3"></i></button>
+                                            </div>
                                             <textarea id="sample_code_{{ $code->id }}"
                                                       class="form-control">{{ $code->code }}</textarea>
                                         </div>
@@ -169,13 +174,18 @@
                                                             {!! $code->description !!}
                                                             <br>
                                                         @endif
-                                                        <strong>
-                                                            <svg class="icon me-2">
-                                                                <use
-                                                                    xlink:href="{{ asset('icons/coreui.svg') }}#cil-code"></use>
-                                                            </svg>
-                                                            Code:
-                                                        </strong>
+                                                        <div class="d-flex justify-content-between flex-wrap">
+                                                            <strong>
+                                                                <svg class="icon me-2">
+                                                                    <use
+                                                                        xlink:href="{{ asset('icons/coreui.svg') }}#cil-code"></use>
+                                                                </svg>
+                                                                Code:
+                                                            </strong>
+                                                            <button class="border-0 me-3 p-0 text-info bg-transparent"
+                                                                    onclick="copyToClipboard('module_{{ $child->id }}_code_{{ $code->id }}')">
+                                                                <i class="las la-clipboard-list h3"></i></button>
+                                                        </div>
                                                         <textarea id="module_{{ $child->id }}_code_{{ $code->id }}"
                                                                   class="form-control">{{ $code->code }}</textarea>
                                                     </div>
@@ -217,7 +227,7 @@
 
     <script>
         function renderCodeMirror(id, mode) {
-            CodeMirror.fromTextArea(document.querySelector('#'+id), {
+            CodeMirror.fromTextArea(document.querySelector('#' + id), {
                 mode: mode, // For 'htmlmixed' mode - xml, javascript, css and htmlmixed js are required
                 readOnly: true,
                 smartIndent: true,
@@ -228,25 +238,28 @@
         }
 
         @forelse ($module->codes as $code)
-            renderCodeMirror('sample_code_{{ $code->id }}', '{{ $code->code_mode }}')
+        renderCodeMirror('sample_code_{{ $code->id }}', '{{ $code->code_mode }}')
         @empty
         @endforelse
 
         @forelse ($module->childs as $child)
-            @forelse ($child->codes as $code)
-                renderCodeMirror('module_{{ $child->id }}_code_{{ $code->id }}', '{{ $code->code_mode }}')
-            @empty
-            @endforelse
+        @forelse ($child->codes as $code)
+        renderCodeMirror('module_{{ $child->id }}_code_{{ $code->id }}', '{{ $code->code_mode }}')
+        @empty
+        @endforelse
         @empty
         @endforelse
 
 
-        document.getElementsByClassName('copy-code').onclick = function (e) {
-            if (e.which == 1) {
-                alert(1)
-                // write the text to the clipboard
-                navigator.clipboard.writeText(editor.getValue());
-            }
-        };
+        // this would be work in https
+        function copyToClipboard(selector) {
+            var copyText = document.getElementById(selector).value;
+            navigator.clipboard.writeText(copyText).then(() => {
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Copied to clipboard'
+                })
+            });
+        }
     </script>
 @endpush
