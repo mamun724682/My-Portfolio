@@ -7,28 +7,20 @@ jobs:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v2
-
+      - uses: actions/checkout@v1
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Dependencies
         run: composer install --optimize-autoloader --no-dev
       - name: Generate key
         run: php artisan key:generate
-#      - name: Database Migration
-#        run: php artisan migrate
       - name: Optimize clear
         run: php artisan optimize:clear
-      #      - name: Directory Permissions
-      #        run: chmod -R 777 storage bootstrap/cache
-
-      - name: Deploy source-code
-        uses: appleboy/scp-action@master
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@main
         env:
-          HOST: ${{ secrets.HOST }}
-          USERNAME: ${{ secrets.USERNAME }}
-          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        with:
-          source: "*"
-          target: "portfolio.abdullahalmamun.xyz"
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SOURCE: "*"
+          REMOTE_HOST: ${{ secrets.HOST }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: "portfolio.abdullahalmamun.xyz"
