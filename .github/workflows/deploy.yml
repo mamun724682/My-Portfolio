@@ -8,14 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-      - name: Install Dependencies
-        run: composer install --optimize-autoloader --no-dev
-      - name: Generate key
-        run: php artisan key:generate
-      - name: Optimize clear
-        run: php artisan optimize:clear
+#      - name: Copy .env
+#        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+#      - name: Install Dependencies
+#        run: composer install --optimize-autoloader --no-dev
+#      - name: Generate key
+#        run: php artisan key:generate
+#      - name: Optimize clear
+#        run: php artisan optimize:clear
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         env:
