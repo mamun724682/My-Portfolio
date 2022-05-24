@@ -68,4 +68,16 @@ class ModuleController extends Controller
             return back()->withInput();
         }
     }
+
+    public function destroy($id)
+    {
+        try {
+            $this->moduleService->delete($id);
+            sendFlash('Module deleted successfully.');
+            return back();
+        } catch (\Exception $e) {
+            sendFlash($e->getMessage(), 'error');
+            return back();
+        }
+    }
 }

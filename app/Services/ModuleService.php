@@ -24,7 +24,12 @@ class ModuleService
     public function delete($id)
     {
         try {
-            Module::destroy($id);
+            $module = Module::findOrFail($id);
+
+            throw_if($module->codes()->count() > 0 || $module->childs()->count() > 0, new \Exception('Assigned with codes or child modules!'));
+
+            $module->delete($id);
+
             return null;
         } catch (\Throwable $th) {
             throw $th;
