@@ -71,38 +71,26 @@
 
     {{--    Codemirror--}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/addon/display/autorefresh.min.js"></script>
 
-    @if($code->code_mode == 'css')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/css/css.min.js"></script>
-    @elseif ($code->code_mode == 'php')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/php/php.min.js"></script>
-    @elseif ($code->code_mode == 'vue')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/vue/vue.min.js"></script>
-    @elseif ($code->code_mode == 'javascript')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/javascript/javascript.min.js"></script>
-    @else
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/xml/xml.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/javascript/javascript.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/css/css.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/htmlmixed/htmlmixed.min.js"></script>
-    @endif
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/clike/clike.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/php/php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/vue/vue.min.js"></script>
 
     <script>
-        var editor = CodeMirror.fromTextArea(document.querySelector('#code'), {
-            lineNumbers: true,
-            mode: '{{ $code->code_mode }}', // For 'htmlmixed' mode - xml, javascript, css and htmlmixed js are required
-            smartIndent: true,
-            indentWithTabs: true,
-            theme: 'monokai'
-        });
+        function renderCodeMirror(id = 'code', mode = 'htmlmixed') {
+            let custom_mode = (mode == 'php') ? {name: 'php', startOpen: true} : mode
+            CodeMirror.fromTextArea(document.querySelector('#'+id), {
+                mode: custom_mode, // For 'htmlmixed' mode - xml, javascript, css and htmlmixed js are required
+                autoRefresh: true,
+                theme: 'monokai'
+            });
+        }
 
-
-        document.getElementsByClassName('copy-code').onclick = function (e) {
-            if (e.which == 1) {
-                alert(1)
-                // write the text to the clipboard
-                navigator.clipboard.writeText(editor.getValue());
-            }
-        };
+        renderCodeMirror('code', '{{ $code->code_mode }}')
     </script>
 @endpush

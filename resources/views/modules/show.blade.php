@@ -222,13 +222,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/javascript/javascript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/css/css.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/clike/clike.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/php/php.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.4/mode/vue/vue.min.js"></script>
 
     <script>
         function renderCodeMirror(id, mode) {
+            let custome_mode = (mode == 'php') ? {name: 'php', startOpen: true} : mode
             CodeMirror.fromTextArea(document.querySelector('#' + id), {
-                mode: mode, // For 'htmlmixed' mode - xml, javascript, css and htmlmixed js are required
+                mode: custome_mode, // For 'htmlmixed' mode - xml, javascript, css and htmlmixed js are required
                 readOnly: true,
                 smartIndent: true,
                 indentWithTabs: true,
