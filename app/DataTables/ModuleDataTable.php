@@ -64,7 +64,7 @@ class ModuleDataTable extends DataTable
      */
     public function query(Module $model)
     {
-        return $model->newQuery()->whereNull('parent_id');
+        return $model->newQuery()->whereNull('parent_id')->latest();
     }
 
     /**
