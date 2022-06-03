@@ -11,7 +11,7 @@ class ModuleCategoryController extends Controller
     {
         setPageMeta('Module Categories');
 
-        $categories = ModuleCategory::latest()->get();
+        $categories = ModuleCategory::latest('name')->get();
 
         return view('module_categories.index', compact('categories'));
     }
