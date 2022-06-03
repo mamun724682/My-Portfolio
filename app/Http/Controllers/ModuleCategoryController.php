@@ -11,7 +11,7 @@ class ModuleCategoryController extends Controller
     {
         setPageMeta('Module Categories');
 
-        $categories = ModuleCategory::orderByDesc('name')->get();
+        $categories = ModuleCategory::orderBy('name')->get();
 
         return view('module_categories.index', compact('categories'));
     }
