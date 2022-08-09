@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\CodeController;
+use App\Http\Controllers\SkillController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,4 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('modules', ModuleController::class);
     // Codes
     Route::resource('codes', CodeController::class);
+
+    /* --------Portfolio--------- */
+    Route::resource('skills', SkillController::class);
 });
