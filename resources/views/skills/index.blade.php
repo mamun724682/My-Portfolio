@@ -45,7 +45,7 @@
                                class="text-decoration-none me-2" href="javascript:void(0)" data-coreui-toggle="modal"
                                data-coreui-target="#exampleModalLive" title="Edit"><i class="las la-edit"></i> Edit</a>
 
-                            <form action="{{ route('module-categories.destroy', $skill->id) }}"
+                            <form action="{{ route('skills.destroy', $skill->id) }}"
                                   id="delete-form-{{ $skill->id }}" method="post">
                                 @csrf
                                 @method('delete')
