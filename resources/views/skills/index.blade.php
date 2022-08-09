@@ -70,7 +70,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLiveLabel" x-text="skill ? 'Edit' : 'Create'"></h5>
+                        <h5 class="modal-title" id="exampleModalLiveLabel" x-text="skill ? 'Edit' : 'Add'"></h5>
                         <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form method="post" x-bind:action="submit_url">
@@ -95,6 +95,21 @@
                                         <span class="input-group-text" id="progress">%</span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 col-form-label" for="serial">Serial</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="serial" name="serial" type="number" x-bind:value="skill ? skill.serial : ''" required>
+                                </div>
+                            </div>
+                            <div class="mb-3 row align-items-center">
+                                <label class="col-sm-3 col-form-label" for="status">Status</label>
+                                <div class="col-sm-9 form-check form-switch">
+                                    <input class="form-check-input" name="status" type="checkbox" id="status" x-bind:checked="skill ? skill.status : true">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <textarea name="details" placeholder="Enter details" class="form-control" x-html="skill ? skill.details : ''"></textarea>
                             </div>
                         </div>
 

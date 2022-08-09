@@ -18,6 +18,7 @@ class SkillController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->all());
         $data = $request->validate([
             'name' => 'required|string|unique:module_categories,name'
         ]);
