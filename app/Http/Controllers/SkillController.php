@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SkillRequest;
 use App\Models\Skill;
 use Illuminate\Http\Request;
 
@@ -11,17 +12,18 @@ class SkillController extends Controller
     {
         setPageMeta('Skills');
 
-        $skills = Skill::active()->whereNull('parent_id')->orderBy('serial')->get();
+        $skills = Skill::whereNull('parent_id')->orderBy('serial')->get();
 
         return view('skills.index', compact('skills'));
     }
 
-    public function store(Request $request)
+    public function store(SkillRequest $request)
     {
-        dd($request->all());
-        $data = $request->validate([
-            'name' => 'required|string|unique:module_categories,name'
-        ]);
+        $data = $request->validated();
+
+        if (! $request->status){
+            $data = $request->validated() + ['status' => false];
+        }
 
         Skill::create($data);
 
@@ -29,11 +31,13 @@ class SkillController extends Controller
         return back();
     }
 
-    public function update(Request $request, Skill $skill)
+    public function update(SkillRequest $request, Skill $skill)
     {
-        $data = $request->validate([
-            'name' => 'required|string|unique:module_categories,name,'.$module_category->id
-        ]);
+        if (! $request->status){
+            $data = $request->validated() + ['status' => false];
+        }else {
+            $data = $request->validated() + ['status' => true];
+        }
 
         $skill->update($data);
 

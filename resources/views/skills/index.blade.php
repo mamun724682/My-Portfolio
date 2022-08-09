@@ -5,7 +5,8 @@
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <div>{{ __('Skills') }}</div>
-                <button x-on:click="skill = '', submit_url = '{{ route('skills.store') }}'" class="btn btn-primary btn-sm" type="button" data-coreui-toggle="modal"
+                <button x-on:click="skill = '', submit_url = '{{ route('skills.store') }}'"
+                        class="btn btn-primary btn-sm" type="button" data-coreui-toggle="modal"
                         data-coreui-target="#exampleModalLive">Create
                 </button>
             </div>
@@ -40,10 +41,12 @@
                             @endif
                         </td>
                         <td class="d-flex align-items-center">
-                            <a x-on:click="skill = {{ $skill }}, submit_url = '{{ route('skills.update', $skill->id) }}'" class="text-decoration-none me-2" href="javascript:void(0)" data-coreui-toggle="modal"
+                            <a x-on:click="skill = {{ $skill }}, submit_url = '{{ route('skills.update', $skill->id) }}'"
+                               class="text-decoration-none me-2" href="javascript:void(0)" data-coreui-toggle="modal"
                                data-coreui-target="#exampleModalLive" title="Edit"><i class="las la-edit"></i> Edit</a>
 
-                            <form action="{{ route('module-categories.destroy', $skill->id) }}" id="delete-form-{{ $skill->id }}" method="post">
+                            <form action="{{ route('module-categories.destroy', $skill->id) }}"
+                                  id="delete-form-{{ $skill->id }}" method="post">
                                 @csrf
                                 @method('delete')
 
@@ -84,14 +87,16 @@
                             <div class="mb-3 row">
                                 <label class="col-sm-3 col-form-label" for="name">Name</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" id="name" name="name" type="text" x-bind:value="skill ? skill.name : ''" required>
+                                    <input class="form-control" id="name" name="name" type="text"
+                                           x-bind:value="skill ? skill.name : ''" required>
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label class="col-sm-3 col-form-label" for="progress">Progress</label>
                                 <div class="col-sm-9">
                                     <div class="input-group">
-                                        <input class="form-control" id="progress" name="progress" type="number" x-bind:value="skill ? skill.progress : ''" required>
+                                        <input class="form-control" id="progress" name="progress" type="number"
+                                               x-bind:value="skill ? skill.progress : ''" required>
                                         <span class="input-group-text" id="progress">%</span>
                                     </div>
                                 </div>
@@ -99,17 +104,20 @@
                             <div class="mb-3 row">
                                 <label class="col-sm-3 col-form-label" for="serial">Serial</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" id="serial" name="serial" type="number" x-bind:value="skill ? skill.serial : ''" required>
+                                    <input class="form-control" id="serial" name="serial" type="number"
+                                           x-bind:value="skill ? skill.serial : ''" required>
                                 </div>
                             </div>
                             <div class="mb-3 row align-items-center">
                                 <label class="col-sm-3 col-form-label" for="status">Status</label>
                                 <div class="col-sm-9 form-check form-switch">
-                                    <input class="form-check-input" name="status" type="checkbox" id="status" x-bind:checked="skill ? skill.status : true">
+                                    <input class="form-check-input" name="status" type="checkbox" id="status"
+                                           x-bind:checked="skill ? (skill.status ? true : false) : true">
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <textarea name="details" placeholder="Enter details" class="form-control" x-html="skill ? skill.details : ''"></textarea>
+                                <textarea name="details" placeholder="Enter details" class="form-control"
+                                          x-html="skill ? skill.details : ''"></textarea>
                             </div>
                         </div>
 
