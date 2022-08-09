@@ -24,10 +24,11 @@ class SkillRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "required|string",
-            "progress" => "required|integer|min:0",
-            "serial" => "required|integer|min:0",
-            "details" => "nullable|string",
+            "parent_id" => "nullable|integer",
+            "name"      => "required|string",
+            "progress"  => "required|integer|min:0",
+            "serial"    => "required|integer|min:0",
+            "details"   => "nullable|string",
         ];
     }
 }

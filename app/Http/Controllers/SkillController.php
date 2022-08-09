@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SkillRequest;
 use App\Models\Skill;
-use Illuminate\Http\Request;
 
 class SkillController extends Controller
 {
@@ -12,7 +11,15 @@ class SkillController extends Controller
     {
         setPageMeta('Skills');
 
-        $skills = Skill::whereNull('parent_id')->orderBy('serial')->get();
+        $skills = Skill::query()
+            ->when(request()->parent_id, function ($query) {
+                return $query->where('parent_id', request()->parent_id);
+            })
+            ->when(!request()->parent_id, function ($query) {
+                return $query->whereNull('parent_id');
+            })
+            ->orderBy('serial')
+            ->get();
 
         return view('skills.index', compact('skills'));
     }
@@ -21,7 +28,7 @@ class SkillController extends Controller
     {
         $data = $request->validated();
 
-        if (! $request->status){
+        if (!$request->status) {
             $data = $request->validated() + ['status' => false];
         }
 
@@ -33,9 +40,9 @@ class SkillController extends Controller
 
     public function update(SkillRequest $request, Skill $skill)
     {
-        if (! $request->status){
+        if (!$request->status) {
             $data = $request->validated() + ['status' => false];
-        }else {
+        } else {
             $data = $request->validated() + ['status' => true];
         }
 
@@ -47,7 +54,7 @@ class SkillController extends Controller
 
     public function destroy(Skill $skill)
     {
-        if ($skill->childs()->count() > 0){
+        if ($skill->childs()->count() > 0) {
             sendFlash('Skill assigned with sub-skills!', 'error');
             return back();
         }

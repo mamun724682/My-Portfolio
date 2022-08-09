@@ -4,7 +4,42 @@
     <div class="card mb-4" x-data="{ skill: '', submit_url: '{{ route('skills.store') }}' }">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
-                <div>{{ __('Skills') }}</div>
+                <nav aria-label="breadcrumb" role="navigation">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            @if(request()->parent_id)
+                                <a href="{{ route('skills.index') }}">Skills</a>
+                            @else
+                                <div>Skills</div>
+                            @endif
+                        </li>
+                        @php
+                            $parent = \App\Models\Skill::find(request()->parent_id);
+                            if ($parent){
+                                $breadcrumbs = [$parent];
+                                while ($parent->parent){
+                                    array_push($breadcrumbs,$parent->parent);
+                                    $parent = $parent->parent;
+                                }
+                            }
+                        @endphp
+
+                        @if(isset($breadcrumbs))
+                            @forelse(array_reverse($breadcrumbs) as $breadcrumb)
+                                <li class="breadcrumb-item {{ $loop->last ? 'active' : '' }}">
+                                    @if($loop->last)
+                                        {{ $breadcrumb->name }}
+                                    @else
+                                        <a href="{{ route('skills.index', ['parent_id' => $breadcrumb->id]) }}">{{ $breadcrumb->name }}</a>
+                                    @endif
+                                </li>
+                            @empty
+                            @endforelse
+                        @endif
+
+                    </ol>
+                </nav>
+
                 <button x-on:click="skill = '', submit_url = '{{ route('skills.store') }}'"
                         class="btn btn-primary btn-sm" type="button" data-coreui-toggle="modal"
                         data-coreui-target="#exampleModalLive">Create
@@ -41,6 +76,9 @@
                             @endif
                         </td>
                         <td class="d-flex align-items-center">
+                            <a class="text-decoration-none me-2"
+                               href="{{ route('skills.index', ['parent_id' => $skill->id]) }}"><i
+                                    class="las la-eye"></i> View</a>
                             <a x-on:click="skill = {{ $skill }}, submit_url = '{{ route('skills.update', $skill->id) }}'"
                                class="text-decoration-none me-2" href="javascript:void(0)" data-coreui-toggle="modal"
                                data-coreui-target="#exampleModalLive" title="Edit"><i class="las la-edit"></i> Edit</a>
@@ -82,6 +120,10 @@
                         <template x-if="skill != ''">
                             <input type="hidden" name="_method" value="put">
                         </template>
+
+                        @if(request()->parent_id)
+                            <input type="hidden" name="parent_id" value="{{ request()->parent_id }}">
+                        @endif
 
                         <div class="modal-body">
                             <div class="mb-3 row">
