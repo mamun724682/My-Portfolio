@@ -26,8 +26,8 @@ return new class extends Migration
                 $table->string('status')->nullable()->comment('Online/On Vacation');
                 $table->text('about')->nullable();
                 $table->string('cv_file')->nullable();
-                $table->text('experiences')->nullable();
                 $table->text('educations')->nullable();
+                $table->string('experience_info')->nullable()->comment('Heading & Sub-heading');
                 $table->string('skill_info')->nullable()->comment('Heading & Sub-heading');
                 $table->string('portfolio_info')->nullable()->comment('Heading & Sub-heading');
                 $table->string('contact_info')->nullable()->comment('Heading & Sub-heading');
@@ -60,8 +60,8 @@ return new class extends Migration
                 'status',
                 'about',
                 'cv_file',
-                'experiences',
                 'educations',
+                'experience_info',
                 'skill_info',
                 'portfolio_info',
                 'contact_info',
