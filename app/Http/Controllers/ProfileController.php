@@ -9,6 +9,8 @@ class ProfileController extends Controller
 {
     public function show()
     {
+        setPageMeta('Profile');
+
         $user = auth()->user();
         return view('auth.profile', compact('user'));
     }
