@@ -9,11 +9,20 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('users.index') }}">
+        <a class="nav-link" href="{{ route('profile.show') }}">
             <svg class="nav-icon">
                 <use xlink:href="{{ asset('icons/coreui.svg#cil-user') }}"></use>
             </svg>
-            {{ __('Users') }}
+            {{ __('Profile') }}
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('experiences.index') }}">
+            <svg class="nav-icon">
+                <use xlink:href="{{ asset('icons/coreui.svg#cil-briefcase') }}"></use>
+            </svg>
+            {{ __('Experiences') }}
         </a>
     </li>
 

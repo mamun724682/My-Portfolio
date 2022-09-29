@@ -27,9 +27,9 @@ class UserSeeder extends Seeder
                 'password'          => bcrypt(12345678),
                 'remember_token'    => Str::random(10),
                 'designation'       => 'Web App Developer',
-                'phone' => '01967141689',
-                'quote' => 'I code simple things beautifully and I love what I do :)',
-                'status' => 'Online'
+                'phone'             => '01967141689',
+                'quote'             => 'I code simple things beautifully and I love what I do :)',
+                'status'            => 'Online'
             ]);
         }
     }

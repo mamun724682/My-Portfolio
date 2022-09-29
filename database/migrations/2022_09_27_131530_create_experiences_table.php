@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('company_name');
             $table->string('designation');
             $table->date('from_date');
-            $table->date('to_date');
+            $table->date('to_date')->nullable();
             $table->string('location')->nullable();
             $table->text('details')->nullable();
             $table->timestamps();

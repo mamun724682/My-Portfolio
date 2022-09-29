@@ -20,6 +20,7 @@ return new class extends Migration
                 $table->string('phone')->nullable();
                 $table->string('address')->nullable();
                 $table->string('interest')->nullable();
+                $table->string('current_learning')->nullable();
                 $table->string('quote')->nullable();
                 $table->string('profile_image')->nullable();
                 $table->string('banner_image')->nullable();
@@ -49,15 +50,16 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn([
-                'greeting',
-                'designation',
-                'phone',
-                'address',
-                'interest',
-                'quote',
+//                'greeting',
+//                'designation',
+//                'phone',
+//                'address',
+//                'interest',
+//                'current_learning',
+//                'quote',
                 'profile_image',
                 'banner_image',
-                'status',
+//                'status',
                 'about',
                 'cv_file',
                 'educations',
