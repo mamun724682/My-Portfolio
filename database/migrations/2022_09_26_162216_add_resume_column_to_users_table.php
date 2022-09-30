@@ -60,18 +60,18 @@ return new class extends Migration
 //                'profile_image',
 //                'banner_image',
 //                'status',
-                'about',
+//                'about',
 //                'cv_file',
-                'educations',
+//                'educations',
                 'experience_info',
                 'skill_info',
                 'portfolio_info',
                 'contact_info',
                 'git_info',
-                'work_process',
-                'social_medias',
-                'counter',
-                'testimonials'
+//                'work_process',
+//                'social_medias',
+//                'counters',
+//                'testimonials'
             ]);
         });
     }
