@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\UserService;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
+    public function __construct(public UserService $userService)
+    {
+    }
+
     public function show()
     {
         setPageMeta('Profile');
@@ -17,14 +22,11 @@ class ProfileController extends Controller
 
     public function update(ProfileUpdateRequest $request)
     {
+        $this->userService->updateOrCreate($request->all(), auth()->id());
+//        dd($request->all());
         if ($request->password) {
             auth()->user()->update(['password' => Hash::make($request->password)]);
         }
-
-        auth()->user()->update([
-            'name' => $request->name,
-            'email' => $request->email,
-        ]);
 
         return redirect()->back()->with('success', 'Profile updated.');
     }

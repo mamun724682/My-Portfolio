@@ -92,7 +92,7 @@
                                             <input class="form-control" type="text" name="greeting"
                                                    id="greeting"
                                                    value="{{ old('greeting', $user->greeting) }}">
-                                            <label for="name">Greeting</label>
+                                            <label for="greeting">Greeting</label>
                                         </div>
                                         @error('greeting')
                                         <span class="text-danger">{{ $message }}</span>
@@ -126,7 +126,7 @@
                                         <div class="form-floating">
                                             <input class="form-control" type="text" name="phone"
                                                    id="phone"
-                                                   value="{{ old('phone', $user->phone) }}" required>
+                                                   value="{{ old('phone', $user->phone) }}">
                                             <label for="phone">Phone</label>
                                         </div>
                                         @error('phone')
@@ -137,7 +137,7 @@
                                         <div class="form-floating">
                                             <input class="form-control" type="text" name="address"
                                                    id="address"
-                                                   value="{{ old('address', $user->address) }}" required>
+                                                   value="{{ old('address', $user->address) }}">
                                             <label for="address">Address</label>
                                         </div>
                                         @error('address')
@@ -159,7 +159,7 @@
                                         <div class="form-floating">
                                             <input class="form-control" type="text" name="interest"
                                                    id="interest"
-                                                   value="{{ old('interest', $user->interest) }}" required>
+                                                   value="{{ old('interest', $user->interest) }}">
                                             <label for="interest">Interest</label>
                                         </div>
                                         @error('interest')
@@ -170,7 +170,7 @@
                                         <div class="form-floating">
                                             <input class="form-control" type="text" name="current_learning"
                                                    id="current_learning"
-                                                   value="{{ old('current_learning', $user->current_learning) }}" required>
+                                                   value="{{ old('current_learning', $user->current_learning) }}">
                                             <label for="current_learning">Current Learning</label>
                                         </div>
                                         @error('current_learning')
@@ -181,7 +181,7 @@
                                         <div class="form-floating">
                                             <input class="form-control" type="text" name="quote"
                                                    id="quote"
-                                                   value="{{ old('quote', $user->quote) }}" required>
+                                                   value="{{ old('quote', $user->quote) }}">
                                             <label for="quote">Quote</label>
                                         </div>
                                         @error('quote')
@@ -192,7 +192,7 @@
                                         <div class="form-floating">
                                             <input class="form-control" type="text" name="status"
                                                    id="status"
-                                                   value="{{ old('status', $user->status) }}" required>
+                                                   value="{{ old('status', $user->status) }}" placeholder="Online/Offline/On Vacation">
                                             <label for="status">Status</label>
                                         </div>
                                         @error('status')
@@ -203,10 +203,10 @@
                                 <div class="row g-3 mt-0">
                                     <div class="col-md-6">
                                         <div class="form-floating">
-                                            <input class="form-control @error('password') is-invalid @enderror"
+                                            <input class="form-control"
                                                    type="password"
                                                    id="password"
-                                                   name="password" placeholder="{{ __('New password') }}" required>
+                                                   name="password" placeholder="{{ __('New password') }}">
                                             <label for="password">Password</label>
                                         </div>
                                         @error('password')
@@ -215,10 +215,10 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating">
-                                            <input class="form-control @error('password_confirmation') is-invalid @enderror"
-                                                   type="c_password"
+                                            <input class="form-control"
+                                                   type="password"
                                                    name="password_confirmation"
-                                                   placeholder="{{ __('New password confirmation') }}" required>
+                                                   placeholder="{{ __('New password confirmation') }}">
                                             <label for="c_password">Confirm Password</label>
                                         </div>
                                     </div>
