@@ -50,28 +50,28 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn([
-//                'greeting',
-//                'designation',
-//                'phone',
-//                'address',
-//                'interest',
-//                'current_learning',
-//                'quote',
-//                'profile_image',
-//                'banner_image',
-//                'status',
-//                'about',
-//                'cv_file',
-//                'educations',
+                'greeting',
+                'designation',
+                'phone',
+                'address',
+                'interest',
+                'current_learning',
+                'quote',
+                'profile_image',
+                'banner_image',
+                'status',
+                'about',
+                'cv_file',
+                'educations',
                 'experience_info',
                 'skill_info',
                 'portfolio_info',
                 'contact_info',
                 'git_info',
-//                'work_process',
-//                'social_medias',
-//                'counters',
-//                'testimonials'
+                'work_processes',
+                'social_medias',
+                'counters',
+                'testimonials'
             ]);
         });
     }

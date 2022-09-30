@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" data-coreui-toggle="tab" href="#profile" role="tab">
+                                <a class="nav-link active" data-coreui-toggle="tab" href="#profile" role="tab">
                                     <svg class="icon me-2">
                                         <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>
                                     </svg>
@@ -68,16 +68,24 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" data-coreui-toggle="tab" href="#testimonials" role="tab">
+                                <a class="nav-link" data-coreui-toggle="tab" href="#testimonials" role="tab">
                                     <svg class="icon me-2">
                                         <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>
                                     </svg>
                                     Testimonials
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-coreui-toggle="tab" href="#others" role="tab">
+                                    <svg class="icon me-2">
+                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>
+                                    </svg>
+                                    Others
+                                </a>
+                            </li>
                         </ul>
                         <div class="tab-content rounded-bottom">
-                            <div class="tab-pane p-3" role="tabpanel" id="profile">
+                            <div class="tab-pane p-3 active preview" role="tabpanel" id="profile">
                                 <div class="row g-3">
                                     <div class="col-md-3">
                                         <div class="form-floating">
@@ -393,7 +401,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane pt-1 active preview" role="tabpanel" id="testimonials">
+                            <div class="tab-pane pt-1" role="tabpanel" id="testimonials">
                                 <div class="row g-3">
                                     <div class="col-md-12" x-data="{ testimonials: {{ $user->testimonials ?? json_encode([['key'=> 1, 'value'=> 2]]) }} }">
 
@@ -422,6 +430,83 @@
                                             </div>
                                         </template>
 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane pt-1" role="tabpanel" id="others">
+                                <div class="card">
+                                    <div class="card-header">Experience Info</div>
+                                    <div class="card-body row">
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="key[]"
+                                                   id="key1" required>
+                                            <label for="key1">Heading</label>
+                                        </div>
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="key[]"
+                                                   id="key1" required>
+                                            <label for="key1">Sub-heading</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card mt-2">
+                                    <div class="card-header">Skill Info</div>
+                                    <div class="card-body row">
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="key[]"
+                                                   id="key1">
+                                            <label for="key1">Heading</label>
+                                        </div>
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="key[]"
+                                                   id="key1">
+                                            <label for="key1">Sub-Heading</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card mt-2">
+                                    <div class="card-header">Portfolio Info</div>
+                                    <div class="card-body row">
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="key[]"
+                                                   id="key1">
+                                            <label for="key1">Heading</label>
+                                        </div>
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="key[]"
+                                                   id="key1">
+                                            <label for="key1">Sub-Heading</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card mt-2">
+                                    <div class="card-header">Contact Info</div>
+                                    <div class="card-body row">
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="key[]"
+                                                   id="key1">
+                                            <label for="key1">Heading</label>
+                                        </div>
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="key[]"
+                                                   id="key1">
+                                            <label for="key1">Sub-Heading</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card mt-2">
+                                    <div class="card-header">Git Info</div>
+                                    <div class="card-body row">
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="key[]"
+                                                   id="key1">
+                                            <label for="key1">Heading</label>
+                                        </div>
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="key[]"
+                                                   id="key1">
+                                            <label for="key1">Sub-Heading</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
