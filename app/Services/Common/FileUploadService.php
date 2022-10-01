@@ -15,26 +15,31 @@ class FileUploadService
 
     /*
      * Upload regular file
+     * $set_file_name = random/custom/original
      */
-    public function uploadFile($file, $upload_path = null, $delete_path = null)
+    public function uploadFile($file, $upload_path = 'uploads/others', $set_file_name = 'random', $delete_path = null)
     {
         // Delete old file
         if ($delete_path) {
             $this->delete($delete_path);
         }
         // Upload new file
-        return $this->upload($file, $upload_path);
+        return $this->upload($file, $upload_path, $set_file_name);
     }
 
-    public function upload($file, $path = 'uploads/others', $use_client_file_name = false)
+    private function upload($file, $path, $set_file_name)
     {
-        $file_name = $use_client_file_name ?
-            (pathinfo($this->getFileName($file), PATHINFO_FILENAME) . '.' . $file->getClientOriginalExtension())
-            : (time() . '_' . rand() . '_' . (auth()->id() ?? '') . '.' . $file->getClientOriginalExtension());
+        if ($set_file_name == 'random'){
+            $file_name = time() . '_' . rand() . '_' . (auth()->id() ?? '') . '.' . $file->getClientOriginalExtension();
+        }elseif ($set_file_name == 'original'){
+            $file_name = pathinfo($this->getFileName($file), PATHINFO_FILENAME) . '.' . $file->getClientOriginalExtension();
+        }else{
+            $file_name = Str::slug($set_file_name).'-'.date('d-M-Y').'.'.$file->getClientOriginalExtension();
+        }
 
         $filename_dir = trim($path, "/") . "/" . $file_name;
 
-        if ($use_client_file_name) {
+        if ($set_file_name) {
             while (Storage::disk($this->disk)->exists($filename_dir)) {
                 $file_name = pathinfo($this->getFileName($file), PATHINFO_FILENAME) . rand((auth()->id ?? 1), ((auth()->id ?? 1) * 1024)) . '.' . $file->getClientOriginalExtension();
                 $filename_dir = trim($path, "/") . "/" . $file_name;
@@ -49,17 +54,17 @@ class FileUploadService
     /*
      * Upload base64 file
      */
-    public function uploadBase64File($base64string, $upload_path = null, $delete_path = null)
+    public function uploadBase64File($base64string, $upload_path = 'others', $set_file_name = null, $delete_path = null)
     {
         // Delete old file
         if ($delete_path) {
             $this->delete($delete_path);
         }
         // Upload new file
-        return $this->uploadBase64($base64string, $upload_path);
+        return $this->uploadBase64($base64string, $upload_path, $set_file_name);
     }
 
-    public function uploadBase64($base64string, $path = 'others', $set_file_name = '')
+    private function uploadBase64($base64string, $upload_path, $set_file_name)
     {
         try {
             $extension = explode('/', explode(':', substr($base64string, 0, strpos($base64string, ';')))[1])[1]; // .jpg .png .pdf
@@ -68,7 +73,7 @@ class FileUploadService
             $image     = str_replace(' ', '+', $image);
             $fileName = Str::slug($set_file_name) . time() . rand(1111, 9999) . '.' . $extension;
 
-            Storage::disk($this->disk)->put($path . '/' . $fileName, base64_decode($image));
+            Storage::disk($this->disk)->put($upload_path . '/' . $fileName, base64_decode($image));
 
             return $fileName ?? '';
         } catch (\Exception $ex) {

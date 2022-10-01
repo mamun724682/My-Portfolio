@@ -21,7 +21,7 @@ class ProfileController extends Controller
 
     public function update(ProfileUpdateRequest $request)
     {
-        dd($request->all());
+//        dd($request->all());
         $this->userService->updateOrCreate($request->all(), auth()->id());
 
         return redirect()->back()->with('success', 'Profile updated.');
