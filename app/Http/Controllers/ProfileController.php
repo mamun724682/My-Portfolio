@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\UserService;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
@@ -22,11 +21,8 @@ class ProfileController extends Controller
 
     public function update(ProfileUpdateRequest $request)
     {
+        dd($request->all());
         $this->userService->updateOrCreate($request->all(), auth()->id());
-//        dd($request->all());
-        if ($request->password) {
-            auth()->user()->update(['password' => Hash::make($request->password)]);
-        }
 
         return redirect()->back()->with('success', 'Profile updated.');
     }

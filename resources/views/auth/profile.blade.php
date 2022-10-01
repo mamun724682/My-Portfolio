@@ -3,7 +3,7 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <form action="{{ route('profile.update') }}" method="post">
+            <form action="{{ route('profile.update') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('put')
 
@@ -12,21 +12,21 @@
                     <div class="card-body">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" data-coreui-toggle="tab" href="#profile" role="tab">
+                                <a class="nav-link" data-coreui-toggle="tab" href="#profile" role="tab">
                                     <svg class="icon me-2">
                                         <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>
                                     </svg>
                                     Profile
                                 </a>
                             </li>
-{{--                            <li class="nav-item">--}}
-{{--                                <a class="nav-link" data-coreui-toggle="tab" href="#files" role="tab">--}}
-{{--                                    <svg class="icon me-2">--}}
-{{--                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>--}}
-{{--                                    </svg>--}}
-{{--                                    Files--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            <li class="nav-item">
+                                <a class="nav-link active" data-coreui-toggle="tab" href="#files" role="tab">
+                                    <svg class="icon me-2">
+                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>
+                                    </svg>
+                                    Files
+                                </a>
+                            </li>
 {{--                            <li class="nav-item">--}}
 {{--                                <a class="nav-link" data-coreui-toggle="tab" href="#about" role="tab">--}}
 {{--                                    <svg class="icon me-2">--}}
@@ -85,7 +85,7 @@
 {{--                            </li>--}}
                         </ul>
                         <div class="tab-content rounded-bottom">
-                            <div class="tab-pane p-3 active preview" role="tabpanel" id="profile">
+                            <div class="tab-pane p-3" role="tabpanel" id="profile">
                                 <div class="row g-3">
                                     <div class="col-md-3">
                                         <div class="form-floating">
@@ -224,25 +224,27 @@
                                     </div>
                                 </div>
                             </div>
-{{--                            <div class="tab-pane pt-1" role="tabpanel" id="files">--}}
-{{--                                <div class="row g-3">--}}
-{{--                                    <div class="col-md-6">--}}
-{{--                                        <label for="profile_image" class="form-label">Profile Image</label>--}}
-{{--                                        <input class="form-control" type="file" name="profile_image" id="profile_image" onchange="document.getElementById('profile_image_preview').src = window.URL.createObjectURL(this.files[0])">--}}
-{{--                                        <img src="{{ $user->profile_image ?? 'https://via.placeholder.com/400x50' }}" id="profile_image_preview" class="img-thumbnail mt-1" style="max-height: 210px;" alt="best web developer">--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-md-6">--}}
-{{--                                        <label for="banner_image" class="form-label">Banner Image</label>--}}
-{{--                                        <input class="form-control" name="banner_image" type="file" id="banner_image" onchange="document.getElementById('banner_image_preview').src = window.URL.createObjectURL(this.files[0])">--}}
-{{--                                        <img src="{{ $user->banner_image ?? 'https://via.placeholder.com/400x50' }}" id="banner_image_preview" class="img-thumbnail mt-1" style="max-height: 210px;" alt="best web developer">--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-md-12">--}}
-{{--                                        <label for="upload_cv" class="form-label">Upload CV</label>--}}
-{{--                                        <input class="form-control" name="cv_file" type="file" id="upload_cv">--}}
-{{--                                        <a href="#" target="_blank">File name</a>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                            <div class="tab-pane pt-1 active preview" role="tabpanel" id="files">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="profile_image" class="form-label">Profile Image</label>
+                                        <input class="form-control" type="file" name="profile_image" id="profile_image" onchange="document.getElementById('profile_image_preview').src = window.URL.createObjectURL(this.files[0])">
+                                        <img src="{{ $user->profile_image ?? 'https://via.placeholder.com/400x50' }}" id="profile_image_preview" class="img-thumbnail mt-1" style="max-height: 210px;" alt="best web developer">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="banner_image" class="form-label">Banner Image</label>
+                                        <input class="form-control" name="banner_image" type="file" id="banner_image" onchange="document.getElementById('banner_image_preview').src = window.URL.createObjectURL(this.files[0])">
+                                        <img src="{{ $user->banner_image ?? 'https://via.placeholder.com/400x50' }}" id="banner_image_preview" class="img-thumbnail mt-1" style="max-height: 210px;" alt="best software engineer">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="upload_cv" class="form-label">Upload CV</label>
+                                        <input class="form-control" name="cv_file" type="file" id="upload_cv">
+                                        @if($user->cv_file)
+                                            <a href="#" target="_blank">{{ $user->cv_file }}</a>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
 {{--                            <div class="tab-pane pt-1" role="tabpanel" id="about">--}}
 {{--                                <div class="row g-3">--}}
 {{--                                    <div class="col-md-12" x-data="{ abouts: {{ $user->about ?? json_encode([['key'=> 1, 'value'=> 2]]) }} }">--}}
