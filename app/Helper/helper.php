@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
-if (!function_exists('formateDate')) {
+if (!function_exists('formatDate')) {
     /**
-     * formateDate
+     * formatDate
      *
      * @param mixed $date
      * @param bool $withTime
@@ -18,7 +18,7 @@ if (!function_exists('formateDate')) {
      * @return string
      */
 
-    function formateDate($date, $withTime = false)
+    function formatDate($date, $withTime = false)
     {
         if ($withTime) {
             return \Carbon\Carbon::parse($date)->format('Y-m-d h:i a');
@@ -26,24 +26,6 @@ if (!function_exists('formateDate')) {
         return \Carbon\Carbon::parse($date)->format('Y-m-d');
     }
 }
-
-
-
-if (!function_exists('formateDateFromCarbon')) {
-    /**
-     * custom_datetime
-     *
-     * @param string $format
-     * @param mixed $datetime
-     *
-     * @return mixed
-     */
-    function formateDateFromCarbon($format = "Y-m-d g:i a", $datetime = null)
-    {
-        return Carbon::parse($datetime ?? now())->format($format);
-    }
-}
-
 
 if (!function_exists('storagelink')) {
     /**
@@ -123,22 +105,6 @@ if (!function_exists('getImage')) {
     }
 }
 
-if (!function_exists('deleteFileFromStorage')) {
-    /**
-     * deleteFileFromStorage
-     */
-
-    function deleteFileFromStorage($url, $disk = 'public')
-    {
-        if (Storage::disk($disk)->exists($url)) {
-            Storage::disk($disk)->delete($url);
-            return true;
-        }
-
-        return false;
-    }
-}
-
 
 if (!function_exists('getRandomNumber')) {
     /**
@@ -198,37 +164,6 @@ if (!function_exists('prefixGenerator')) {
     }
 }
 
-
-if (!function_exists('getToday')) {
-    /**
-     * getToday
-     *
-     * @return mixed
-     */
-
-    function getToday()
-    {
-        return \Carbon\Carbon::parse(now())->format('Y-m-d');
-    }
-}
-
-
-if (!function_exists('sendFlash')) {
-    /**
-     * sendFlash
-     *
-     * @param mixed $message
-     * @param string $type
-     *
-     * @return void
-     */
-
-    function sendFlash($message, $type = 'success')
-    {
-        session()->flash($type, $message);
-    }
-}
-
 if (!function_exists('systemSettings')) {
     /**
      * systemSettings
@@ -281,50 +216,6 @@ if (!function_exists('setPageMeta')) {
     }
 }
 
-
-if (!function_exists('apiJsonResponse')) {
-    /**
-     * send api response
-     *
-     * @param string $status
-     * @param array|null $data
-     * @param string $message
-     * @param integer $statusCode
-     * @return response
-     */
-    function apiJsonResponse($status = 'success', $data = null, $message = '', $statusCode = 200)
-    {
-        return response()
-            ->json([
-                'status' => $status,
-                'data' => $data ?? [],
-                'message' => $message
-            ], $statusCode);
-    }
-}
-
-
-if (!function_exists('apiValidation')) {
-    /**
-     * validate api request
-     *
-     * @param Request $request
-     * @param array $rule
-     * @param array $attributes
-     * @return void
-     */
-    function apiValidation(Request $request, $rule = [], $attributes = [])
-    {
-        $validator = Validator::make($request->all(), $rule, $attributes);
-        if ($validator->fails()) {
-            return apiJsonResponse('error', $validator->errors(), __('validation.default_message'), 422);
-        } else {
-            return null;
-        }
-    }
-}
-
-
 if (!function_exists('log_error')) {
 
     /**
@@ -336,6 +227,22 @@ if (!function_exists('log_error')) {
     function log_error(\Exception $e)
     {
         Log::error($e->getMessage());
+    }
+}
+
+if (!function_exists('sendFlash')) {
+    /**
+     * sendFlash
+     *
+     * @param mixed $message
+     * @param string $type
+     *
+     * @return void
+     */
+
+    function sendFlash($message, $type = 'success')
+    {
+        session()->flash($type, $message);
     }
 }
 
