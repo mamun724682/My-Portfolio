@@ -13,6 +13,10 @@ class UserService
 
     public function updateOrCreate($data_array, $id = null)
     {
+//        foreach ($data_array['about'] as $item) {
+//            $about[$item[0]] = $item[1];
+//        }
+//        dd($about);
         try {
             // Update password
             if (isset($data_array['password']) && $data_array['password']) {
@@ -33,6 +37,13 @@ class UserService
             if (isset($data_array['cv_file']) && $data_array['cv_file']){
                 $data_array['cv_file'] = $this->fileUploadService->uploadFile($data_array['cv_file'], 'uploads/profile', 'CV Mamun', auth()->user()->cv_file);
             }
+
+            // Process about
+            if (isset($data_array['about']) && $data_array['about']){
+                $data_array['about'] = json_encode($data_array['about']);
+            }
+
+//            dd($data_array);
 
             $user = User::updateOrCreate(['id' => $id], $data_array);
 
