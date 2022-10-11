@@ -43,9 +43,14 @@ class UserService
                 $data_array['about'] = json_encode($data_array['about']);
             }
 
-            // Process about
+            // Process educations
             if (isset($data_array['educations']) && $data_array['educations']){
                 $data_array['educations'] = json_encode($data_array['educations']);
+            }
+
+            // Work process
+            if (isset($data_array['work_processes']) && $data_array['work_processes']){
+                $data_array['work_processes'] = json_encode($data_array['work_processes']);
             }
 
 //            dd($data_array);

@@ -229,12 +229,12 @@
                                     <div class="col-md-6">
                                         <label for="profile_image" class="form-label">Profile Image</label>
                                         <input class="form-control" type="file" name="profile_image" id="profile_image" onchange="document.getElementById('profile_image_preview').src = window.URL.createObjectURL(this.files[0])">
-                                        <img src="{{ getImage($user->profile_image) ?? 'https://via.placeholder.com/400x50' }}" id="profile_image_preview" class="img-thumbnail mt-1" style="max-height: 210px;" alt="best web developer">
+                                        <img src="{{ $user->profile_image ? getImage($user->profile_image) : 'https://via.placeholder.com/400x50' }}" id="profile_image_preview" class="img-thumbnail mt-1" style="max-height: 210px;" alt="best web developer">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="banner_image" class="form-label">Banner Image</label>
                                         <input class="form-control" name="banner_image" type="file" id="banner_image" onchange="document.getElementById('banner_image_preview').src = window.URL.createObjectURL(this.files[0])">
-                                        <img src="{{ getImage($user->banner_image) ?? 'https://via.placeholder.com/400x50' }}" id="banner_image_preview" class="img-thumbnail mt-1" style="max-height: 210px;" alt="best software engineer">
+                                        <img src="{{ $user->profile_image ? getImage($user->banner_image) : 'https://via.placeholder.com/400x50' }}" id="banner_image_preview" class="img-thumbnail mt-1" style="max-height: 210px;" alt="best software engineer">
                                     </div>
                                     <div class="col-md-12">
                                         <label for="upload_cv" class="form-label">Upload CV</label>
@@ -345,27 +345,46 @@
                                 </div>
                             </div>
                             <div class="tab-pane pt-1 active preview" role="tabpanel" id="work_process">
+                                <div class="my-3">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" name="work_processes[show_work_process_section]" type="radio" id="show_work_processes" value="1" @checked(json_decode($user->work_processes)?->show_work_process_section ?? 0)>
+                                        <label class="form-check-label" for="show_work_processes">Show Work Process Section</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" name="work_processes[show_work_process_section]" type="radio" id="hide_work_processes" value="0" @checked(!json_decode($user->work_processes)?->show_work_process_section ?? 0)>
+                                        <label class="form-check-label" for="hide_work_processes">Hide Work Process Section</label>
+                                    </div>
+                                </div>
                                 <div class="row g-3">
-                                    <div class="col-md-12" x-data="{ work_processes: {{ $user->work_process ?? json_encode([['key'=> 1, 'value'=> 2]]) }} }">
+                                    @php
+                                        $work_processes = str_replace('"show_work_process_section":"1",', '', str_replace('"show_work_process_section":"0",','',$user->work_processes));
+                                    @endphp
+                                    <div class="col-md-12" x-data="{ work_processes: {{ $user->work_processes ? json_encode(json_decode($work_processes, true)) : json_encode([['key'=> '', 'value'=> '']]) }} }">
 
                                         <template x-for="(work_process, index) in work_processes" :key="index">
                                             <div class="row">
                                                 <div class="form-floating col-md-5">
-                                                    <input class="form-control" type="text" name="key[]"
-                                                           id="key1" required>
-                                                    <label for="key1">Key</label>
+                                                    <input class="form-control" type="text"
+                                                           x-bind:name="'work_processes['+index+'][key]'"
+                                                           x-bind:id="'work_process_key'+index"
+                                                           x-bind:value="work_process['key']"
+                                                    >
+                                                    <label x-bind:for="'work_process_key'+index">Key</label>
                                                 </div>
                                                 <div class="form-floating col-md-5">
-                                                    <input class="form-control" type="text" name="value[]"
-                                                           id="key2" required>
-                                                    <label for="key2">Value</label>
+                                                    <input class="form-control" type="text"
+                                                           x-bind:name="'work_processes['+index+'][value]'"
+                                                           x-bind:id="'work_process_value'+index"
+                                                           x-bind:value="work_process['value']"
+                                                    >
+                                                    <label x-bind:for="'work_process_value'+index">Value</label>
                                                 </div>
-                                                <button x-on:click="work_processes.push({{ json_encode([['key'=> 1, 'value'=> 2]]) }})" type="button" class="btn btn-info col-md-1">
+                                                <button x-on:click="work_processes.push({{ json_encode(['key' => '', 'value' => '']) }})" type="button" class="btn btn-info col-md-1">
                                                     <svg class="icon">
                                                         <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-plus"></use>
                                                     </svg>
                                                 </button>
-                                                <button x-on:click="work_processes.shift()" type="button" class="btn btn-danger col-md-1" x-show="work_processes.length > 1 && index == work_processes.length-1">
+                                                <button x-on:click="work_processes.pop()" type="button" class="btn btn-danger col-md-1" x-show="work_processes.length > 1 && index == work_processes.length-1">
                                                     <svg class="icon">
                                                         <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-trash"></use>
                                                     </svg>

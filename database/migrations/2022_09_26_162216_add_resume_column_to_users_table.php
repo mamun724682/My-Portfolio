@@ -33,9 +33,9 @@ return new class extends Migration
                 $table->string('portfolio_info')->nullable()->comment('Heading & Sub-heading');
                 $table->string('contact_info')->nullable()->comment('Heading & Sub-heading');
                 $table->string('git_info')->nullable()->comment('Heading, Sub-heading & etc.');
-                $table->string('work_process')->nullable();
+                $table->string('work_processes')->nullable();
                 $table->string('social_medias')->nullable();
-                $table->string('counter')->nullable();
+                $table->string('counters')->nullable();
                 $table->text('testimonials')->nullable();
             });
         });
