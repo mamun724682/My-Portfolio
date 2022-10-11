@@ -43,6 +43,11 @@ class UserService
                 $data_array['about'] = json_encode($data_array['about']);
             }
 
+            // Process about
+            if (isset($data_array['educations']) && $data_array['educations']){
+                $data_array['educations'] = json_encode($data_array['educations']);
+            }
+
 //            dd($data_array);
 
             $user = User::updateOrCreate(['id' => $id], $data_array);
