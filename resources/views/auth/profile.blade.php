@@ -36,21 +36,21 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" data-coreui-toggle="tab" href="#educations" role="tab">
+                                <a class="nav-link" data-coreui-toggle="tab" href="#educations" role="tab">
                                     <svg class="icon me-2">
                                         <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>
                                     </svg>
                                     Educations
                                 </a>
                             </li>
-{{--                            <li class="nav-item">--}}
-{{--                                <a class="nav-link" data-coreui-toggle="tab" href="#work_process" role="tab">--}}
-{{--                                    <svg class="icon me-2">--}}
-{{--                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>--}}
-{{--                                    </svg>--}}
-{{--                                    Work Process--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            <li class="nav-item">
+                                <a class="nav-link active" data-coreui-toggle="tab" href="#work_process" role="tab">
+                                    <svg class="icon me-2">
+                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>
+                                    </svg>
+                                    Work Process
+                                </a>
+                            </li>
 {{--                            <li class="nav-item">--}}
 {{--                                <a class="nav-link" data-coreui-toggle="tab" href="#social_medias" role="tab">--}}
 {{--                                    <svg class="icon me-2">--}}
@@ -283,9 +283,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane pt-1 active preview" role="tabpanel" id="educations">
+                            <div class="tab-pane pt-1" role="tabpanel" id="educations">
                                 <div class="my-3">
-{{--                                    @dd(json_decode($user->educations, true))--}}
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" name="educations[show_education_section]" type="radio" id="show_education" value="1" @checked(json_decode($user->educations)?->show_education_section ?? 0)>
                                         <label class="form-check-label" for="show_education">Show Education Section</label>
@@ -298,7 +297,6 @@
                                 <div class="row g-3">
                                     @php
                                     $educations = str_replace('"show_education_section":"1",', '', str_replace('"show_education_section":"0",','',$user->educations));
-//                                    dd($ed);
                                     @endphp
                                     <div class="col-md-12" x-data="{ educations: {{ $educations ? $educations : json_encode([['degree'=> '', 'name'=> '', 'years' => '']]) }} }">
 
@@ -346,38 +344,38 @@
                                     </div>
                                 </div>
                             </div>
-{{--                            <div class="tab-pane pt-1" role="tabpanel" id="work_process">--}}
-{{--                                <div class="row g-3">--}}
-{{--                                    <div class="col-md-12" x-data="{ work_processes: {{ $user->work_process ?? json_encode([['key'=> 1, 'value'=> 2]]) }} }">--}}
+                            <div class="tab-pane pt-1 active preview" role="tabpanel" id="work_process">
+                                <div class="row g-3">
+                                    <div class="col-md-12" x-data="{ work_processes: {{ $user->work_process ?? json_encode([['key'=> 1, 'value'=> 2]]) }} }">
 
-{{--                                        <template x-for="(work_process, index) in work_processes" :key="index">--}}
-{{--                                            <div class="row">--}}
-{{--                                                <div class="form-floating col-md-5">--}}
-{{--                                                    <input class="form-control" type="text" name="key[]"--}}
-{{--                                                           id="key1" required>--}}
-{{--                                                    <label for="key1">Key</label>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="form-floating col-md-5">--}}
-{{--                                                    <input class="form-control" type="text" name="value[]"--}}
-{{--                                                           id="key2" required>--}}
-{{--                                                    <label for="key2">Value</label>--}}
-{{--                                                </div>--}}
-{{--                                                <button x-on:click="work_processes.push({{ json_encode([['key'=> 1, 'value'=> 2]]) }})" type="button" class="btn btn-info col-md-1">--}}
-{{--                                                    <svg class="icon">--}}
-{{--                                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-plus"></use>--}}
-{{--                                                    </svg>--}}
-{{--                                                </button>--}}
-{{--                                                <button x-on:click="work_processes.shift()" type="button" class="btn btn-danger col-md-1" x-show="work_processes.length > 1 && index == work_processes.length-1">--}}
-{{--                                                    <svg class="icon">--}}
-{{--                                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-trash"></use>--}}
-{{--                                                    </svg>--}}
-{{--                                                </button>--}}
-{{--                                            </div>--}}
-{{--                                        </template>--}}
+                                        <template x-for="(work_process, index) in work_processes" :key="index">
+                                            <div class="row">
+                                                <div class="form-floating col-md-5">
+                                                    <input class="form-control" type="text" name="key[]"
+                                                           id="key1" required>
+                                                    <label for="key1">Key</label>
+                                                </div>
+                                                <div class="form-floating col-md-5">
+                                                    <input class="form-control" type="text" name="value[]"
+                                                           id="key2" required>
+                                                    <label for="key2">Value</label>
+                                                </div>
+                                                <button x-on:click="work_processes.push({{ json_encode([['key'=> 1, 'value'=> 2]]) }})" type="button" class="btn btn-info col-md-1">
+                                                    <svg class="icon">
+                                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-plus"></use>
+                                                    </svg>
+                                                </button>
+                                                <button x-on:click="work_processes.shift()" type="button" class="btn btn-danger col-md-1" x-show="work_processes.length > 1 && index == work_processes.length-1">
+                                                    <svg class="icon">
+                                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-trash"></use>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </template>
 
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                                    </div>
+                                </div>
+                            </div>
 {{--                            <div class="tab-pane pt-1" role="tabpanel" id="social_medias">--}}
 {{--                                <div class="row g-3">--}}
 {{--                                    <div class="col-md-12" x-data="{ social_medias: {{ $user->social_medias ?? json_encode([['key'=> 1, 'value'=> 2]]) }} }">--}}
