@@ -403,7 +403,7 @@
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" name="social_medias[show_social_media_section]" type="radio" id="hide_social_medias" value="0" @checked(!json_decode($user->social_medias)?->show_social_media_section ?? 0)>
-                                        <label class="form-check-label" for="hide_social_medias">Hide Work Process Section</label>
+                                        <label class="form-check-label" for="hide_social_medias">Hide Social Media Section</label>
                                     </div>
                                 </div>
                                 <div class="row g-3">
@@ -459,58 +459,48 @@
                             <div class="tab-pane pt-1 active preview" role="tabpanel" id="counters">
                                 <div class="my-3">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" name="social_medias[show_social_media_section]" type="radio" id="show_social_medias" value="1" @checked(json_decode($user->social_medias)?->show_social_media_section ?? 0)>
-                                        <label class="form-check-label" for="show_social_medias">Show Social Media Section</label>
+                                        <input class="form-check-input" name="counters[show_counter_section]" type="radio" id="show_counters" value="1" @checked(json_decode($user->counters)?->show_counter_section ?? 0)>
+                                        <label class="form-check-label" for="show_counters">Show Counter Section</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" name="social_medias[show_social_media_section]" type="radio" id="hide_social_medias" value="0" @checked(!json_decode($user->social_medias)?->show_social_media_section ?? 0)>
-                                        <label class="form-check-label" for="hide_social_medias">Hide Work Process Section</label>
+                                        <input class="form-check-input" name="counters[show_counter_section]" type="radio" id="hide_counters" value="0" @checked(!json_decode($user->counters)?->show_counter_section ?? 0)>
+                                        <label class="form-check-label" for="hide_counters">Hide Counter Section</label>
                                     </div>
                                 </div>
                                 <div class="row g-3">
                                     @php
-                                        $social_medias = str_replace('"show_social_media_section":"1",', '', str_replace('"show_social_media_section":"0",','',$user->social_medias));
+                                        $counters = str_replace('"show_counter_section":"1",', '', str_replace('"show_counter_section":"0",','',$user->counters));
                                     @endphp
-                                    <div class="col-md-12" x-data="{ social_medias: {{ $user->social_medias ? json_encode(json_decode($social_medias, true)) : json_encode([['key'=> '', 'value'=> '', 'icon'=> '']]) }} }">
+                                    <div class="col-md-12" x-data="{ counters: {{ $user->counters ? json_encode(json_decode($counters, true)) : json_encode([['key'=> '', 'value'=> '']]) }} }">
 
-                                        <template x-for="(social_media, index) in social_medias" :key="index">
+                                        <template x-for="(counter, index) in counters" :key="index">
                                             <div class="row align-items-center">
-                                                <div class="form-floating col-md-3">
+                                                <div class="form-floating col-md-5">
                                                     <input class="form-control" type="text"
-                                                           x-bind:name="'social_medias['+index+'][key]'"
-                                                           x-bind:id="'social_media_key'+index"
-                                                           x-bind:value="social_media['key']"
+                                                           x-bind:name="'counters['+index+'][key]'"
+                                                           x-bind:id="'counter_key'+index"
+                                                           x-bind:value="counter['key']"
                                                     >
-                                                    <label x-bind:for="'social_media_key'+index">Key</label>
+                                                    <label x-bind:for="'counter_key'+index">Key</label>
                                                 </div>
-                                                <div class="form-floating col-md-4">
+                                                <div class="form-floating col-md-5">
                                                     <input class="form-control" type="text"
-                                                           x-bind:name="'social_medias['+index+'][value]'"
-                                                           x-bind:id="'social_media_value'+index"
-                                                           x-bind:value="social_media['value']"
+                                                           x-bind:name="'counters['+index+'][value]'"
+                                                           x-bind:id="'counter_value'+index"
+                                                           x-bind:value="counter['value']"
                                                     >
-                                                    <label x-bind:for="'social_media_value'+index">Value</label>
+                                                    <label x-bind:for="'counter_value'+index">Value</label>
                                                 </div>
-                                                <div class="form-floating col-md-4">
-                                                    <input class="form-control" type="text"
-                                                           x-bind:name="'social_medias['+index+'][icon]'"
-                                                           x-bind:id="'social_media_icon'+index"
-                                                           x-bind:value="social_media['icon']"
-                                                    >
-                                                    <label x-bind:for="'social_media_icon'+index">Icon</label>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <button x-on:click="social_medias.push({{ json_encode(['key' => '', 'value' => '', 'icon' => '']) }})" type="button" class="btn btn-info btn-sm">
-                                                        <svg class="icon">
-                                                            <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-plus"></use>
-                                                        </svg>
-                                                    </button>
-                                                    <button x-on:click="social_medias.pop()" type="button" class="btn btn-danger btn-sm" x-show="social_medias.length > 1 && index == social_medias.length-1">
-                                                        <svg class="icon">
-                                                            <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-trash"></use>
-                                                        </svg>
-                                                    </button>
-                                                </div>
+                                                <button x-on:click="counters.push({{ json_encode(['key' => '', 'value' => '']) }})" type="button" class="btn btn-info btn-sm col-md-1">
+                                                    <svg class="icon">
+                                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-plus"></use>
+                                                    </svg>
+                                                </button>
+                                                <button x-on:click="counters.pop()" type="button" class="btn btn-danger btn-sm col-md-1" x-show="counters.length > 1 && index == counters.length-1">
+                                                    <svg class="icon">
+                                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-trash"></use>
+                                                    </svg>
+                                                </button>
                                             </div>
                                         </template>
 
