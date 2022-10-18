@@ -60,21 +60,21 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" data-coreui-toggle="tab" href="#counters" role="tab">
+                                <a class="nav-link" data-coreui-toggle="tab" href="#counters" role="tab">
                                     <svg class="icon me-2">
                                         <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>
                                     </svg>
                                     Counter
                                 </a>
                             </li>
-{{--                            <li class="nav-item">--}}
-{{--                                <a class="nav-link" data-coreui-toggle="tab" href="#testimonials" role="tab">--}}
-{{--                                    <svg class="icon me-2">--}}
-{{--                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>--}}
-{{--                                    </svg>--}}
-{{--                                    Testimonials--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            <li class="nav-item">
+                                <a class="nav-link active" data-coreui-toggle="tab" href="#testimonials" role="tab">
+                                    <svg class="icon me-2">
+                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>
+                                    </svg>
+                                    Testimonials
+                                </a>
+                            </li>
 {{--                            <li class="nav-item">--}}
 {{--                                <a class="nav-link" data-coreui-toggle="tab" href="#others" role="tab">--}}
 {{--                                    <svg class="icon me-2">--}}
@@ -456,7 +456,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane pt-1 active preview" role="tabpanel" id="counters">
+                            <div class="tab-pane pt-1" role="tabpanel" id="counters">
                                 <div class="my-3">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" name="counters[show_counter_section]" type="radio" id="show_counters" value="1" @checked(json_decode($user->counters)?->show_counter_section ?? 0)>
@@ -507,38 +507,75 @@
                                     </div>
                                 </div>
                             </div>
-{{--                            <div class="tab-pane pt-1" role="tabpanel" id="counter">--}}
-{{--                                <div class="row g-3">--}}
-{{--                                    <div class="col-md-12" x-data="{ counters: {{ $user->counters ?? json_encode([['key'=> 1, 'value'=> 2]]) }} }">--}}
+                            <div class="tab-pane pt-1 active preview" role="tabpanel" id="testimonials">
+                                <div class="my-3">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" name="testimonials[show_testimonial_section]" type="radio" id="show_testimonials" value="1" @checked(json_decode($user->testimonials)?->show_testimonial_section ?? 0)>
+                                        <label class="form-check-label" for="show_testimonials">Show Testimonial Section</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" name="testimonials[show_testimonial_section]" type="radio" id="hide_testimonials" value="0" @checked(!json_decode($user->testimonials)?->show_testimonial_section ?? 0)>
+                                        <label class="form-check-label" for="hide_testimonials">Hide Testimonial Section</label>
+                                    </div>
+                                </div>
+                                <div class="row g-3">
+                                    @php
+                                        $testimonials = str_replace('"show_testimonial_section":"1",', '', str_replace('"show_testimonial_section":"0",','',$user->testimonials));
+                                    @endphp
+                                    <div class="col-md-12" x-data="{ testimonials: {{ $user->testimonials ? json_encode(json_decode($testimonials, true)) : json_encode([['name'=> '', 'designation'=> '', 'review'=> '', 'rating'=> '']]) }} }">
 
-{{--                                        <template x-for="(counter, index) in counters" :key="index">--}}
-{{--                                            <div class="row">--}}
-{{--                                                <div class="form-floating col-md-5">--}}
-{{--                                                    <input class="form-control" type="text" name="key[]"--}}
-{{--                                                           id="key1" required>--}}
-{{--                                                    <label for="key1">Key</label>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="form-floating col-md-5">--}}
-{{--                                                    <input class="form-control" type="text" name="value[]"--}}
-{{--                                                           id="key2" required>--}}
-{{--                                                    <label for="key2">Value</label>--}}
-{{--                                                </div>--}}
-{{--                                                <button x-on:click="counters.push({{ json_encode([['key'=> 1, 'value'=> 2]]) }})" type="button" class="btn btn-info col-md-1">--}}
-{{--                                                    <svg class="icon">--}}
-{{--                                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-plus"></use>--}}
-{{--                                                    </svg>--}}
-{{--                                                </button>--}}
-{{--                                                <button x-on:click="counters.shift()" type="button" class="btn btn-danger col-md-1" x-show="counters.length > 1 && index == counters.length-1">--}}
-{{--                                                    <svg class="icon">--}}
-{{--                                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-trash"></use>--}}
-{{--                                                    </svg>--}}
-{{--                                                </button>--}}
-{{--                                            </div>--}}
-{{--                                        </template>--}}
+                                        <template x-for="(testimonial, index) in testimonials" :key="index">
+                                            <div class="row align-items-center">
+                                                <div class="form-floating col-md-3">
+                                                    <input class="form-control" type="text"
+                                                           x-bind:name="'testimonials['+index+'][name]'"
+                                                           x-bind:id="'testimonial_name'+index"
+                                                           x-bind:value="testimonial['name']"
+                                                    >
+                                                    <label x-bind:for="'testimonial_name'+index">Name</label>
+                                                </div>
+                                                <div class="form-floating col-md-3">
+                                                    <input class="form-control" type="text"
+                                                           x-bind:name="'testimonials['+index+'][designation]'"
+                                                           x-bind:id="'testimonial_designation'+index"
+                                                           x-bind:value="testimonial['designation']"
+                                                    >
+                                                    <label x-bind:for="'testimonial_designation'+index">Designation</label>
+                                                </div>
+                                                <div class="form-floating col-md-4">
+                                                    <input class="form-control" type="text"
+                                                           x-bind:name="'testimonials['+index+'][review]'"
+                                                           x-bind:id="'testimonial_review'+index"
+                                                           x-bind:value="testimonial['review']"
+                                                    >
+                                                    <label x-bind:for="'testimonial_review'+index">Review</label>
+                                                </div>
+                                                <div class="form-floating col-md-1">
+                                                    <input class="form-control" type="text"
+                                                           x-bind:name="'testimonials['+index+'][rating]'"
+                                                           x-bind:id="'testimonial_rating'+index"
+                                                           x-bind:value="testimonial['rating']"
+                                                    >
+                                                    <label x-bind:for="'testimonial_rating'+index">Rating</label>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <button x-on:click="testimonials.push({{ json_encode(['name'=> '', 'designation'=> '', 'review'=> '', 'rating'=> '']) }})" type="button" class="btn btn-info btn-sm">
+                                                        <svg class="icon">
+                                                            <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-plus"></use>
+                                                        </svg>
+                                                    </button>
+                                                    <button x-on:click="testimonials.pop()" type="button" class="btn btn-danger btn-sm" x-show="testimonials.length > 1 && index == testimonials.length-1">
+                                                        <svg class="icon">
+                                                            <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-trash"></use>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </template>
 
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                                    </div>
+                                </div>
+                            </div>
 {{--                            <div class="tab-pane pt-1" role="tabpanel" id="testimonials">--}}
 {{--                                <div class="row g-3">--}}
 {{--                                    <div class="col-md-12" x-data="{ testimonials: {{ $user->testimonials ?? json_encode([['key'=> 1, 'value'=> 2]]) }} }">--}}
