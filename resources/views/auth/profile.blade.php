@@ -52,21 +52,21 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" data-coreui-toggle="tab" href="#social_medias" role="tab">
+                                <a class="nav-link" data-coreui-toggle="tab" href="#social_medias" role="tab">
                                     <svg class="icon me-2">
                                         <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>
                                     </svg>
                                     Social Medias
                                 </a>
                             </li>
-{{--                            <li class="nav-item">--}}
-{{--                                <a class="nav-link" data-coreui-toggle="tab" href="#counter" role="tab">--}}
-{{--                                    <svg class="icon me-2">--}}
-{{--                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>--}}
-{{--                                    </svg>--}}
-{{--                                    Counter--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            <li class="nav-item">
+                                <a class="nav-link active" data-coreui-toggle="tab" href="#counters" role="tab">
+                                    <svg class="icon me-2">
+                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>
+                                    </svg>
+                                    Counter
+                                </a>
+                            </li>
 {{--                            <li class="nav-item">--}}
 {{--                                <a class="nav-link" data-coreui-toggle="tab" href="#testimonials" role="tab">--}}
 {{--                                    <svg class="icon me-2">--}}
@@ -395,7 +395,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane pt-1 active preview" role="tabpanel" id="social_medias">
+                            <div class="tab-pane pt-1" role="tabpanel" id="social_medias">
                                 <div class="my-3">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" name="social_medias[show_social_media_section]" type="radio" id="show_social_medias" value="1" @checked(json_decode($user->social_medias)?->show_social_media_section ?? 0)>
@@ -456,38 +456,67 @@
                                     </div>
                                 </div>
                             </div>
-{{--                            <div class="tab-pane pt-1" role="tabpanel" id="social_medias">--}}
-{{--                                <div class="row g-3">--}}
-{{--                                    <div class="col-md-12" x-data="{ social_medias: {{ $user->social_medias ?? json_encode([['key'=> 1, 'value'=> 2]]) }} }">--}}
+                            <div class="tab-pane pt-1 active preview" role="tabpanel" id="counters">
+                                <div class="my-3">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" name="social_medias[show_social_media_section]" type="radio" id="show_social_medias" value="1" @checked(json_decode($user->social_medias)?->show_social_media_section ?? 0)>
+                                        <label class="form-check-label" for="show_social_medias">Show Social Media Section</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" name="social_medias[show_social_media_section]" type="radio" id="hide_social_medias" value="0" @checked(!json_decode($user->social_medias)?->show_social_media_section ?? 0)>
+                                        <label class="form-check-label" for="hide_social_medias">Hide Work Process Section</label>
+                                    </div>
+                                </div>
+                                <div class="row g-3">
+                                    @php
+                                        $social_medias = str_replace('"show_social_media_section":"1",', '', str_replace('"show_social_media_section":"0",','',$user->social_medias));
+                                    @endphp
+                                    <div class="col-md-12" x-data="{ social_medias: {{ $user->social_medias ? json_encode(json_decode($social_medias, true)) : json_encode([['key'=> '', 'value'=> '', 'icon'=> '']]) }} }">
 
-{{--                                        <template x-for="(social_media, index) in social_medias" :key="index">--}}
-{{--                                            <div class="row">--}}
-{{--                                                <div class="form-floating col-md-5">--}}
-{{--                                                    <input class="form-control" type="text" name="key[]"--}}
-{{--                                                           id="key1" required>--}}
-{{--                                                    <label for="key1">Key</label>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="form-floating col-md-5">--}}
-{{--                                                    <input class="form-control" type="text" name="value[]"--}}
-{{--                                                           id="key2" required>--}}
-{{--                                                    <label for="key2">Value</label>--}}
-{{--                                                </div>--}}
-{{--                                                <button x-on:click="social_medias.push({{ json_encode([['key'=> 1, 'value'=> 2]]) }})" type="button" class="btn btn-info col-md-1">--}}
-{{--                                                    <svg class="icon">--}}
-{{--                                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-plus"></use>--}}
-{{--                                                    </svg>--}}
-{{--                                                </button>--}}
-{{--                                                <button x-on:click="social_medias.shift()" type="button" class="btn btn-danger col-md-1" x-show="social_medias.length > 1 && index == social_medias.length-1">--}}
-{{--                                                    <svg class="icon">--}}
-{{--                                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-trash"></use>--}}
-{{--                                                    </svg>--}}
-{{--                                                </button>--}}
-{{--                                            </div>--}}
-{{--                                        </template>--}}
+                                        <template x-for="(social_media, index) in social_medias" :key="index">
+                                            <div class="row align-items-center">
+                                                <div class="form-floating col-md-3">
+                                                    <input class="form-control" type="text"
+                                                           x-bind:name="'social_medias['+index+'][key]'"
+                                                           x-bind:id="'social_media_key'+index"
+                                                           x-bind:value="social_media['key']"
+                                                    >
+                                                    <label x-bind:for="'social_media_key'+index">Key</label>
+                                                </div>
+                                                <div class="form-floating col-md-4">
+                                                    <input class="form-control" type="text"
+                                                           x-bind:name="'social_medias['+index+'][value]'"
+                                                           x-bind:id="'social_media_value'+index"
+                                                           x-bind:value="social_media['value']"
+                                                    >
+                                                    <label x-bind:for="'social_media_value'+index">Value</label>
+                                                </div>
+                                                <div class="form-floating col-md-4">
+                                                    <input class="form-control" type="text"
+                                                           x-bind:name="'social_medias['+index+'][icon]'"
+                                                           x-bind:id="'social_media_icon'+index"
+                                                           x-bind:value="social_media['icon']"
+                                                    >
+                                                    <label x-bind:for="'social_media_icon'+index">Icon</label>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <button x-on:click="social_medias.push({{ json_encode(['key' => '', 'value' => '', 'icon' => '']) }})" type="button" class="btn btn-info btn-sm">
+                                                        <svg class="icon">
+                                                            <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-plus"></use>
+                                                        </svg>
+                                                    </button>
+                                                    <button x-on:click="social_medias.pop()" type="button" class="btn btn-danger btn-sm" x-show="social_medias.length > 1 && index == social_medias.length-1">
+                                                        <svg class="icon">
+                                                            <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-trash"></use>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </template>
 
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                                    </div>
+                                </div>
+                            </div>
 {{--                            <div class="tab-pane pt-1" role="tabpanel" id="counter">--}}
 {{--                                <div class="row g-3">--}}
 {{--                                    <div class="col-md-12" x-data="{ counters: {{ $user->counters ?? json_encode([['key'=> 1, 'value'=> 2]]) }} }">--}}
