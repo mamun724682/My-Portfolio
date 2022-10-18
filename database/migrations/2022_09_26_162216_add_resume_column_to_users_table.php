@@ -34,7 +34,7 @@ return new class extends Migration
                 $table->string('contact_info')->nullable()->comment('Heading & Sub-heading');
                 $table->string('git_info')->nullable()->comment('Heading, Sub-heading & etc.');
                 $table->string('work_processes')->nullable();
-                $table->string('social_medias')->nullable();
+                $table->text('social_medias')->nullable();
                 $table->string('counters')->nullable();
                 $table->text('testimonials')->nullable();
             });

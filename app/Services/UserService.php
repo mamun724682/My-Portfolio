@@ -53,6 +53,11 @@ class UserService
                 $data_array['work_processes'] = json_encode($data_array['work_processes']);
             }
 
+            // Social medias
+            if (isset($data_array['social_medias']) && $data_array['social_medias']){
+                $data_array['social_medias'] = json_encode($data_array['social_medias']);
+            }
+
 //            dd($data_array);
 
             $user = User::updateOrCreate(['id' => $id], $data_array);

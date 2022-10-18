@@ -398,48 +398,58 @@
                             <div class="tab-pane pt-1 active preview" role="tabpanel" id="social_medias">
                                 <div class="my-3">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" name="work_processes[show_work_process_section]" type="radio" id="show_work_processes" value="1" @checked(json_decode($user->work_processes)?->show_work_process_section ?? 0)>
-                                        <label class="form-check-label" for="show_work_processes">Show Work Process Section</label>
+                                        <input class="form-check-input" name="social_medias[show_social_media_section]" type="radio" id="show_social_medias" value="1" @checked(json_decode($user->social_medias)?->show_social_media_section ?? 0)>
+                                        <label class="form-check-label" for="show_social_medias">Show Social Media Section</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" name="work_processes[show_work_process_section]" type="radio" id="hide_work_processes" value="0" @checked(!json_decode($user->work_processes)?->show_work_process_section ?? 0)>
-                                        <label class="form-check-label" for="hide_work_processes">Hide Work Process Section</label>
+                                        <input class="form-check-input" name="social_medias[show_social_media_section]" type="radio" id="hide_social_medias" value="0" @checked(!json_decode($user->social_medias)?->show_social_media_section ?? 0)>
+                                        <label class="form-check-label" for="hide_social_medias">Hide Work Process Section</label>
                                     </div>
                                 </div>
                                 <div class="row g-3">
                                     @php
-                                        $work_processes = str_replace('"show_work_process_section":"1",', '', str_replace('"show_work_process_section":"0",','',$user->work_processes));
+                                        $social_medias = str_replace('"show_social_media_section":"1",', '', str_replace('"show_social_media_section":"0",','',$user->social_medias));
                                     @endphp
-                                    <div class="col-md-12" x-data="{ work_processes: {{ $user->work_processes ? json_encode(json_decode($work_processes, true)) : json_encode([['key'=> '', 'value'=> '']]) }} }">
+                                    <div class="col-md-12" x-data="{ social_medias: {{ $user->social_medias ? json_encode(json_decode($social_medias, true)) : json_encode([['key'=> '', 'value'=> '', 'icon'=> '']]) }} }">
 
-                                        <template x-for="(work_process, index) in work_processes" :key="index">
-                                            <div class="row">
-                                                <div class="form-floating col-md-5">
+                                        <template x-for="(social_media, index) in social_medias" :key="index">
+                                            <div class="row align-items-center">
+                                                <div class="form-floating col-md-3">
                                                     <input class="form-control" type="text"
-                                                           x-bind:name="'work_processes['+index+'][key]'"
-                                                           x-bind:id="'work_process_key'+index"
-                                                           x-bind:value="work_process['key']"
+                                                           x-bind:name="'social_medias['+index+'][key]'"
+                                                           x-bind:id="'social_media_key'+index"
+                                                           x-bind:value="social_media['key']"
                                                     >
-                                                    <label x-bind:for="'work_process_key'+index">Key</label>
+                                                    <label x-bind:for="'social_media_key'+index">Key</label>
                                                 </div>
-                                                <div class="form-floating col-md-5">
+                                                <div class="form-floating col-md-4">
                                                     <input class="form-control" type="text"
-                                                           x-bind:name="'work_processes['+index+'][value]'"
-                                                           x-bind:id="'work_process_value'+index"
-                                                           x-bind:value="work_process['value']"
+                                                           x-bind:name="'social_medias['+index+'][value]'"
+                                                           x-bind:id="'social_media_value'+index"
+                                                           x-bind:value="social_media['value']"
                                                     >
-                                                    <label x-bind:for="'work_process_value'+index">Value</label>
+                                                    <label x-bind:for="'social_media_value'+index">Value</label>
                                                 </div>
-                                                <button x-on:click="work_processes.push({{ json_encode(['key' => '', 'value' => '']) }})" type="button" class="btn btn-info col-md-1">
-                                                    <svg class="icon">
-                                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-plus"></use>
-                                                    </svg>
-                                                </button>
-                                                <button x-on:click="work_processes.pop()" type="button" class="btn btn-danger col-md-1" x-show="work_processes.length > 1 && index == work_processes.length-1">
-                                                    <svg class="icon">
-                                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-trash"></use>
-                                                    </svg>
-                                                </button>
+                                                <div class="form-floating col-md-4">
+                                                    <input class="form-control" type="text"
+                                                           x-bind:name="'social_medias['+index+'][icon]'"
+                                                           x-bind:id="'social_media_icon'+index"
+                                                           x-bind:value="social_media['icon']"
+                                                    >
+                                                    <label x-bind:for="'social_media_icon'+index">Icon</label>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <button x-on:click="social_medias.push({{ json_encode(['key' => '', 'value' => '', 'icon' => '']) }})" type="button" class="btn btn-info btn-sm">
+                                                        <svg class="icon">
+                                                            <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-plus"></use>
+                                                        </svg>
+                                                    </button>
+                                                    <button x-on:click="social_medias.pop()" type="button" class="btn btn-danger btn-sm" x-show="social_medias.length > 1 && index == social_medias.length-1">
+                                                        <svg class="icon">
+                                                            <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-trash"></use>
+                                                        </svg>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </template>
 
