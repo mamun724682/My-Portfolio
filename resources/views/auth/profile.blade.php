@@ -68,21 +68,21 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" data-coreui-toggle="tab" href="#testimonials" role="tab">
+                                <a class="nav-link" data-coreui-toggle="tab" href="#testimonials" role="tab">
                                     <svg class="icon me-2">
                                         <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>
                                     </svg>
                                     Testimonials
                                 </a>
                             </li>
-{{--                            <li class="nav-item">--}}
-{{--                                <a class="nav-link" data-coreui-toggle="tab" href="#others" role="tab">--}}
-{{--                                    <svg class="icon me-2">--}}
-{{--                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>--}}
-{{--                                    </svg>--}}
-{{--                                    Others--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            <li class="nav-item">
+                                <a class="nav-link active" data-coreui-toggle="tab" href="#others" role="tab">
+                                    <svg class="icon me-2">
+                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>
+                                    </svg>
+                                    Others
+                                </a>
+                            </li>
                         </ul>
                         <div class="tab-content rounded-bottom">
                             <div class="tab-pane p-3" role="tabpanel" id="profile">
@@ -507,7 +507,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane pt-1 active preview" role="tabpanel" id="testimonials">
+                            <div class="tab-pane pt-1" role="tabpanel" id="testimonials">
                                 <div class="my-3">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" name="testimonials[show_testimonial_section]" type="radio" id="show_testimonials" value="1" @checked(json_decode($user->testimonials)?->show_testimonial_section ?? 0)>
@@ -576,115 +576,83 @@
                                     </div>
                                 </div>
                             </div>
-{{--                            <div class="tab-pane pt-1" role="tabpanel" id="testimonials">--}}
-{{--                                <div class="row g-3">--}}
-{{--                                    <div class="col-md-12" x-data="{ testimonials: {{ $user->testimonials ?? json_encode([['key'=> 1, 'value'=> 2]]) }} }">--}}
-
-{{--                                        <template x-for="(testimonial, index) in testimonials" :key="index">--}}
-{{--                                            <div class="row">--}}
-{{--                                                <div class="form-floating col-md-5">--}}
-{{--                                                    <input class="form-control" type="text" name="key[]"--}}
-{{--                                                           id="key1" required>--}}
-{{--                                                    <label for="key1">Key</label>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="form-floating col-md-5">--}}
-{{--                                                    <input class="form-control" type="text" name="value[]"--}}
-{{--                                                           id="key2" required>--}}
-{{--                                                    <label for="key2">Value</label>--}}
-{{--                                                </div>--}}
-{{--                                                <button x-on:click="testimonials.push({{ json_encode([['key'=> 1, 'value'=> 2]]) }})" type="button" class="btn btn-info col-md-1">--}}
-{{--                                                    <svg class="icon">--}}
-{{--                                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-plus"></use>--}}
-{{--                                                    </svg>--}}
-{{--                                                </button>--}}
-{{--                                                <button x-on:click="testimonials.shift()" type="button" class="btn btn-danger col-md-1" x-show="testimonials.length > 1 && index == testimonials.length-1">--}}
-{{--                                                    <svg class="icon">--}}
-{{--                                                        <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-trash"></use>--}}
-{{--                                                    </svg>--}}
-{{--                                                </button>--}}
-{{--                                            </div>--}}
-{{--                                        </template>--}}
-
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="tab-pane pt-1" role="tabpanel" id="others">--}}
-{{--                                <div class="card">--}}
-{{--                                    <div class="card-header">Experience Info</div>--}}
-{{--                                    <div class="card-body row">--}}
-{{--                                        <div class="form-floating col-md-6">--}}
-{{--                                            <input class="form-control" type="text" name="key[]"--}}
-{{--                                                   id="key1" required>--}}
-{{--                                            <label for="key1">Heading</label>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="form-floating col-md-6">--}}
-{{--                                            <input class="form-control" type="text" name="key[]"--}}
-{{--                                                   id="key1" required>--}}
-{{--                                            <label for="key1">Sub-heading</label>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="card mt-2">--}}
-{{--                                    <div class="card-header">Skill Info</div>--}}
-{{--                                    <div class="card-body row">--}}
-{{--                                        <div class="form-floating col-md-6">--}}
-{{--                                            <input class="form-control" type="text" name="key[]"--}}
-{{--                                                   id="key1">--}}
-{{--                                            <label for="key1">Heading</label>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="form-floating col-md-6">--}}
-{{--                                            <input class="form-control" type="text" name="key[]"--}}
-{{--                                                   id="key1">--}}
-{{--                                            <label for="key1">Sub-Heading</label>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="card mt-2">--}}
-{{--                                    <div class="card-header">Portfolio Info</div>--}}
-{{--                                    <div class="card-body row">--}}
-{{--                                        <div class="form-floating col-md-6">--}}
-{{--                                            <input class="form-control" type="text" name="key[]"--}}
-{{--                                                   id="key1">--}}
-{{--                                            <label for="key1">Heading</label>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="form-floating col-md-6">--}}
-{{--                                            <input class="form-control" type="text" name="key[]"--}}
-{{--                                                   id="key1">--}}
-{{--                                            <label for="key1">Sub-Heading</label>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="card mt-2">--}}
-{{--                                    <div class="card-header">Contact Info</div>--}}
-{{--                                    <div class="card-body row">--}}
-{{--                                        <div class="form-floating col-md-6">--}}
-{{--                                            <input class="form-control" type="text" name="key[]"--}}
-{{--                                                   id="key1">--}}
-{{--                                            <label for="key1">Heading</label>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="form-floating col-md-6">--}}
-{{--                                            <input class="form-control" type="text" name="key[]"--}}
-{{--                                                   id="key1">--}}
-{{--                                            <label for="key1">Sub-Heading</label>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="card mt-2">--}}
-{{--                                    <div class="card-header">Git Info</div>--}}
-{{--                                    <div class="card-body row">--}}
-{{--                                        <div class="form-floating col-md-6">--}}
-{{--                                            <input class="form-control" type="text" name="key[]"--}}
-{{--                                                   id="key1">--}}
-{{--                                            <label for="key1">Heading</label>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="form-floating col-md-6">--}}
-{{--                                            <input class="form-control" type="text" name="key[]"--}}
-{{--                                                   id="key1">--}}
-{{--                                            <label for="key1">Sub-Heading</label>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                            <div class="tab-pane pt-1 active preview" role="tabpanel" id="others">
+                                <div class="card">
+                                    <div class="card-header">Experience Info</div>
+                                    <div class="card-body row">
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="experience_info[heading]"
+                                                   id="experience_info_heading" value="{{ json_decode($user->experience_info)->heading }}">
+                                            <label for="experience_info_heading">Heading</label>
+                                        </div>
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="experience_info[subheading]"
+                                                   id="experience_info_subheading" value="{{ json_decode($user->experience_info)->subheading }}">
+                                            <label for="experience_info_subheading">Sub-heading</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card mt-2">
+                                    <div class="card-header">Skill Info</div>
+                                    <div class="card-body row">
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="skill_info[heading]"
+                                                   id="skill_info_heading" value="{{ json_decode($user->skill_info)->heading }}">
+                                            <label for="skill_info_heading">Heading</label>
+                                        </div>
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="skill_info[subheading]"
+                                                   id="skill_info_subheading" value="{{ json_decode($user->skill_info)->subheading }}">
+                                            <label for="skill_info_subheading">Sub-Heading</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card mt-2">
+                                    <div class="card-header">Portfolio Info</div>
+                                    <div class="card-body row">
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="portfolio_info[heading]"
+                                                   id="portfolio_info_heading" value="{{ json_decode($user->portfolio_info)->heading }}">
+                                            <label for="portfolio_info_heading">Heading</label>
+                                        </div>
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="portfolio_info[subheading]"
+                                                   id="portfolio_info_subheading" value="{{ json_decode($user->portfolio_info)->subheading }}">
+                                            <label for="portfolio_info_subheading">Sub-Heading</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card mt-2">
+                                    <div class="card-header">Contact Info</div>
+                                    <div class="card-body row">
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="contact_info[heading]"
+                                                   id="contact_info_heading" value="{{ json_decode($user->contact_info)->heading }}">
+                                            <label for="contact_info_heading">Heading</label>
+                                        </div>
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="contact_info[subheading]"
+                                                   id="contact_info_subheading" value="{{ json_decode($user->contact_info)->subheading }}">
+                                            <label for="contact_info_subheading">Sub-Heading</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card mt-2">
+                                    <div class="card-header">Git Info</div>
+                                    <div class="card-body row">
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="git_info[heading]"
+                                                   id="git_info_heading" value="{{ json_decode($user->git_info)->heading }}">
+                                            <label for="git_info_heading">Heading</label>
+                                        </div>
+                                        <div class="form-floating col-md-6">
+                                            <input class="form-control" type="text" name="git_info[subheading]"
+                                                   id="git_info_subheading" value="{{ json_decode($user->git_info)->subheading }}">
+                                            <label for="git_info_subheading">Sub-Heading</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer">
