@@ -234,7 +234,7 @@
                                     <div class="col-md-6">
                                         <label for="banner_image" class="form-label">Banner Image</label>
                                         <input class="form-control" name="banner_image" type="file" id="banner_image" onchange="document.getElementById('banner_image_preview').src = window.URL.createObjectURL(this.files[0])">
-                                        <img src="{{ $user->profile_image ? getImage($user->banner_image) : 'https://via.placeholder.com/400x50' }}" id="banner_image_preview" class="img-thumbnail mt-1" style="max-height: 210px;" alt="best software engineer">
+                                        <img src="{{ $user->banner_image ? getImage($user->banner_image) : 'https://via.placeholder.com/400x50' }}" id="banner_image_preview" class="img-thumbnail mt-1" style="max-height: 210px;" alt="best software engineer">
                                     </div>
                                     <div class="col-md-12">
                                         <label for="upload_cv" class="form-label">Upload CV</label>

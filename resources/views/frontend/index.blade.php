@@ -53,7 +53,7 @@
         <div class="container">
             <div class="row personal-profile">
                 <div class="col-md-4 personal-profile__avatar">
-                    <img class="" src="https://previews.aspirity.com/spirit/assets/img/img_avatar.png" loading="lazy" alt="best web developer portfolio">
+                    <img class="profile_image" src="{{ getImage($user->profile_image) }}" loading="lazy" alt="best web developer portfolio">
                 </div>
                 <div class="col-md-8">
                     <p class="personal-profile__name">John Anderson_</p>
@@ -87,14 +87,17 @@
             <div class="col-md-10">
                 <h2 id="hello_header" class="section__title">Hi_</h2>
                 <p class="section__description">
-                    I am Junior Web developer able to build a Web presence from the ground up - from concept, navigation,
+                    I am Junior Web developer able to build a Web presence from the ground up - from concept,
+                    navigation,
                     layout and programming to UX and SEO. Skilled at writing well-designed, testable and efficient code
                     using
-                    current best practices in Web development. Fast learner, hard worker and team player who is proficient
+                    current best practices in Web development. Fast learner, hard worker and team player who is
+                    proficient
                     in
                     an array of scripting languages and multimedia Web tools.
                 </p>
-                <a href="" class="section_btn site-btn"><img src="{{ asset('frontend/img/img_btn_icon.png') }}" alt="">Download CV</a>
+                <a href="" class="section_btn site-btn"><img src="{{ asset('frontend/img/img_btn_icon.png') }}" alt="">Download
+                    CV</a>
             </div>
         </div>
     </section>
@@ -108,9 +111,12 @@
             <div class="col-md-10">
                 <h2 id="resume_header" class="section__title">Resume_</h2>
                 <p class="section__description">
-                    Lorem ipsum dolor sit amet, <i><b>communication</b></i> adipisicing elit, <i><b>helpful</b></i> eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud <i><b>sence of
-                            humour</b></i> ullamco laboris nisi ut <i><b>honest</b></i> ea commodo consequat. Duis aute irure dolor
+                    Lorem ipsum dolor sit amet, <i><b>communication</b></i> adipisicing elit, <i><b>helpful</b></i>
+                    eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud <i><b>sence
+                            of
+                            humour</b></i> ullamco laboris nisi ut <i><b>honest</b></i> ea commodo consequat. Duis aute
+                    irure dolor
                     in
                     upper-intermediate english level velit dolore eu ivivdtevoluptatem ontend developer.
                 </p>
@@ -292,15 +298,17 @@
             </div>
         </div>
         <div class="portfolio-cards">
-            <div class="row project-card" data-toggle="modal" data-target="#portfolioModal" data-portfolio-tag="web-sites">
+            <div class="row project-card" data-toggle="modal" data-target="#portfolioModal"
+                 data-portfolio-tag="web-sites">
                 <div class="col-md-6 col-lg-5 project-card__img">
-                    <img class="" src="assets/img/img_project_1_mono.png" alt="project-img">
+                    <img class="" src="frontend/img/img_project_1_mono.png" alt="project-img">
                 </div>
                 <div class="col-md-6 col-lg-7 project-card__info">
                     <h3 class="project-card__title">Mobile and desktop app for London hostel store </h3>
                     <p class="project-card__description">
                         Do answered bachelor occasion in of offended no concerns. Supply worthy warmth branch of no ye.
-                        Voice tried known to as my to. Though wished merits or be. Alone visit use these smart rooms ham.
+                        Voice tried known to as my to. Though wished merits or be. Alone visit use these smart rooms
+                        ham.
                     </p>
                     <p class="project-card__stack">Used stack:</p>
                     <ul class="tags">
@@ -316,7 +324,7 @@
             <div class="row project-card" data-toggle="modal" data-target="#portfolioModal"
                  data-portfolio-tag="mobile apps">
                 <div class="col-md-6 col-lg-5 project-card__img">
-                    <img class="" src="assets/img/img_project_2_mono.png" alt="project-img">
+                    <img class="" src="frontend/img/img_project_2_mono.png" alt="project-img">
                 </div>
                 <div class="col-md-6 col-lg-7 project-card__info">
                     <h3 class="project-card__title">Web app page for trevel company</h3>
@@ -339,13 +347,14 @@
             <div class="row project-card" data-toggle="modal" data-target="#portfolioModal"
                  data-portfolio-tag="landing-pages">
                 <div class="col-md-6 col-lg-5 project-card__img">
-                    <img class="" src="assets/img/img_project_3_mono.png" alt="project-img">
+                    <img class="" src="frontend/img/img_project_3_mono.png" alt="project-img">
                 </div>
                 <div class="col-md-6 col-lg-7 project-card__info">
                     <h3 class="project-card__title">Admin template for Photo Service</h3>
                     <p class="project-card__description">
                         Do answered bachelor occasion in of offended no concerns. Supply worthy warmth branch of no ye.
-                        Voice tried known to as my to. Though wished merits or be. Alone visit use these smart rooms ham.
+                        Voice tried known to as my to. Though wished merits or be. Alone visit use these smart rooms
+                        ham.
                     </p>
                     <p class="project-card__stack">Used stack:</p>
                     <ul class="tags">
@@ -381,11 +390,14 @@
                                     <p class="slider-carousel__title">Antonio Anderson</p>
                                     <p class="slider-carousel__caption">Project: Landin page for travel company</p>
                                     <hr>
-                                    <p class="slider-carousel__description">Up or well must less rent read walk so be. Easy
-                                        sold at do hour sing spot. Any meant has cease too the decay. Since party burst am
+                                    <p class="slider-carousel__description">Up or well must less rent read walk so be.
+                                        Easy
+                                        sold at do hour sing spot. Any meant has cease too the decay. Since party burst
+                                        am
                                         it match. By or blushes between besides offices noisier as. Sending do brought
                                         winding
-                                        compass in. Easy sold at do hour sing spot less rent read walk so be. Any meant has
+                                        compass in. Easy sold at do hour sing spot less rent read walk so be. Any meant
+                                        has
                                         cease too the decay. </p>
                                 </div>
                             </div>
@@ -396,11 +408,14 @@
                                     <p class="slider-carousel__title">Antonio Anderson</p>
                                     <p class="slider-carousel__caption">Project: Landin page for travel company</p>
                                     <hr>
-                                    <p class="slider-carousel__description">Up or well must less rent read walk so be. Easy
-                                        sold at do hour sing spot. Any meant has cease too the decay. Since party burst am
+                                    <p class="slider-carousel__description">Up or well must less rent read walk so be.
+                                        Easy
+                                        sold at do hour sing spot. Any meant has cease too the decay. Since party burst
+                                        am
                                         it match. By or blushes between besides offices noisier as. Sending do brought
                                         winding
-                                        compass in. Easy sold at do hour sing spot less rent read walk so be. Any meant has
+                                        compass in. Easy sold at do hour sing spot less rent read walk so be. Any meant
+                                        has
                                         cease too the decay. </p>
                                 </div>
                             </div>
@@ -411,11 +426,14 @@
                                     <p class="slider-carousel__title">Antonio Anderson</p>
                                     <p class="slider-carousel__caption">Project: Landin page for travel company</p>
                                     <hr>
-                                    <p class="slider-carousel__description">Up or well must less rent read walk so be. Easy
-                                        sold at do hour sing spot. Any meant has cease too the decay. Since party burst am
+                                    <p class="slider-carousel__description">Up or well must less rent read walk so be.
+                                        Easy
+                                        sold at do hour sing spot. Any meant has cease too the decay. Since party burst
+                                        am
                                         it match. By or blushes between besides offices noisier as. Sending do brought
                                         winding
-                                        compass in. Easy sold at do hour sing spot less rent read walk so be. Any meant has
+                                        compass in. Easy sold at do hour sing spot less rent read walk so be. Any meant
+                                        has
                                         cease too the decay. </p>
                                 </div>
                             </div>
@@ -426,11 +444,14 @@
                                     <p class="slider-carousel__title">Antonio Anderson</p>
                                     <p class="slider-carousel__caption">Project: Landin page for travel company</p>
                                     <hr>
-                                    <p class="slider-carousel__description">Up or well must less rent read walk so be. Easy
-                                        sold at do hour sing spot. Any meant has cease too the decay. Since party burst am
+                                    <p class="slider-carousel__description">Up or well must less rent read walk so be.
+                                        Easy
+                                        sold at do hour sing spot. Any meant has cease too the decay. Since party burst
+                                        am
                                         it match. By or blushes between besides offices noisier as. Sending do brought
                                         winding
-                                        compass in. Easy sold at do hour sing spot less rent read walk so be. Any meant has
+                                        compass in. Easy sold at do hour sing spot less rent read walk so be. Any meant
+                                        has
                                         cease too the decay. </p>
                                 </div>
                             </div>
@@ -466,7 +487,7 @@
                 <a href="blog.html">
                     <div class="post-cards__card">
                         <div class="post-cards__img">
-                            <img src="assets/img/img_blog_1.png" alt="blog_img">
+                            <img src="frontend/img/img_blog_1.png" alt="blog_img">
                         </div>
                         <div class="post-cards__info">
                             <p class="post-cards__date">October 22, 2017</p>
@@ -482,7 +503,7 @@
                 <a href="blog.html">
                     <div class="post-cards__card">
                         <div class="post-cards__img">
-                            <img src="assets/img/img_blog_2.png" alt="blog_img">
+                            <img src="frontend/img/img_blog_2.png" alt="blog_img">
                         </div>
                         <div class="post-cards__info">
                             <p class="post-cards__date">October 22, 2017</p>
@@ -498,7 +519,7 @@
                 <a href="blog.html">
                     <div class="post-cards__card">
                         <div class="post-cards__img">
-                            <img src="assets/img/img_blog_3.png" alt="blog_img">
+                            <img src="frontend/img/img_blog_3.png" alt="blog_img">
                         </div>
                         <div class="post-cards__info">
                             <p class="post-cards__date">October 22, 2017</p>
@@ -553,7 +574,8 @@
                                 <span class="form-invalid-icon"><i class="mdi mdi-close" aria-hidden="true"></i></span>
                             </div>
                             <div class="form-group">
-                                <input class="form-field js-field-email" type="email" placeholder="Your e-mail" required>
+                                <input class="form-field js-field-email" type="email" placeholder="Your e-mail"
+                                       required>
                                 <span class="form-validation"></span>
                                 <span class="form-invalid-icon"><i class="mdi mdi-close" aria-hidden="true"></i></span>
                             </div>
@@ -586,21 +608,25 @@
                 </div>
                 <div class="modal-body col-md-11 col-lg-9 ml-auto mr-auto">
                     <p class="portfolio-modal__title">Mobile and desktop app for London hostel store</p>
-                    <img class="portfolio-modal__img" src="assets/img/img_project_1_mono.png" alt="modal_img">
+                    <img class="portfolio-modal__img" src="frontend/img/img_project_1_mono.png" alt="modal_img">
                     <p class="portfolio-modal__description">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt utlabore
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+                        utlabore
                         et
                         dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamcolaboris nisi ut
                         aliquip ex
-                        ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
+                        ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                        dolore
                         eu fugiat
-                        nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                        nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                        deserunt
                         mollit
                         anim id est laborum. Sed ut perspiciatis undeomnis iste natus error sit voluptatem accusantium
                         doloremque
                         laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
                         beatae vitae
-                        dicta sunt explicabo.Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed
+                        dicta sunt explicabo.Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,
+                        sed
                         quia
                         conse.
                     </p>
@@ -623,3 +649,12 @@
     </div>
     <!-- Portfolio Modal -->
 @endsection
+
+@push('css')
+    <style>
+        .profile_image {
+            -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+            filter: grayscale(100%);
+        }
+    </style>
+@endpush
