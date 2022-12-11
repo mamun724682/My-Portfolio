@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" data-coreui-toggle="tab" href="#profile" role="tab">
+                                <a class="nav-link active" data-coreui-toggle="tab" href="#profile" role="tab">
                                     <svg class="icon me-2">
                                         <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>
                                     </svg>
@@ -76,7 +76,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" data-coreui-toggle="tab" href="#others" role="tab">
+                                <a class="nav-link" data-coreui-toggle="tab" href="#others" role="tab">
                                     <svg class="icon me-2">
                                         <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>
                                     </svg>
@@ -85,7 +85,7 @@
                             </li>
                         </ul>
                         <div class="tab-content rounded-bottom">
-                            <div class="tab-pane p-3" role="tabpanel" id="profile">
+                            <div class="tab-pane p-3 active preview" role="tabpanel" id="profile">
                                 <div class="row g-3">
                                     <div class="col-md-3">
                                         <div class="form-floating">
@@ -576,7 +576,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane pt-1 active preview" role="tabpanel" id="others">
+                            <div class="tab-pane pt-1" role="tabpanel" id="others">
                                 <div class="card">
                                     <div class="card-header">Experience Info</div>
                                     <div class="card-body row">
