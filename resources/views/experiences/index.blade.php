@@ -68,7 +68,7 @@
                         <td>{{ $experience->company_name }}</td>
                         <td>{{ $experience->designation }}</td>
                         <td>{{ $experience->from_date }}</td>
-                        <td>{{ $experience->to_date }}</td>
+                        <td>{{ $experience->to_date ?? 'Present' }}</td>
                         <td>{{ $experience->location }}</td>
                         <td>
                             @if($experience->status)
@@ -128,6 +128,13 @@
                                            x-bind:value="experience ? experience.company_name : ''" required>
                                 </div>
                                 <div class="col-6">
+                                    <label class="col-form-label" for="company_url">Company URL</label>
+                                    <input class="form-control" id="company_url" name="company_url" type="url"
+                                           x-bind:value="experience ? experience.company_url : ''">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
                                     <label class="col-form-label" for="designation">Designation</label>
                                     <input class="form-control" id="designation" name="designation" type="text"
                                            x-bind:value="experience ? experience.designation : ''" required>
@@ -142,14 +149,14 @@
                                 <div class="col-6">
                                     <label class="col-form-label" for="to_date">To Date</label>
                                     <input class="form-control" id="to_date" name="to_date" type="date"
-                                           x-bind:value="experience ? experience.to_date : ''" required>
+                                           x-bind:value="experience ? experience.to_date : ''">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
                                     <label class="col-form-label" for="location">Location</label>
                                     <input class="form-control" id="location" name="location" type="text"
-                                           x-bind:value="experience ? experience.location : ''" required>
+                                           x-bind:value="experience ? experience.location : ''">
                                 </div>
                                 <div class="col-6 align-items-center">
                                     <label class="col-form-label" for="status">Status</label>

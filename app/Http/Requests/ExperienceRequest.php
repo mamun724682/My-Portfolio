@@ -25,9 +25,10 @@ class ExperienceRequest extends FormRequest
     {
         return [
             'company_name' => 'required|string',
+            'company_url'  => 'nullable|url',
             'designation'  => 'required|string',
             'from_date'    => 'required|date',
-            'to_date'      => 'required|date',
+            'to_date'      => 'nullable|date',
             'location'     => 'string|nullable',
             'details'      => 'string|nullable',
         ];

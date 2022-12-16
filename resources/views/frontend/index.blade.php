@@ -156,13 +156,32 @@
             <div class="col-md-8 section__resume resume-list">
                 <h3 class="resume-list_title">Employment</h3>
 
-                <div class="resume-list__block">
-                    <p class="resume-list__block-title">Apple</p>
-                    <p class="resume-list__block-date">2006 - 2010</p>
-                    <p>
-                        Senior Full Stack Developer
-                    </p>
-                </div>
+                @forelse($experiences as $experience)
+                    <div class="resume-list__block">
+                        <p class="resume-list__block-title">
+                            @if($experience->company_url)
+                                <a href="{{ $experience->company_url }}" target="_blank">{{ $experience->company_name }}</a>
+                            @else
+                                {{ $experience->company_name }}
+                            @endif
+                        </p>
+                        <p>{{ $experience->designation }}</p>
+                        <p class="resume-list__block-date">
+                            {{ \Carbon\Carbon::parse($experience->from_date)->format('M/Y') }} -
+                            {{ $experience->to_date ? \Carbon\Carbon::parse($experience->to_date)->format('M/Y') : 'Present' }}</p>
+                        @if($experience->details)
+                            @php
+                            $details = explode(PHP_EOL, $experience->details);
+                            @endphp
+                            <div>
+                                @foreach($details as $detail)
+                                    <p>{{{ $detail }}}</p>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+                @empty
+                @endforelse
 
             </div>
         </div>
