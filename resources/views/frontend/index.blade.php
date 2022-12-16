@@ -11,6 +11,7 @@
                         <ul>
                             <li><a href="#hello">Hello</a></li>
                             <li><a href="#resume">Resume</a></li>
+                            <li><a href="#skills">Skills</a></li>
                             <li><a href="#portfolio">Portfolio</a></li>
                             <li><a href="#testimonials">testimonials</a></li>
                             <li><a href="#blog">blog</a></li>
@@ -209,6 +210,18 @@
             </div>
         @endif
         <!--Education-->
+    </section>
+    <!--Resume-->
+
+    <!--Skills-->
+    <section id="skills" class="container section">
+        <div class="row">
+            <div class="col-md-10">
+                <h2 id="resume_header"
+                    class="section__title mb-1">{{ json_decode($user->skill_info)->heading ?? 'Skills' }}_</h2>
+                <h6>{{ json_decode($user->skill_info)->subheading ?? '' }}</h6>
+            </div>
+        </div>
 
         <div class="row section__resume progress-list js-progress-list">
             <div class="col-md-12">
@@ -308,7 +321,7 @@
             </div>
         </div>
     </section>
-    <!--Resume-->
+    <!--Skills-->
 
     <!--Portfolio-->
     <section id="portfolio" class="container section">

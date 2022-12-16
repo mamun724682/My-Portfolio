@@ -55,6 +55,7 @@
                     <th scope="col">Progress</th>
                     <th scope="col">Details</th>
                     <th scope="col">Serial</th>
+                    <th scope="col">Childs</th>
                     <th scope="col">Status</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -68,6 +69,7 @@
                         <td>{{ $skill->progress }}%</td>
                         <td>{{ $skill->details }}</td>
                         <td>{{ $skill->serial }}</td>
+                        <td>{{ $skill->childs_count }}</td>
                         <td>
                             @if($skill->status)
                                 <span class="badge bg-success">Active</span>
@@ -97,7 +99,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="text-center">No Data</td>
+                        <td colspan="8" class="text-center">No Data</td>
                     </tr>
                 @endforelse
 

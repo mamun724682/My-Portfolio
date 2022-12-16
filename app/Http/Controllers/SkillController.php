@@ -19,6 +19,7 @@ class SkillController extends Controller
                 return $query->whereNull('parent_id');
             })
             ->orderBy('serial')
+            ->withCount('childs')
             ->get();
 
         return view('skills.index', compact('skills'));
