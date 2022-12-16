@@ -138,18 +138,19 @@
     <section id="resume" class="container section">
         <div class="row">
             <div class="col-md-10">
-                <h2 id="resume_header" class="section__title mb-1">{{ json_decode($user->experience_info)->heading ?? 'Resume' }}_</h2>
+                <h2 id="resume_header"
+                    class="section__title mb-1">{{ json_decode($user->experience_info)->heading ?? 'Resume' }}_</h2>
                 <h6>{{ json_decode($user->experience_info)->subheading ?? '' }}</h6>
-{{--                <p class="section__description">--}}
-{{--                    Lorem ipsum dolor sit amet, <i><b>communication</b></i> adipisicing elit, <i><b>helpful</b></i>--}}
-{{--                    eiusmod--}}
-{{--                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud <i><b>sence--}}
-{{--                            of--}}
-{{--                            humour</b></i> ullamco laboris nisi ut <i><b>honest</b></i> ea commodo consequat. Duis aute--}}
-{{--                    irure dolor--}}
-{{--                    in--}}
-{{--                    upper-intermediate english level velit dolore eu ivivdtevoluptatem ontend developer.--}}
-{{--                </p>--}}
+                {{--                <p class="section__description">--}}
+                {{--                    Lorem ipsum dolor sit amet, <i><b>communication</b></i> adipisicing elit, <i><b>helpful</b></i>--}}
+                {{--                    eiusmod--}}
+                {{--                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud <i><b>sence--}}
+                {{--                            of--}}
+                {{--                            humour</b></i> ullamco laboris nisi ut <i><b>honest</b></i> ea commodo consequat. Duis aute--}}
+                {{--                    irure dolor--}}
+                {{--                    in--}}
+                {{--                    upper-intermediate english level velit dolore eu ivivdtevoluptatem ontend developer.--}}
+                {{--                </p>--}}
             </div>
         </div>
         <div class="row">
@@ -160,7 +161,8 @@
                     <div class="resume-list__block">
                         <p class="resume-list__block-title">
                             @if($experience->company_url)
-                                <a href="{{ $experience->company_url }}" target="_blank">{{ $experience->company_name }}</a>
+                                <a href="{{ $experience->company_url }}"
+                                   target="_blank">{{ $experience->company_name }}</a>
                             @else
                                 {{ $experience->company_name }}
                             @endif
@@ -171,7 +173,7 @@
                             {{ $experience->to_date ? \Carbon\Carbon::parse($experience->to_date)->format('M/Y') : 'Present' }}</p>
                         @if($experience->details)
                             @php
-                            $details = explode(PHP_EOL, $experience->details);
+                                $details = explode(PHP_EOL, $experience->details);
                             @endphp
                             <div>
                                 @foreach($details as $detail)
@@ -185,34 +187,29 @@
 
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-8 section__resume resume-list">
-                <h3 class="resume-list_title">education</h3>
-                <div class="resume-list__block">
-                    <p class="resume-list__block-title">University of Minnesota Twin Cities </p>
-                    <p class="resume-list__block-date">2006 - 2010</p>
-                    <p>
-                        Bachelor Computer Engineering Lorem
-                    </p>
-                </div>
-                <div class="resume-list__block">
-                    <p class="resume-list__block-title">School of Informational technologies</p>
-                    <p class="resume-list__block-date">2004 - 2005</p>
-                    <p>
-                        Awesome student, lorem ipsum dolor sit amet, conse ctetur adipisicing elit, sed do eius-
-                        mod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                    </p>
-                </div>
-                <div class="resume-list__block">
-                    <p class="resume-list__block-title">Lorem Ipsum School</p>
-                    <p class="resume-list__block-date">2003 - 2006</p>
-                    <p>
-                        Student, Lorem ipsum dolor sit amet, consecte tur adipisicing elit, sed do eiusmod tempor
-                        incididunt ut
-                    </p>
+
+        <!--Education-->
+        @if(json_decode($user->educations)?->show_education_section ?? 0)
+            <div class="row">
+                <div class="col-md-8 section__resume resume-list">
+                    <h3 class="resume-list_title">education</h3>
+
+                    @php
+                    $educations = str_replace('"show_education_section":"1",', '', str_replace('"show_education_section":"0",','',$user->educations));
+                    @endphp
+                    @foreach(json_decode($educations, 1) as $education)
+                        <div class="resume-list__block">
+                            <p class="resume-list__block-title">{{ $education['name'] ?? '' }}</p>
+                            <p class="resume-list__block-date">{{ $education['years'] ?? '' }}</p>
+                            <p>{{ $education['degree'] ?? '' }}</p>
+                        </div>
+                    @endforeach
+
                 </div>
             </div>
-        </div>
+        @endif
+        <!--Education-->
+
         <div class="row section__resume progress-list js-progress-list">
             <div class="col-md-12">
                 <h3 class="progress-list__title">general skills</h3>
@@ -686,7 +683,8 @@
 @endsection
 
 @push('css')
-    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet"
+          href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <style>
         .profile_image {
             -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
