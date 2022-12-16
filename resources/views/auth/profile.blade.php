@@ -237,10 +237,16 @@
                                         <img src="{{ $user->banner_image ? getImage($user->banner_image) : 'https://via.placeholder.com/400x50' }}" id="banner_image_preview" class="img-thumbnail mt-1" style="max-height: 210px;" alt="best software engineer">
                                     </div>
                                     <div class="col-md-12">
-                                        <label for="upload_cv" class="form-label">Upload CV</label>
+                                        <label for="upload_cv" class="form-label">Add Url or Upload CV</label>
+                                        <input class="form-control mb-1" placeholder="Add CV Url" name="cv_file" value="{{ str_contains($user->cv_file, 'http') ? $user->cv_file : null }}" type="url" id="upload_cv">
                                         <input class="form-control" name="cv_file" type="file" id="upload_cv">
+
                                         @if($user->cv_file)
-                                            <a href="{{ downloadableLink($user->cv_file) }}" target="_blank">{{ str_replace('uploads/profile/','',$user->cv_file) }}</a>
+                                            @if (str_contains($user->cv_file, 'http'))
+                                                <a href="{{ $user->cv_file }}" target="_blank">{{ $user->cv_file }}</a>
+                                            @else
+                                                <a href="{{ downloadableLink($user->cv_file) }}" target="_blank">{{ str_replace('uploads/profile/','',$user->cv_file) }}</a>
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -260,11 +266,11 @@
                                                     <label x-bind:for="'about_key'+index">Key</label>
                                                 </div>
                                                 <div class="form-floating col-md-5">
-                                                    <input class="form-control" type="text"
-                                                           x-bind:name="'about['+index+'][value]'"
-                                                           x-bind:id="'about_value'+index"
-                                                           x-bind:value="about['value']"
-                                                    >
+                                                    <textarea class="form-control"
+                                                              x-bind:name="'about['+index+'][value]'"
+                                                              x-bind:id="'about_value'+index"
+                                                              x-bind:value="about['value']"
+                                                    ></textarea>
                                                     <label x-bind:for="'about_value'+index">Value</label>
                                                 </div>
                                                 <button x-on:click="abouts.push({{ json_encode(['key' => '', 'value' => '']) }})" type="button" class="btn btn-info col-md-1">

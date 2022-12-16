@@ -53,27 +53,43 @@
         <div class="container">
             <div class="row personal-profile">
                 <div class="col-md-4 personal-profile__avatar">
-                    <img class="profile_image" src="{{ getImage($user->profile_image) }}" loading="lazy" alt="best web developer portfolio">
+                    <img class="profile_image" src="{{ getImage($user->profile_image) }}" loading="lazy"
+                         alt="best web developer portfolio">
                 </div>
                 <div class="col-md-8">
-                    <p class="personal-profile__name">John Anderson_</p>
-                    <p class="personal-profile__work">frontend developer, QA-engineer</p>
+                    <p class="personal-profile__name">{{ $user->name }}_</p>
+                    <p class="personal-profile__work">{{ $user->designation }}</p>
                     <div class="personal-profile__contacts">
                         <dl class="contact-list contact-list__opacity-titles">
-                            <dt>Age:</dt>
-                            <dd>23</dd>
-                            <dt>Phone:</dt>
-                            <dd><a href="tel:82344563333">8 (234) 456-33-33</a></dd>
-                            <dt>Email:</dt>
-                            <dd><a href="mailto:mail@mail.com">mail@mail.com</a></dd>
-                            <dt>Address:</dt>
-                            <dd>Melbourne Victoria 3000 Australia</dd>
+
+                            @if($user->phone)
+                                <dt>Phone:</dt>
+                                <dd><a href="tel:{{ $user->phone }}">{{ $user->phone }}</a></dd>
+                            @endif
+                            @if($user->email)
+                                <dt>Email:</dt>
+                                <dd><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></dd>
+                            @endif
+                            @if($user->address)
+                                <dt>Address:</dt>
+                                <dd>{{ $user->address }}</dd>
+                            @endif
+                            @if($user->quote)
+                                <dt>Quote:</dt>
+                                <dd>{{ $user->quote }}</dd>
+                            @endif
+
                         </dl>
                     </div>
                     <p class="personal-profile__social">
-                        <a href="" target="_blank"><i class="fa fa-github"></i></a>
-                        <a href="" target="_blank"><i class="fa fa-linkedin-square"></i></a>
-                        <a href="" target="_blank"><i class="fa fa-facebook-square"></i></a>
+
+                        @forelse(json_decode($user->social_medias, true) as $key => $social_media)
+                            @continue($key == 'show_social_media_section')
+                            <a href="{{ $social_media['value'] }}" target="_blank">{!! $social_media['icon'] !!}</a>
+                        @empty
+
+                        @endforelse
+
                     </p>
                 </div>
             </div>
@@ -86,18 +102,25 @@
         <div class="row">
             <div class="col-md-10">
                 <h2 id="hello_header" class="section__title">Hi_</h2>
-                <p class="section__description">
-                    I am Junior Web developer able to build a Web presence from the ground up - from concept,
-                    navigation,
-                    layout and programming to UX and SEO. Skilled at writing well-designed, testable and efficient code
-                    using
-                    current best practices in Web development. Fast learner, hard worker and team player who is
-                    proficient
-                    in
-                    an array of scripting languages and multimedia Web tools.
-                </p>
-                <a href="" class="section_btn site-btn"><img src="{{ asset('frontend/img/img_btn_icon.png') }}" alt="">Download
-                    CV</a>
+
+                @forelse(json_decode($user->about) as $about)
+                    <p class="section__description">
+                        {{ $about->value }}
+                    </p>
+                @empty
+                @endforelse
+
+                @if($user->cv_file)
+                    @if (str_contains($user->cv_file, 'http'))
+                        <a href="{{ $user->cv_file }}" class="section_btn site-btn" target="_blank">
+                            <img src="{{ asset('frontend/img/img_btn_icon.png') }}" alt="">
+                            Download CV
+                        </a>
+                    @else
+                        <a href="{{ downloadableLink($user->cv_file) }}" class="section_btn site-btn"><img src="{{ asset('frontend/img/img_btn_icon.png') }}" alt="">Download
+                            CV</a>
+                    @endif
+                @endif
             </div>
         </div>
     </section>
@@ -651,6 +674,7 @@
 @endsection
 
 @push('css')
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <style>
         .profile_image {
             -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
