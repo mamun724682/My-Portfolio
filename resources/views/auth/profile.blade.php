@@ -588,12 +588,12 @@
                                     <div class="card-body row">
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="experience_info[heading]"
-                                                   id="experience_info_heading" value="{{ json_decode($user->experience_info)->heading }}">
+                                                   id="experience_info_heading" value="{{ json_decode($user->experience_info)->heading ?? '' }}">
                                             <label for="experience_info_heading">Heading</label>
                                         </div>
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="experience_info[subheading]"
-                                                   id="experience_info_subheading" value="{{ json_decode($user->experience_info)->subheading }}">
+                                                   id="experience_info_subheading" value="{{ json_decode($user->experience_info)->subheading ?? '' }}">
                                             <label for="experience_info_subheading">Sub-heading</label>
                                         </div>
                                     </div>
@@ -603,12 +603,12 @@
                                     <div class="card-body row">
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="skill_info[heading]"
-                                                   id="skill_info_heading" value="{{ json_decode($user->skill_info)->heading }}">
+                                                   id="skill_info_heading" value="{{ json_decode($user->skill_info)->heading ?? '' }}">
                                             <label for="skill_info_heading">Heading</label>
                                         </div>
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="skill_info[subheading]"
-                                                   id="skill_info_subheading" value="{{ json_decode($user->skill_info)->subheading }}">
+                                                   id="skill_info_subheading" value="{{ json_decode($user->skill_info)->subheading ?? '' }}">
                                             <label for="skill_info_subheading">Sub-Heading</label>
                                         </div>
                                     </div>
@@ -618,12 +618,12 @@
                                     <div class="card-body row">
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="portfolio_info[heading]"
-                                                   id="portfolio_info_heading" value="{{ json_decode($user->portfolio_info)->heading }}">
+                                                   id="portfolio_info_heading" value="{{ json_decode($user->portfolio_info)->heading ?? '' }}">
                                             <label for="portfolio_info_heading">Heading</label>
                                         </div>
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="portfolio_info[subheading]"
-                                                   id="portfolio_info_subheading" value="{{ json_decode($user->portfolio_info)->subheading }}">
+                                                   id="portfolio_info_subheading" value="{{ json_decode($user->portfolio_info)->subheading ?? '' }}">
                                             <label for="portfolio_info_subheading">Sub-Heading</label>
                                         </div>
                                     </div>
@@ -633,12 +633,12 @@
                                     <div class="card-body row">
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="contact_info[heading]"
-                                                   id="contact_info_heading" value="{{ json_decode($user->contact_info)->heading }}">
+                                                   id="contact_info_heading" value="{{ json_decode($user->contact_info)->heading ?? '' }}">
                                             <label for="contact_info_heading">Heading</label>
                                         </div>
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="contact_info[subheading]"
-                                                   id="contact_info_subheading" value="{{ json_decode($user->contact_info)->subheading }}">
+                                                   id="contact_info_subheading" value="{{ json_decode($user->contact_info)->subheading ?? '' }}">
                                             <label for="contact_info_subheading">Sub-Heading</label>
                                         </div>
                                     </div>
@@ -648,12 +648,12 @@
                                     <div class="card-body row">
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="git_info[heading]"
-                                                   id="git_info_heading" value="{{ json_decode($user->git_info)->heading }}">
+                                                   id="git_info_heading" value="{{ json_decode($user->git_info)->heading ?? '' }}">
                                             <label for="git_info_heading">Heading</label>
                                         </div>
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="git_info[subheading]"
-                                                   id="git_info_subheading" value="{{ json_decode($user->git_info)->subheading }}">
+                                                   id="git_info_subheading" value="{{ json_decode($user->git_info)->subheading ?? '' }}">
                                             <label for="git_info_subheading">Sub-Heading</label>
                                         </div>
                                     </div>
