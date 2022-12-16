@@ -83,12 +83,14 @@
                     </div>
                     <p class="personal-profile__social">
 
-                        @forelse(json_decode($user->social_medias, true) as $key => $social_media)
-                            @continue($key == 'show_social_media_section')
-                            <a href="{{ $social_media['value'] }}" target="_blank">{!! $social_media['icon'] !!}</a>
-                        @empty
+                        @if($user->social_medias)
+                            @forelse(json_decode($user->social_medias, true) as $key => $social_media)
+                                @continue($key == 'show_social_media_section')
+                                <a href="{{ $social_media['value'] }}" target="_blank">{!! $social_media['icon'] !!}</a>
+                            @empty
 
-                        @endforelse
+                            @endforelse
+                        @endif
 
                     </p>
                 </div>
@@ -103,22 +105,26 @@
             <div class="col-md-10">
                 <h2 id="hello_header" class="section__title">Hi_</h2>
 
-                @forelse(json_decode($user->about) as $about)
-                    <p class="section__description">
-                        {{ $about->value }}
-                    </p>
-                @empty
-                @endforelse
+                @if($user->about)
+                    @forelse(json_decode($user->about) as $about)
+                        <p class="section__description">
+                            {{ $about->value }}
+                        </p>
+                    @empty
+                    @endforelse
+                @endif
 
                 @if($user->cv_file)
                     @if (str_contains($user->cv_file, 'http'))
                         <a href="{{ $user->cv_file }}" class="section_btn site-btn" target="_blank">
-                            <img src="{{ asset('frontend/img/img_btn_icon.png') }}" alt="">
+                            <img src="{{ asset('frontend/img/img_btn_icon.png') }}" alt="Abdullah Al Mamun">
                             Download CV
                         </a>
                     @else
-                        <a href="{{ downloadableLink($user->cv_file) }}" class="section_btn site-btn"><img src="{{ asset('frontend/img/img_btn_icon.png') }}" alt="">Download
-                            CV</a>
+                        <a href="{{ downloadableLink($user->cv_file) }}" class="section_btn site-btn">
+                            <img src="{{ asset('frontend/img/img_btn_icon.png') }}" alt="Abdullah Al Mamun">
+                            Download CV
+                        </a>
                     @endif
                 @endif
             </div>
@@ -132,17 +138,32 @@
     <section id="resume" class="container section">
         <div class="row">
             <div class="col-md-10">
-                <h2 id="resume_header" class="section__title">Resume_</h2>
-                <p class="section__description">
-                    Lorem ipsum dolor sit amet, <i><b>communication</b></i> adipisicing elit, <i><b>helpful</b></i>
-                    eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud <i><b>sence
-                            of
-                            humour</b></i> ullamco laboris nisi ut <i><b>honest</b></i> ea commodo consequat. Duis aute
-                    irure dolor
-                    in
-                    upper-intermediate english level velit dolore eu ivivdtevoluptatem ontend developer.
-                </p>
+                <h2 id="resume_header" class="section__title mb-1">{{ json_decode($user->experience_info)->heading ?? 'Resume' }}_</h2>
+                <h6>{{ json_decode($user->experience_info)->subheading ?? '' }}</h6>
+{{--                <p class="section__description">--}}
+{{--                    Lorem ipsum dolor sit amet, <i><b>communication</b></i> adipisicing elit, <i><b>helpful</b></i>--}}
+{{--                    eiusmod--}}
+{{--                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud <i><b>sence--}}
+{{--                            of--}}
+{{--                            humour</b></i> ullamco laboris nisi ut <i><b>honest</b></i> ea commodo consequat. Duis aute--}}
+{{--                    irure dolor--}}
+{{--                    in--}}
+{{--                    upper-intermediate english level velit dolore eu ivivdtevoluptatem ontend developer.--}}
+{{--                </p>--}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 section__resume resume-list">
+                <h3 class="resume-list_title">Employment</h3>
+
+                <div class="resume-list__block">
+                    <p class="resume-list__block-title">Apple</p>
+                    <p class="resume-list__block-date">2006 - 2010</p>
+                    <p>
+                        Senior Full Stack Developer
+                    </p>
+                </div>
+
             </div>
         </div>
         <div class="row">
@@ -168,34 +189,6 @@
                     <p class="resume-list__block-date">2003 - 2006</p>
                     <p>
                         Student, Lorem ipsum dolor sit amet, consecte tur adipisicing elit, sed do eiusmod tempor
-                        incididunt ut
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8 section__resume resume-list">
-                <h3 class="resume-list_title">employment</h3>
-                <div class="resume-list__block">
-                    <p class="resume-list__block-title">Apple</p>
-                    <p class="resume-list__block-date">2006 - 2010</p>
-                    <p>
-                        Senior Full Stack Developer
-                    </p>
-                </div>
-                <div class="resume-list__block">
-                    <p class="resume-list__block-title">Tech university</p>
-                    <p class="resume-list__block-date">2004 - 2005</p>
-                    <p>
-                        Awesome developer, lorem ipsum dolor sit amet, conse ctetur adipisicing elit, sed do eius-
-                        mod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                    </p>
-                </div>
-                <div class="resume-list__block">
-                    <p class="resume-list__block-title">Molly’s studio</p>
-                    <p class="resume-list__block-date">2003 - 2006</p>
-                    <p>
-                        Programmer Lorem ipsum dolor sit amet, consecte tur adipisicing elit, sed do eiusmod tempor
                         incididunt ut
                     </p>
                 </div>

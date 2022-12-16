@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('to_date')->nullable();
             $table->string('location')->nullable();
             $table->text('details')->nullable();
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
