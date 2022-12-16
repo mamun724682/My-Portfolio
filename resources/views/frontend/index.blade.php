@@ -142,16 +142,6 @@
                 <h2 id="resume_header"
                     class="section__title mb-1">{{ json_decode($user->experience_info)->heading ?? 'Resume' }}_</h2>
                 <h6>{{ json_decode($user->experience_info)->subheading ?? '' }}</h6>
-                {{--                <p class="section__description">--}}
-                {{--                    Lorem ipsum dolor sit amet, <i><b>communication</b></i> adipisicing elit, <i><b>helpful</b></i>--}}
-                {{--                    eiusmod--}}
-                {{--                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud <i><b>sence--}}
-                {{--                            of--}}
-                {{--                            humour</b></i> ullamco laboris nisi ut <i><b>honest</b></i> ea commodo consequat. Duis aute--}}
-                {{--                    irure dolor--}}
-                {{--                    in--}}
-                {{--                    upper-intermediate english level velit dolore eu ivivdtevoluptatem ontend developer.--}}
-                {{--                </p>--}}
             </div>
         </div>
         <div class="row">
@@ -196,7 +186,7 @@
                     <h3 class="resume-list_title">education</h3>
 
                     @php
-                    $educations = str_replace('"show_education_section":"1",', '', str_replace('"show_education_section":"0",','',$user->educations));
+                        $educations = str_replace('"show_education_section":"1",', '', str_replace('"show_education_section":"0",','',$user->educations));
                     @endphp
                     @foreach(json_decode($educations, 1) as $education)
                         <div class="resume-list__block">
@@ -224,101 +214,35 @@
         </div>
 
         <div class="row section__resume progress-list js-progress-list">
-            <div class="col-md-12">
-                <h3 class="progress-list__title">general skills</h3>
-            </div>
-            <div class="col-md-5 mr-auto">
-                <div class="progress-list__skill">
-                    <p>
-                        <span class="progress-list__skill-title">html5</span>
-                        <span class="progress-list__skill-value">80%</span>
-                    </p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0"
-                             aria-valuemax="100">
-                        </div>
-                    </div>
+
+            @forelse($skills as $skill)
+                <div class="col-md-5 mr-auto">
+                    <h3 class="progress-list__title mb-3">{{ $skill->name }}</h3>
+
+                    <table class="table table-borderless table-sm">
+                        <tbody class="small">
+                        @forelse($skill->childs as $child)
+                            <tr>
+                                <th scope="row" class="align-middle border-0">{{ $child->name }}</th>
+                                <td class="align-middle border-0">
+                                    <ul class="tags">
+                                        @forelse($child->childs as $grandChild)
+                                            <li>{{ $grandChild->name }}</li>
+                                        @empty
+                                        @endforelse
+                                    </ul>
+                                </td>
+                            </tr>
+                        @empty
+                        @endforelse
+                        </tbody>
+                    </table>
+
                 </div>
-                <div class="progress-list__skill">
-                    <p>
-                        <span class="progress-list__skill-title">css3</span>
-                        <span class="progress-list__skill-value">70%</span>
-                    </p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0"
-                             aria-valuemax="100">
-                        </div>
-                    </div>
-                </div>
-                <div class="progress-list__skill">
-                    <p>
-                        <span class="progress-list__skill-title">java script</span>
-                        <span class="progress-list__skill-value">90%</span>
-                    </p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0"
-                             aria-valuemax="100">
-                        </div>
-                    </div>
-                </div>
-                <div class="progress-list__skill">
-                    <p>
-                        <span class="progress-list__skill-title">jquery</span>
-                        <span class="progress-list__skill-value">80%</span>
-                    </p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0"
-                             aria-valuemax="100">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5 mr-auto">
-                <div class="progress-list__skill">
-                    <p>
-                        <span class="progress-list__skill-title">bootstrap 3</span>
-                        <span class="progress-list__skill-value">80%</span>
-                    </p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0"
-                             aria-valuemax="100">
-                        </div>
-                    </div>
-                </div>
-                <div class="progress-list__skill">
-                    <p>
-                        <span class="progress-list__skill-title">grunt</span>
-                        <span class="progress-list__skill-value">60%</span>
-                    </p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                             aria-valuemax="100">
-                        </div>
-                    </div>
-                </div>
-                <div class="progress-list__skill">
-                    <p>
-                        <span class="progress-list__skill-title">git</span>
-                        <span class="progress-list__skill-value">90%</span>
-                    </p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0"
-                             aria-valuemax="100">
-                        </div>
-                    </div>
-                </div>
-                <div class="progress-list__skill">
-                    <p>
-                        <span class="progress-list__skill-title">adobe photoshop</span>
-                        <span class="progress-list__skill-value">80%</span>
-                    </p>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0"
-                             aria-valuemax="100">
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @empty
+                No Skill
+            @endforelse
+
         </div>
     </section>
     <!--Skills-->
