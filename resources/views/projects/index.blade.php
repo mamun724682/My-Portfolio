@@ -1,18 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card mb-4" x-data="{ experience: '', submit_url: '{{ route('experiences.store') }}' }">
+    <div class="card mb-4" x-data="{ project: '', submit_url: '{{ route('projects.store') }}' }">
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <nav aria-label="breadcrumb" role="navigation">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <div>Experiences</div>
+                            <div>Projects</div>
                         </li>
                     </ol>
                 </nav>
 
-                <button x-on:click="experience = '', submit_url = '{{ route('experiences.store') }}'"
+                <button x-on:click="project = '', submit_url = '{{ route('projects.store') }}'"
                         class="btn btn-primary btn-sm" type="button" data-coreui-toggle="modal"
                         data-coreui-target="#exampleModalLive">Create
                 </button>
@@ -23,44 +23,50 @@
                 <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Company Name</th>
-                    <th scope="col">Designation</th>
-                    <th scope="col">From Date</th>
-                    <th scope="col">To Date</th>
-                    <th scope="col">Location</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Tags</th>
+                    <th scope="col">Images</th>
+                    <th scope="col">Git Url</th>
+                    <th scope="col">Live Url</th>
                     <th scope="col">Status</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
 
-                @forelse($experiences as $experience)
+                @forelse($projects as $project)
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
-                        <td>{{ $experience->company_name }}</td>
-                        <td>{{ $experience->designation }}</td>
-                        <td>{{ $experience->from_date }}</td>
-                        <td>{{ $experience->to_date ?? 'Present' }}</td>
-                        <td>{{ $experience->location }}</td>
+                        <td>{{ $project->name }}</td>
+                        <td>{{ $project->tags }}</td>
                         <td>
-                            @if($experience->status)
+                            @if($project->images)
+                                @foreach(json_decode($project->images) as $image)
+                                    <a href="{{ getImage($image) }}" target="_blank"><img src="{{ getImage($image) }}" style="height: 50px" class="rounded" alt="Abdullah Al Mamun"></a>
+                                @endforeach
+                            @endif
+                        </td>
+                        <td>{{ $project->git }}</td>
+                        <td>{{ $project->url }}</td>
+                        <td>
+                            @if($project->status)
                                 <span class="badge bg-success">Active</span>
                             @else
                                 <span class="badge bg-danger">Inactive</span>
                             @endif
                         </td>
                         <td class="d-flex align-items-center">
-                            <a x-on:click="experience = {{ $experience }}, submit_url = '{{ route('experiences.update', $experience->id) }}'"
+                            <a x-on:click="project = {{ $project }}, submit_url = '{{ route('projects.update', $project->id) }}'"
                                class="text-decoration-none me-2" href="javascript:void(0)" data-coreui-toggle="modal"
                                data-coreui-target="#exampleModalLive" title="Edit"><i class="las la-edit"></i> Edit</a>
 
-                            <form action="{{ route('experiences.destroy', $experience->id) }}"
-                                  id="delete-form-{{ $experience->id }}" method="post">
+                            <form action="{{ route('projects.destroy', $project->id) }}"
+                                  id="delete-form-{{ $project->id }}" method="post">
                                 @csrf
                                 @method('delete')
 
                                 <button class="btn btn-link text-decoration-none p-0" type="button" title="Delete"
-                                        onclick="return makeDeleteRequest(event, {{ $experience->id }})">
+                                        onclick="return makeDeleteRequest(event, {{ $project->id }})">
                                     <i class="las la-trash-alt"></i> Delete
                                 </button>
                             </form>
@@ -82,72 +88,67 @@
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLiveLabel" x-text="experience ? 'Edit' : 'Add'"></h5>
+                        <h5 class="modal-title" id="exampleModalLiveLabel" x-text="project ? 'Edit' : 'Add'"></h5>
                         <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form method="post" x-bind:action="submit_url">
+                    <form method="post" x-bind:action="submit_url" enctype="multipart/form-data">
                         @csrf
 
-                        <template x-if="experience != ''">
+                        <template x-if="project != ''">
                             <input type="hidden" name="_method" value="put">
                         </template>
 
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-6">
-                                    <label class="col-form-label" for="name">Company Name</label>
-                                    <input class="form-control" id="name" name="company_name" type="text"
-                                           x-bind:value="experience ? experience.company_name : ''" required>
+                                    <label class="col-form-label" for="name">Name</label>
+                                    <input class="form-control" id="name" name="name" type="text"
+                                           x-bind:value="project ? project.name : ''" required>
                                 </div>
                                 <div class="col-6">
-                                    <label class="col-form-label" for="company_url">Company URL</label>
-                                    <input class="form-control" id="company_url" name="company_url" type="url"
-                                           x-bind:value="experience ? experience.company_url : ''">
+                                    <label class="col-form-label" for="images">Images</label>
+                                    <input class="form-control" id="images" name="images[]" type="file"
+                                           x-bind:value="project ? project.images : ''" multiple>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <label class="col-form-label" for="designation">Designation</label>
-                                    <input class="form-control" id="designation" name="designation" type="text"
-                                           x-bind:value="experience ? experience.designation : ''" required>
+                                    <label class="col-form-label" for="tags">Tags</label>
+                                    <input class="form-control" id="tags" name="tags" type="text"
+                                           x-bind:value="project ? project.tags : ''" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <label class="col-form-label" for="from_date">From Date</label>
-                                    <input class="form-control" id="from_date" name="from_date" type="date"
-                                           x-bind:value="experience ? experience.from_date : ''" required>
+                                    <label class="col-form-label" for="git">Git Url</label>
+                                    <input class="form-control" id="git" name="git" type="url"
+                                           x-bind:value="project ? project.git : ''">
                                 </div>
                                 <div class="col-6">
-                                    <label class="col-form-label" for="to_date">To Date</label>
-                                    <input class="form-control" id="to_date" name="to_date" type="date"
-                                           x-bind:value="experience ? experience.to_date : ''">
+                                    <label class="col-form-label" for="url">Live Url</label>
+                                    <input class="form-control" id="url" name="url" type="url"
+                                           x-bind:value="project ? project.url : ''">
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-6">
-                                    <label class="col-form-label" for="location">Location</label>
-                                    <input class="form-control" id="location" name="location" type="text"
-                                           x-bind:value="experience ? experience.location : ''">
-                                </div>
                                 <div class="col-6 align-items-center">
                                     <label class="col-form-label" for="status">Status</label>
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" name="status" type="checkbox" id="status"
-                                               x-bind:checked="experience ? (experience.status ? true : false) : true">
+                                               x-bind:checked="project ? (project.status ? true : false) : true">
                                     </div>
                                 </div>
                             </div>
                             <div class="mt-3 row">
                                 <textarea name="details" placeholder="Enter details" rows="5" class="form-control"
-                                          x-html="experience ? experience.details : ''"></textarea>
+                                          x-html="project ? project.details : ''"></textarea>
                             </div>
                         </div>
 
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-coreui-dismiss="modal">Close</button>
                             <button class="btn btn-primary" type="submit">Save
-                                <template x-if="experience != ''">
+                                <template x-if="project != ''">
                                     <span>changes</span>
                                 </template>
                             </button>

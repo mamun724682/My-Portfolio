@@ -5,6 +5,7 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ModuleCategoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\CodeController;
@@ -40,5 +41,6 @@ Route::middleware('auth')->group(function () {
 
     /* --------Portfolio--------- */
     Route::resource('skills', SkillController::class);
-    Route::resource('experiences', ExperienceController::class);
+    Route::apiResource('experiences', ExperienceController::class);
+    Route::apiResource('projects', ProjectController::class);
 });
