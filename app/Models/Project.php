@@ -12,4 +12,9 @@ class Project extends Model
     const PROJECT_IMAGES_PATH = "uploads/projects";
 
     protected $guarded = ['id'];
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', true);
+    }
 }

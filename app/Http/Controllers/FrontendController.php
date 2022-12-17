@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Experience;
+use App\Models\Project;
 use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,7 +15,8 @@ class FrontendController extends Controller
         $user = User::first();
         $experiences = Experience::active()->latest()->get();
         $skills = Skill::active()->whereNull('parent_id')->orderBy('serial')->get();
+        $projects = Project::active()->latest()->get();
 
-        return view('frontend.index', compact('user', 'experiences', 'skills'));
+        return view('frontend.index', compact('user', 'experiences', 'skills', 'projects'));
     }
 }

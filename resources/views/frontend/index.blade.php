@@ -254,255 +254,68 @@
                 <h2 id="portfolio_header" class="section__title">My projects_</h2>
             </div>
         </div>
-        <div class="row portfolio-menu">
-            <div class="col-md-12">
-                <nav>
-                    <ul>
-                        <li><a href="" data-portfolio-target-tag="all">all</a></li>
-                        <li><a href="" data-portfolio-target-tag="mobile apps">mobile apps</a></li>
-                        <li><a href="" data-portfolio-target-tag="web-sites">web-sites</a></li>
-                        <li><a href="" data-portfolio-target-tag="landing-pages">landing pages</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
+{{--        <div class="row portfolio-menu">--}}
+{{--            <div class="col-md-12">--}}
+{{--                <nav>--}}
+{{--                    <ul>--}}
+{{--                        <li><a href="" data-portfolio-target-tag="all">all</a></li>--}}
+{{--                        <li><a href="" data-portfolio-target-tag="mobile apps">mobile apps</a></li>--}}
+{{--                        <li><a href="" data-portfolio-target-tag="web-sites">web-sites</a></li>--}}
+{{--                        <li><a href="" data-portfolio-target-tag="landing-pages">landing pages</a></li>--}}
+{{--                    </ul>--}}
+{{--                </nav>--}}
+{{--            </div>--}}
+{{--        </div>--}}
         <div class="portfolio-cards">
-            <div class="row project-card" data-toggle="modal" data-target="#portfolioModal"
-                 data-portfolio-tag="web-sites">
-                <div class="col-md-6 col-lg-5 project-card__img">
-                    <img class="" src="frontend/img/img_project_1_mono.png" alt="project-img">
+
+            @forelse($projects as $project)
+                <div class="row project-card" data-toggle="modal" data-target="#portfolioModal"
+                     data-portfolio-tag="web-sites">
+                    <div class="col-md-6 col-lg-5 project-card__img">
+                        <img src="{{ getImage(json_decode($project->images)[0]) }}" alt="{{ $project->name }}">
+                    </div>
+                    <div class="col-md-6 col-lg-7 project-card__info">
+                        <h3 class="project-card__title">{{ $project->name }}</h3>
+                        @if($project->details)
+                            @php
+                                $details = explode(PHP_EOL, $project->details);
+                            @endphp
+                            <div>
+                                @foreach($details as $detail)
+                                    <p class="project-card__description mb-0">{{{ $detail }}}</p>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        <p class="project-card__stack">Used stack:</p>
+                        <ul class="tags">
+
+                            @forelse(explode(',', $project->tags) as $tag)
+                                <li>{{ trim($tag) }}</li>
+                            @empty
+                            @endforelse
+
+                        </ul>
+
+                        @if($project->git)
+                            @if (str_contains($project->git, 'github'))
+                                <a href="{{ $project->git }}" class="project-card__link" target="_blank"><i class="fa fa-github"></i> GitHub</a>
+                            @elseif(str_contains($project->git, 'gitlab'))
+                                <a href="{{ $project->git }}" class="project-card__link" target="_blank"><i class="fa fa-gitlab"></i> GitLab</a>
+                            @endif
+                        @endif
+                        @if($project->url)
+                            <a href="{{ $project->git }}" class="project-card__link" target="_blank"><i class="fa fa-globe"></i> Live</a>
+                        @endif
+
+                    </div>
                 </div>
-                <div class="col-md-6 col-lg-7 project-card__info">
-                    <h3 class="project-card__title">Mobile and desktop app for London hostel store </h3>
-                    <p class="project-card__description">
-                        Do answered bachelor occasion in of offended no concerns. Supply worthy warmth branch of no ye.
-                        Voice tried known to as my to. Though wished merits or be. Alone visit use these smart rooms
-                        ham.
-                    </p>
-                    <p class="project-card__stack">Used stack:</p>
-                    <ul class="tags">
-                        <li>html5</li>
-                        <li>css3</li>
-                        <li>JavaScript</li>
-                        <li>bower</li>
-                        <li>grunt</li>
-                    </ul>
-                    <a href="" class="project-card__link">www.superapp.com</a>
-                </div>
-            </div>
-            <div class="row project-card" data-toggle="modal" data-target="#portfolioModal"
-                 data-portfolio-tag="mobile apps">
-                <div class="col-md-6 col-lg-5 project-card__img">
-                    <img class="" src="frontend/img/img_project_2_mono.png" alt="project-img">
-                </div>
-                <div class="col-md-6 col-lg-7 project-card__info">
-                    <h3 class="project-card__title">Web app page for trevel company</h3>
-                    <p class="project-card__description">
-                        Preference any astonished unreserved mrs. Prosperous understood middletons in conviction an
-                        uncommonly do. Supposing so be resolving breakfast am or perfectly. Is drew am hill from mr.
-                    </p>
-                    <p class="project-card__stack">Used stack:</p>
-                    <ul class="tags">
-                        <li>html5</li>
-                        <li>css3</li>
-                        <li>JavaScript</li>
-                        <li>BEM</li>
-                        <li>bower</li>
-                        <li>grunt</li>
-                    </ul>
-                    <a href="" class="project-card__link">www.travellend.com</a>
-                </div>
-            </div>
-            <div class="row project-card" data-toggle="modal" data-target="#portfolioModal"
-                 data-portfolio-tag="landing-pages">
-                <div class="col-md-6 col-lg-5 project-card__img">
-                    <img class="" src="frontend/img/img_project_3_mono.png" alt="project-img">
-                </div>
-                <div class="col-md-6 col-lg-7 project-card__info">
-                    <h3 class="project-card__title">Admin template for Photo Service</h3>
-                    <p class="project-card__description">
-                        Do answered bachelor occasion in of offended no concerns. Supply worthy warmth branch of no ye.
-                        Voice tried known to as my to. Though wished merits or be. Alone visit use these smart rooms
-                        ham.
-                    </p>
-                    <p class="project-card__stack">Used stack:</p>
-                    <ul class="tags">
-                        <li>html5</li>
-                        <li>css3</li>
-                        <li>JavaScript</li>
-                        <li>BEM</li>
-                        <li>bower</li>
-                        <li>grunt</li>
-                    </ul>
-                    <a href="" class="project-card__link">www.coolphoto.com</a>
-                </div>
-            </div>
+            @empty
+            @endforelse
+
         </div>
     </section>
     <!--Portfolio-->
-
-    <!--Testimonials-->
-    <div id="testimonials" class="section">
-        <div class="background slider-carousel" style="background-image: url(frontend/img/img_bg_main.jpg);">
-            <div class="container">
-                <div id="carouselTestimonials" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li data-target="#carouselTestimonials" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselTestimonials" data-slide-to="1"></li>
-                        <li data-target="#carouselTestimonials" data-slide-to="2"></li>
-                        <li data-target="#carouselTestimonials" data-slide-to="3"></li>
-                    </ol>
-                    <div class="carousel-inner" role="listbox">
-                        <div class="carousel-item active">
-                            <div class="row">
-                                <div class="col-md-10 col-sm-10 col-10 mr-auto ml-auto">
-                                    <p class="slider-carousel__title">Antonio Anderson</p>
-                                    <p class="slider-carousel__caption">Project: Landin page for travel company</p>
-                                    <hr>
-                                    <p class="slider-carousel__description">Up or well must less rent read walk so be.
-                                        Easy
-                                        sold at do hour sing spot. Any meant has cease too the decay. Since party burst
-                                        am
-                                        it match. By or blushes between besides offices noisier as. Sending do brought
-                                        winding
-                                        compass in. Easy sold at do hour sing spot less rent read walk so be. Any meant
-                                        has
-                                        cease too the decay. </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="row">
-                                <div class="col-md-10 col-sm-10 col-10 mr-auto ml-auto">
-                                    <p class="slider-carousel__title">Antonio Anderson</p>
-                                    <p class="slider-carousel__caption">Project: Landin page for travel company</p>
-                                    <hr>
-                                    <p class="slider-carousel__description">Up or well must less rent read walk so be.
-                                        Easy
-                                        sold at do hour sing spot. Any meant has cease too the decay. Since party burst
-                                        am
-                                        it match. By or blushes between besides offices noisier as. Sending do brought
-                                        winding
-                                        compass in. Easy sold at do hour sing spot less rent read walk so be. Any meant
-                                        has
-                                        cease too the decay. </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="row">
-                                <div class="col-md-10 col-sm-10 col-10 mr-auto ml-auto">
-                                    <p class="slider-carousel__title">Antonio Anderson</p>
-                                    <p class="slider-carousel__caption">Project: Landin page for travel company</p>
-                                    <hr>
-                                    <p class="slider-carousel__description">Up or well must less rent read walk so be.
-                                        Easy
-                                        sold at do hour sing spot. Any meant has cease too the decay. Since party burst
-                                        am
-                                        it match. By or blushes between besides offices noisier as. Sending do brought
-                                        winding
-                                        compass in. Easy sold at do hour sing spot less rent read walk so be. Any meant
-                                        has
-                                        cease too the decay. </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="row">
-                                <div class="col-md-10 col-sm-10 col-10 mr-auto ml-auto">
-                                    <p class="slider-carousel__title">Antonio Anderson</p>
-                                    <p class="slider-carousel__caption">Project: Landin page for travel company</p>
-                                    <hr>
-                                    <p class="slider-carousel__description">Up or well must less rent read walk so be.
-                                        Easy
-                                        sold at do hour sing spot. Any meant has cease too the decay. Since party burst
-                                        am
-                                        it match. By or blushes between besides offices noisier as. Sending do brought
-                                        winding
-                                        compass in. Easy sold at do hour sing spot less rent read walk so be. Any meant
-                                        has
-                                        cease too the decay. </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#testimonials" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#testimonials" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                    <div class="slider-carousel__circle">
-                        <p><i class="fa fa-quote-right" aria-hidden="true"></i></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--Testimonials-->
-
-    <!--Blog-->
-    <section id="blog" class="container section">
-        <div class="row">
-            <div class="col-md-12">
-                <h2 id="blog_header" class="section__title">Latest Posts_</h2>
-            </div>
-        </div>
-
-        <div class="row post-cards">
-            <div class="col-md-4">
-                <a href="blog.html">
-                    <div class="post-cards__card">
-                        <div class="post-cards__img">
-                            <img src="frontend/img/img_blog_1.png" alt="blog_img">
-                        </div>
-                        <div class="post-cards__info">
-                            <p class="post-cards__date">October 22, 2017</p>
-                            <h3 class="post-cards_title">How to use css-preprocessor</h3>
-                            <p class="post-cards_description">Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit, sed do eiusmod tempr incididunt...
-                            </p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="blog.html">
-                    <div class="post-cards__card">
-                        <div class="post-cards__img">
-                            <img src="frontend/img/img_blog_2.png" alt="blog_img">
-                        </div>
-                        <div class="post-cards__info">
-                            <p class="post-cards__date">October 22, 2017</p>
-                            <h3 class="post-cards_title">How I organize my work with code</h3>
-                            <p class="post-cards_description">Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit, sed do eiusmod tempr incididu...
-                            </p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-md-4">
-                <a href="blog.html">
-                    <div class="post-cards__card">
-                        <div class="post-cards__img">
-                            <img src="frontend/img/img_blog_3.png" alt="blog_img">
-                        </div>
-                        <div class="post-cards__info">
-                            <p class="post-cards__date">October 22, 2017</p>
-                            <h3 class="post-cards_title">SVG sprites vs Icon Font</h3>
-                            <p class="post-cards_description">Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit, sed do eiusmod tempr incididu...
-                            </p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-    <!--Blog-->
 
     <!--Contact-->
     <div class="background" style="background-image: url(frontend/img/img_bg_main.jpg)">
@@ -517,19 +330,24 @@
                     <div class="contacts__list">
                         <dl class="contact-list">
                             <dt>Phone:</dt>
-                            <dd><a href="tel:82344563333">8 (234) 456-33-33</a></dd>
-                            <dt>Skype:</dt>
-                            <dd><a href="skype:iamivanovivan">iamivanovivan</a></dd>
+                            <dd><a href="tel:{{ $user->phone }}">{{ $user->phone }}</a></dd>
+{{--                            <dt>Skype:</dt>--}}
+{{--                            <dd><a href="skype:iamivanovivan">iamivanovivan</a></dd>--}}
                             <dt>Email:</dt>
-                            <dd><a href="mailto:mail@mail.com">mail@mail.com</a></dd>
+                            <dd><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></dd>
                         </dl>
                     </div>
                     <div class="contacts__social">
                         <ul>
-                            <li><a href="">Facebook</a></li>
-                            <li><a href="">Linkedin</a></li>
-                            <li><a href="">GitHub</a></li>
-                            <li><a href="">Bitbucket</a></li>
+
+                            @if($user->social_medias)
+                                @forelse(json_decode($user->social_medias, true) as $key => $social_media)
+                                    @continue($key == 'show_social_media_section')
+                                    <li><a href="{{ $social_media['value'] }}">{{ $social_media['key'] }}</a></li>
+                                @empty
+
+                                @endforelse
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -538,18 +356,18 @@
                         <p class="contacts__form-title">Or just write me a letter here_</p>
                         <form class="js-form">
                             <div class="form-group">
-                                <input class="form-field js-field-name" type="text" placeholder="Your name" required>
+                                <input class="form-field js-field-name" name="name" type="text" placeholder="Your name" required>
                                 <span class="form-validation"></span>
                                 <span class="form-invalid-icon"><i class="mdi mdi-close" aria-hidden="true"></i></span>
                             </div>
                             <div class="form-group">
-                                <input class="form-field js-field-email" type="email" placeholder="Your e-mail"
+                                <input class="form-field js-field-email" name="email" type="email" placeholder="Your e-mail"
                                        required>
                                 <span class="form-validation"></span>
                                 <span class="form-invalid-icon"><i class="mdi mdi-close" aria-hidden="true"></i></span>
                             </div>
                             <div class="form-group">
-                            <textarea class="form-field js-field-message" placeholder="Type the message here"
+                            <textarea class="form-field js-field-message" name="message" placeholder="Type the message here"
                                       required></textarea>
                                 <span class="form-validation"></span>
                                 <span class="form-invalid-icon"><i class="mdi mdi-close" aria-hidden="true"></i></span>
@@ -558,7 +376,7 @@
                         </form>
                     </div>
                     <div class="footer">
-                        <p>© 2016 Ivan Susanin. All Rights Reserved</p>
+                        <p>© {{ date('Y') }} {{ $user->name }}. All Rights Reserved</p>
                     </div>
                 </div>
             </div>
