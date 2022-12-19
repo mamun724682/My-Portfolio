@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
@@ -43,4 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('skills', SkillController::class);
     Route::apiResource('experiences', ExperienceController::class);
     Route::apiResource('projects', ProjectController::class);
+    Route::apiResource('contacts', ContactController::class)->only(['index', 'destroy']);
 });
+
+Route::post('contacts', [ContactController::class, 'store']);

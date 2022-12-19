@@ -39,9 +39,15 @@ function submitForm(e, formName) {
         message: message
     };
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     $.ajax({
         type: "POST",
-        url: 'mail.php',
+        url: '/contacts',
         data: formData,
         success: function () {
             console.log('success');

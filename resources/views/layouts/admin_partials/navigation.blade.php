@@ -70,4 +70,12 @@
             </li>
         </ul>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('contacts.index') }}">
+            <svg class="nav-icon">
+                <use xlink:href="{{ asset('icons/coreui.svg#cil-envelope-open') }}"></use>
+            </svg>
+            {{ __('Contacts') }}
+        </a>
+    </li>
 </ul>
