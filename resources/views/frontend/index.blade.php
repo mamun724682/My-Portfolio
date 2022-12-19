@@ -254,64 +254,113 @@
                 <h2 id="portfolio_header" class="section__title">My projects_</h2>
             </div>
         </div>
-{{--        <div class="row portfolio-menu">--}}
-{{--            <div class="col-md-12">--}}
-{{--                <nav>--}}
-{{--                    <ul>--}}
-{{--                        <li><a href="" data-portfolio-target-tag="all">all</a></li>--}}
-{{--                        <li><a href="" data-portfolio-target-tag="mobile apps">mobile apps</a></li>--}}
-{{--                        <li><a href="" data-portfolio-target-tag="web-sites">web-sites</a></li>--}}
-{{--                        <li><a href="" data-portfolio-target-tag="landing-pages">landing pages</a></li>--}}
-{{--                    </ul>--}}
-{{--                </nav>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+        {{--        <div class="row portfolio-menu">--}}
+        {{--            <div class="col-md-12">--}}
+        {{--                <nav>--}}
+        {{--                    <ul>--}}
+        {{--                        <li><a href="" data-portfolio-target-tag="all">all</a></li>--}}
+        {{--                        <li><a href="" data-portfolio-target-tag="mobile apps">mobile apps</a></li>--}}
+        {{--                        <li><a href="" data-portfolio-target-tag="web-sites">web-sites</a></li>--}}
+        {{--                        <li><a href="" data-portfolio-target-tag="landing-pages">landing pages</a></li>--}}
+        {{--                    </ul>--}}
+        {{--                </nav>--}}
+        {{--            </div>--}}
+        {{--        </div>--}}
         <div class="portfolio-cards">
 
-            @forelse($projects as $project)
-                <div class="row project-card" data-toggle="modal" data-target="#portfolioModal"
-                     data-portfolio-tag="web-sites">
-                    <div class="col-md-6 col-lg-5 project-card__img">
-                        <img src="{{ getImage(json_decode($project->images)[0]) }}" alt="{{ $project->name }}">
-                    </div>
-                    <div class="col-md-6 col-lg-7 project-card__info">
-                        <h3 class="project-card__title">{{ $project->name }}</h3>
-                        @if($project->details)
-                            @php
-                                $details = explode(PHP_EOL, $project->details);
-                            @endphp
-                            <div>
-                                @foreach($details as $detail)
-                                    <p class="project-card__description mb-0">{{{ $detail }}}</p>
-                                @endforeach
-                            </div>
-                        @endif
+            <div class="row" x-data="{project: ''}">
+                @forelse($projects as $project)
+                    <div x-on:click="project = {{ $project }}"
+                         class="col-sm-12 col-md-12 col-lg-6 row project-card mb-3" data-toggle="modal"
+                         data-target="#portfolioModal"
+                         data-portfolio-tag="web-sites">
+                        <div class="col-sm-6 col-md-7 col-lg-7 project-card__img">
+                            <img src="{{ getImage(json_decode($project->images)[0]) }}" alt="{{ $project->name }}">
+                        </div>
+                        <div class="col-sm-6 col-md-5 col-lg-5 project-card__info">
+                            <h3 class="project-card__title">{{ $project->name }}</h3>
+                            <p class="project-card__stack">Used stack:</p>
+                            <ul class="tags">
 
-                        <p class="project-card__stack">Used stack:</p>
-                        <ul class="tags">
+                                @forelse(explode(',', $project->tags) as $tag)
+                                    <li>{{ trim($tag) }}</li>
+                                @empty
+                                @endforelse
 
-                            @forelse(explode(',', $project->tags) as $tag)
-                                <li>{{ trim($tag) }}</li>
-                            @empty
-                            @endforelse
+                            </ul>
 
-                        </ul>
-
-                        @if($project->git)
-                            @if (str_contains($project->git, 'github'))
-                                <a href="{{ $project->git }}" class="project-card__link" target="_blank"><i class="fa fa-github"></i> GitHub</a>
-                            @elseif(str_contains($project->git, 'gitlab'))
-                                <a href="{{ $project->git }}" class="project-card__link" target="_blank"><i class="fa fa-gitlab"></i> GitLab</a>
+                            @if($project->git)
+                                @if (str_contains($project->git, 'github'))
+                                    <a href="{{ $project->git }}" class="project-card__link" target="_blank"><i
+                                            class="fa fa-github"></i> GitHub</a>
+                                @elseif(str_contains($project->git, 'gitlab'))
+                                    <a href="{{ $project->git }}" class="project-card__link" target="_blank"><i
+                                            class="fa fa-gitlab"></i> GitLab</a>
+                                @endif
                             @endif
-                        @endif
-                        @if($project->url)
-                            <a href="{{ $project->git }}" class="project-card__link" target="_blank"><i class="fa fa-globe"></i> Live</a>
-                        @endif
+                            @if($project->url)
+                                <a href="{{ $project->git }}" class="project-card__link" target="_blank"><i
+                                        class="fa fa-globe"></i> Live</a>
+                            @endif
 
+                        </div>
+                    </div>
+                @empty
+                @endforelse
+
+                <!-- Portfolio Modal -->
+                <div class="modal fade portfolio-modal" id="portfolioModal" tabindex="-1" role="dialog"
+                     aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body col-md-11 col-lg-9 ml-auto mr-auto">
+                                <p class="portfolio-modal__title" x-text="project.name"></p>
+                                <template x-if="project">
+                                    <img loading="lazy" class="portfolio-modal__img" x-bind:src="'/storage/'+JSON.parse(project?.images)[0]"
+                                         alt="modal_img">
+                                </template>
+
+                                <template x-for="detail in project?.details?.split(/\r?\n/)">
+                                    <p class="portfolio-modal__description" x-text="detail"></p>
+                                </template>
+
+
+                                <div class="portfolio-modal__link">
+
+                                    <template x-if="project.git && project.git.includes('github')">
+                                        <a x-bind:href="project.git" target="_blank"><i
+                                                class="fa fa-github"></i> GitHub</a>
+                                    </template>
+                                    <template x-if="project.git && project.git.includes('gitlab')">
+                                        <a x-bind:href="project.git" target="_blank"><i
+                                                class="fa fa-gitlab"></i> GitHub</a>
+                                    </template>
+                                    <template x-if="project.url">
+                                        <a x-bind:href="project.url" target="_blank"><i
+                                                class="fa fa-globe"></i> Live</a>
+                                    </template>
+                                </div>
+                                <div class="portfolio-modal__stack">
+                                    <p class="portfolio-modal__stack-title">Used stack:</p>
+                                    <ul class="tags">
+
+                                        <template x-for="tag in project?.tags?.split(',')">
+                                            <li x-text="tag"></li>
+                                        </template>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            @empty
-            @endforelse
+                <!-- Portfolio Modal -->
+            </div>
 
         </div>
     </section>
@@ -331,8 +380,8 @@
                         <dl class="contact-list">
                             <dt>Phone:</dt>
                             <dd><a href="tel:{{ $user->phone }}">{{ $user->phone }}</a></dd>
-{{--                            <dt>Skype:</dt>--}}
-{{--                            <dd><a href="skype:iamivanovivan">iamivanovivan</a></dd>--}}
+                            {{--                            <dt>Skype:</dt>--}}
+                            {{--                            <dd><a href="skype:iamivanovivan">iamivanovivan</a></dd>--}}
                             <dt>Email:</dt>
                             <dd><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></dd>
                         </dl>
@@ -356,22 +405,28 @@
                         <p class="contacts__form-title">Or just write me a letter here_</p>
                         <form class="js-form">
                             <div class="form-group">
-                                <input class="form-field js-field-name" name="name" type="text" placeholder="Your name" required>
-                                <span class="form-validation"></span>
-                                <span class="form-invalid-icon"><i class="mdi mdi-close" aria-hidden="true"></i></span>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-field js-field-email" name="email" type="email" placeholder="Your e-mail"
+                                <input class="form-field js-field-name" name="name" type="text" placeholder="Your name"
                                        required>
                                 <span class="form-validation"></span>
                                 <span class="form-invalid-icon"><i class="mdi mdi-close" aria-hidden="true"></i></span>
                             </div>
                             <div class="form-group">
-                            <textarea class="form-field js-field-message" name="message" placeholder="Type the message here"
+                                <input class="form-field js-field-email" name="email" type="email"
+                                       placeholder="Your e-mail"
+                                       required>
+                                <span class="form-validation"></span>
+                                <span class="form-invalid-icon"><i class="mdi mdi-close" aria-hidden="true"></i></span>
+                            </div>
+                            <div class="form-group">
+                            <textarea class="form-field js-field-message" name="message"
+                                      placeholder="Type the message here"
                                       required></textarea>
                                 <span class="form-validation"></span>
                                 <span class="form-invalid-icon"><i class="mdi mdi-close" aria-hidden="true"></i></span>
                             </div>
+
+                            <div class="success_alert"></div>
+
                             <button class="site-btn site-btn--form" type="submit" value="Send">Send</button>
                         </form>
                     </div>
@@ -383,58 +438,6 @@
         </div>
     </div>
     <!--Contact-->
-
-    <!-- Portfolio Modal -->
-    <div class="modal fade portfolio-modal" id="portfolioModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body col-md-11 col-lg-9 ml-auto mr-auto">
-                    <p class="portfolio-modal__title">Mobile and desktop app for London hostel store</p>
-                    <img class="portfolio-modal__img" src="frontend/img/img_project_1_mono.png" alt="modal_img">
-                    <p class="portfolio-modal__description">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
-                        utlabore
-                        et
-                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamcolaboris nisi ut
-                        aliquip ex
-                        ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                        dolore
-                        eu fugiat
-                        nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                        deserunt
-                        mollit
-                        anim id est laborum. Sed ut perspiciatis undeomnis iste natus error sit voluptatem accusantium
-                        doloremque
-                        laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
-                        beatae vitae
-                        dicta sunt explicabo.Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,
-                        sed
-                        quia
-                        conse.
-                    </p>
-                    <div class="portfolio-modal__link">
-                        <a href="">www.superapp.com</a>
-                    </div>
-                    <div class="portfolio-modal__stack">
-                        <p class="portfolio-modal__stack-title">Using stack:</p>
-                        <ul class="tags">
-                            <li>html5</li>
-                            <li>css3</li>
-                            <li>JavaScript</li>
-                            <li>bower</li>
-                            <li>grunt</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Portfolio Modal -->
 @endsection
 
 @push('css')
@@ -445,5 +448,17 @@
             -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
             filter: grayscale(100%);
         }
+
+        .project-card:hover {
+            box-shadow: none;
+        }
+
+        .project-card:hover .project-card__info {
+            box-shadow: 0 1px 31px rgb(0 0 0 / 9%);
+        }
     </style>
+@endpush
+
+@push('js')
+    <script src="//unpkg.com/alpinejs" defer></script>
 @endpush

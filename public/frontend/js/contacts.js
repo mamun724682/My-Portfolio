@@ -49,9 +49,17 @@ function submitForm(e, formName) {
         type: "POST",
         url: '/contacts',
         data: formData,
-        success: function () {
-            console.log('success');
-            //...
+        success: function (response) {
+            if (response.success){
+                $('.js-form').trigger("reset");
+                $('.success_alert').html(`<div class="alert alert-success alert-dismissible fade show" role="alert">
+                                Message sent successfully.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>`)
+                $('.alert-success').delay(3000).fadeOut('slow');
+            }
         },
         error: function () {
             console.log('error');

@@ -108,7 +108,7 @@
                                 <div class="col-6">
                                     <label class="col-form-label" for="images">Images</label>
                                     <input class="form-control" id="images" name="images[]" type="file"
-                                           x-bind:value="project ? project.images : ''" multiple>
+                                           x-bind:value="project ? project.images : ''" multiple required>
                                 </div>
                             </div>
                             <div class="row">
