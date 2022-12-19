@@ -277,7 +277,7 @@
                         <div class="col-sm-6 col-md-7 col-lg-7 project-card__img">
                             <img src="{{ getImage(json_decode($project->images)[0]) }}" alt="{{ $project->name }}">
                         </div>
-                        <div class="col-sm-6 col-md-5 col-lg-5 project-card__info">
+                        <div class="col-sm-6 col-md-5 col-lg-5 project-card__info" style="position: relative;">
                             <h3 class="project-card__title">{{ $project->name }}</h3>
                             <p class="project-card__stack">Used stack:</p>
                             <ul class="tags">
@@ -289,19 +289,21 @@
 
                             </ul>
 
-                            @if($project->git)
-                                @if (str_contains($project->git, 'github'))
-                                    <a href="{{ $project->git }}" class="project-card__link" target="_blank"><i
-                                            class="fa fa-github"></i> GitHub</a>
-                                @elseif(str_contains($project->git, 'gitlab'))
-                                    <a href="{{ $project->git }}" class="project-card__link" target="_blank"><i
-                                            class="fa fa-gitlab"></i> GitLab</a>
+                            <div class="mb-1" style="position: absolute; bottom: 0">
+                                @if($project->git)
+                                    @if (str_contains($project->git, 'github'))
+                                        <a href="{{ $project->git }}" class="project-card__link mt-0" target="_blank"><i
+                                                class="fa fa-github"></i> GitHub</a>
+                                    @elseif(str_contains($project->git, 'gitlab'))
+                                        <a href="{{ $project->git }}" class="project-card__link mt-0" target="_blank"><i
+                                                class="fa fa-gitlab"></i> GitLab</a>
+                                    @endif
                                 @endif
-                            @endif
-                            @if($project->url)
-                                <a href="{{ $project->git }}" class="project-card__link" target="_blank"><i
-                                        class="fa fa-globe"></i> Live</a>
-                            @endif
+                                @if($project->url)
+                                    <a href="{{ $project->url }}" class="project-card__link mx-1 mt-0" target="_blank"><i
+                                            class="fa fa-globe"></i> Live</a>
+                                @endif
+                            </div>
 
                         </div>
                     </div>
@@ -321,8 +323,8 @@
                             <div class="modal-body col-md-11 col-lg-9 ml-auto mr-auto">
                                 <p class="portfolio-modal__title" x-text="project.name"></p>
                                 <template x-if="project">
-                                    <img loading="lazy" class="portfolio-modal__img" x-bind:src="'/storage/'+JSON.parse(project?.images)[0]"
-                                         alt="modal_img">
+                                    <img class="portfolio-modal__img" x-bind:src="'/storage/'+JSON.parse(project?.images)[0]"
+                                         alt="Senior software engineer portfolio">
                                 </template>
 
                                 <template x-for="detail in project?.details?.split(/\r?\n/)">
