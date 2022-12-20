@@ -62,6 +62,14 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
+        // Delete profile images
+        $images = json_decode($project->images);
+        if (count($images) >= 1){
+            foreach ($images as $image) {
+                $this->fileUploadService->delete(Project::PROJECT_IMAGES_PATH.'/'.$image);
+            }
+        }
+
         $project->delete();
 
         sendFlash('Project deleted successfully');
