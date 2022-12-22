@@ -84,7 +84,7 @@ if (!function_exists('getDefaultImage')) {
      */
     function getDefaultImage()
     {
-        return asset('/images/default.png');
+        return asset('/images/default.jpg');
     }
 }
 // Get image
@@ -94,7 +94,7 @@ if (!function_exists('getImage')) {
      */
     function getImage($url = null)
     {
-        if (Storage::disk('public')->exists($url)) {
+        if ($url && Storage::disk('public')->exists($url)) {
             return '/storage/'.$url;
         } else {
             return getDefaultImage();

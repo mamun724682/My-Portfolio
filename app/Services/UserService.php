@@ -33,9 +33,11 @@ class UserService
                 $data_array['banner_image'] = $this->fileUploadService->uploadFile($data_array['banner_image'], 'uploads/profile', 'random', auth()->user()->banner_image);
             }
 
-            // Upload cv file
+            // Add Url or Upload cv
             if (isset($data_array['cv_file']) && $data_array['cv_file']){
-                $data_array['cv_file'] = $this->fileUploadService->uploadFile($data_array['cv_file'], 'uploads/profile', 'CV Mamun', auth()->user()->cv_file);
+                if (!str_contains($data_array['cv_file'], 'http')){
+                    $data_array['cv_file'] = $this->fileUploadService->uploadFile($data_array['cv_file'], 'uploads/profile', 'CV Mamun', auth()->user()->cv_file);
+                }
             }
 
             // Process about

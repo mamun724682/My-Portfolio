@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('experiences', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string('company_name');
-            $table->string('company_url')->nullable();
-            $table->string('designation');
-            $table->date('from_date');
-            $table->date('to_date')->nullable();
-            $table->string('location')->nullable();
+            $table->string('name');
             $table->text('details')->nullable();
+            $table->string('tags')->nullable();
+            $table->string('images');
+            $table->string('git')->nullable();
+            $table->string('url')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
@@ -34,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('experiences');
+        Schema::dropIfExists('projects');
     }
 };

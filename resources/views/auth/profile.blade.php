@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" data-coreui-toggle="tab" href="#profile" role="tab">
+                                <a class="nav-link active" data-coreui-toggle="tab" href="#profile" role="tab">
                                     <svg class="icon me-2">
                                         <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>
                                     </svg>
@@ -76,7 +76,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" data-coreui-toggle="tab" href="#others" role="tab">
+                                <a class="nav-link" data-coreui-toggle="tab" href="#others" role="tab">
                                     <svg class="icon me-2">
                                         <use xlink:href="{{ asset('icons/coreui.svg') }}#cil-media-play"></use>
                                     </svg>
@@ -85,7 +85,7 @@
                             </li>
                         </ul>
                         <div class="tab-content rounded-bottom">
-                            <div class="tab-pane p-3" role="tabpanel" id="profile">
+                            <div class="tab-pane p-3 active preview" role="tabpanel" id="profile">
                                 <div class="row g-3">
                                     <div class="col-md-3">
                                         <div class="form-floating">
@@ -206,7 +206,7 @@
                                             <input class="form-control"
                                                    type="password"
                                                    id="password"
-                                                   name="password" placeholder="{{ __('New password') }}">
+                                                   name="password" placeholder="{{ __('New password') }}" autocomplete="new-password">
                                             <label for="password">Password</label>
                                         </div>
                                         @error('password')
@@ -234,13 +234,19 @@
                                     <div class="col-md-6">
                                         <label for="banner_image" class="form-label">Banner Image</label>
                                         <input class="form-control" name="banner_image" type="file" id="banner_image" onchange="document.getElementById('banner_image_preview').src = window.URL.createObjectURL(this.files[0])">
-                                        <img src="{{ $user->profile_image ? getImage($user->banner_image) : 'https://via.placeholder.com/400x50' }}" id="banner_image_preview" class="img-thumbnail mt-1" style="max-height: 210px;" alt="best software engineer">
+                                        <img src="{{ $user->banner_image ? getImage($user->banner_image) : 'https://via.placeholder.com/400x50' }}" id="banner_image_preview" class="img-thumbnail mt-1" style="max-height: 210px;" alt="best software engineer">
                                     </div>
                                     <div class="col-md-12">
-                                        <label for="upload_cv" class="form-label">Upload CV</label>
+                                        <label for="upload_cv" class="form-label">Add Url or Upload CV</label>
+                                        <input class="form-control mb-1" placeholder="Add CV Url" name="cv_file" value="{{ str_contains($user->cv_file, 'http') ? $user->cv_file : null }}" type="url" id="upload_cv">
                                         <input class="form-control" name="cv_file" type="file" id="upload_cv">
+
                                         @if($user->cv_file)
-                                            <a href="{{ downloadableLink($user->cv_file) }}" target="_blank">{{ str_replace('uploads/profile/','',$user->cv_file) }}</a>
+                                            @if (str_contains($user->cv_file, 'http'))
+                                                <a href="{{ $user->cv_file }}" target="_blank">{{ $user->cv_file }}</a>
+                                            @else
+                                                <a href="{{ downloadableLink($user->cv_file) }}" target="_blank">{{ str_replace('uploads/profile/','',$user->cv_file) }}</a>
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -260,11 +266,11 @@
                                                     <label x-bind:for="'about_key'+index">Key</label>
                                                 </div>
                                                 <div class="form-floating col-md-5">
-                                                    <input class="form-control" type="text"
-                                                           x-bind:name="'about['+index+'][value]'"
-                                                           x-bind:id="'about_value'+index"
-                                                           x-bind:value="about['value']"
-                                                    >
+                                                    <textarea class="form-control"
+                                                              x-bind:name="'about['+index+'][value]'"
+                                                              x-bind:id="'about_value'+index"
+                                                              x-bind:value="about['value']"
+                                                    ></textarea>
                                                     <label x-bind:for="'about_value'+index">Value</label>
                                                 </div>
                                                 <button x-on:click="abouts.push({{ json_encode(['key' => '', 'value' => '']) }})" type="button" class="btn btn-info col-md-1">
@@ -576,18 +582,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane pt-1 active preview" role="tabpanel" id="others">
+                            <div class="tab-pane pt-1" role="tabpanel" id="others">
                                 <div class="card">
                                     <div class="card-header">Experience Info</div>
                                     <div class="card-body row">
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="experience_info[heading]"
-                                                   id="experience_info_heading" value="{{ json_decode($user->experience_info)->heading }}">
+                                                   id="experience_info_heading" value="{{ json_decode($user->experience_info)->heading ?? '' }}">
                                             <label for="experience_info_heading">Heading</label>
                                         </div>
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="experience_info[subheading]"
-                                                   id="experience_info_subheading" value="{{ json_decode($user->experience_info)->subheading }}">
+                                                   id="experience_info_subheading" value="{{ json_decode($user->experience_info)->subheading ?? '' }}">
                                             <label for="experience_info_subheading">Sub-heading</label>
                                         </div>
                                     </div>
@@ -597,12 +603,12 @@
                                     <div class="card-body row">
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="skill_info[heading]"
-                                                   id="skill_info_heading" value="{{ json_decode($user->skill_info)->heading }}">
+                                                   id="skill_info_heading" value="{{ json_decode($user->skill_info)->heading ?? '' }}">
                                             <label for="skill_info_heading">Heading</label>
                                         </div>
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="skill_info[subheading]"
-                                                   id="skill_info_subheading" value="{{ json_decode($user->skill_info)->subheading }}">
+                                                   id="skill_info_subheading" value="{{ json_decode($user->skill_info)->subheading ?? '' }}">
                                             <label for="skill_info_subheading">Sub-Heading</label>
                                         </div>
                                     </div>
@@ -612,12 +618,12 @@
                                     <div class="card-body row">
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="portfolio_info[heading]"
-                                                   id="portfolio_info_heading" value="{{ json_decode($user->portfolio_info)->heading }}">
+                                                   id="portfolio_info_heading" value="{{ json_decode($user->portfolio_info)->heading ?? '' }}">
                                             <label for="portfolio_info_heading">Heading</label>
                                         </div>
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="portfolio_info[subheading]"
-                                                   id="portfolio_info_subheading" value="{{ json_decode($user->portfolio_info)->subheading }}">
+                                                   id="portfolio_info_subheading" value="{{ json_decode($user->portfolio_info)->subheading ?? '' }}">
                                             <label for="portfolio_info_subheading">Sub-Heading</label>
                                         </div>
                                     </div>
@@ -627,12 +633,12 @@
                                     <div class="card-body row">
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="contact_info[heading]"
-                                                   id="contact_info_heading" value="{{ json_decode($user->contact_info)->heading }}">
+                                                   id="contact_info_heading" value="{{ json_decode($user->contact_info)->heading ?? '' }}">
                                             <label for="contact_info_heading">Heading</label>
                                         </div>
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="contact_info[subheading]"
-                                                   id="contact_info_subheading" value="{{ json_decode($user->contact_info)->subheading }}">
+                                                   id="contact_info_subheading" value="{{ json_decode($user->contact_info)->subheading ?? '' }}">
                                             <label for="contact_info_subheading">Sub-Heading</label>
                                         </div>
                                     </div>
@@ -642,12 +648,12 @@
                                     <div class="card-body row">
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="git_info[heading]"
-                                                   id="git_info_heading" value="{{ json_decode($user->git_info)->heading }}">
+                                                   id="git_info_heading" value="{{ json_decode($user->git_info)->heading ?? '' }}">
                                             <label for="git_info_heading">Heading</label>
                                         </div>
                                         <div class="form-floating col-md-6">
                                             <input class="form-control" type="text" name="git_info[subheading]"
-                                                   id="git_info_subheading" value="{{ json_decode($user->git_info)->subheading }}">
+                                                   id="git_info_subheading" value="{{ json_decode($user->git_info)->subheading ?? '' }}">
                                             <label for="git_info_subheading">Sub-Heading</label>
                                         </div>
                                     </div>

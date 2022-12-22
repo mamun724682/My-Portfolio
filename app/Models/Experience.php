@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Experience extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
+
+    public function scopeActive($query)
+    {
+        $query->where('status', 1);
+    }
 }
