@@ -206,7 +206,7 @@
         <div class="row">
             <div class="col-md-10">
                 <h2 id="resume_header"
-                    class="section__title mb-1">{{ json_decode($user->skill_info)->heading ?? 'Skills' }}_</h2>
+                    class="section__title mb-1">{{ json_decode($user->skill_info)->heading ?? 'Professional Skills' }}_</h2>
                 <h6>{{ json_decode($user->skill_info)->subheading ?? '' }}</h6>
             </div>
         </div>
@@ -249,7 +249,8 @@
     <section id="portfolio" class="container section">
         <div class="row">
             <div class="col-md-12">
-                <h2 id="portfolio_header" class="section__title">My projects_</h2>
+                <h2 id="portfolio_header" class="section__title">{{ json_decode($user->portfolio_info)->heading ?? 'My Portfolio' }}_</h2>
+                <h6>{{ json_decode($user->portfolio_info)->subheading ?? '' }}</h6>
             </div>
         </div>
         {{--        <div class="row portfolio-menu">--}}
@@ -264,49 +265,42 @@
         {{--                </nav>--}}
         {{--            </div>--}}
         {{--        </div>--}}
-        <div class="portfolio-cards">
+        <div class="portfolio-cards" x-data="{project: ''}">
 
-            <div class="row" x-data="{project: ''}">
-                @forelse($projects as $project)
-                    <div x-on:click="project = {{ $project }}"
-                         class="col-sm-12 col-md-12 col-lg-6 row project-card mb-3" data-toggle="modal"
-                         data-target="#portfolioModal"
-                         data-portfolio-tag="web-sites">
-                        <div class="col-sm-6 col-md-7 col-lg-7 project-card__img">
-                            <img src="{{ getImage(json_decode($project->images)[0]) }}" alt="{{ $project->name }}">
-                        </div>
-                        <div class="col-sm-6 col-md-5 col-lg-5 project-card__info" style="position: relative;">
-                            <h3 class="project-card__title">{{ $project->name }}</h3>
-                            <p class="project-card__stack">Used stack:</p>
-                            <ul class="tags">
-
-                                @forelse(explode(',', $project->tags) as $tag)
-                                    <li>{{ trim($tag) }}</li>
-                                @empty
-                                @endforelse
-
-                            </ul>
-
-                            <div class="mb-1" style="position: absolute; bottom: 0">
-                                @if($project->git)
-                                    @if (str_contains($project->git, 'github'))
-                                        <a href="{{ $project->git }}" class="project-card__link mt-0" target="_blank"><i
-                                                class="fa fa-github"></i> GitHub</a>
-                                    @elseif(str_contains($project->git, 'gitlab'))
-                                        <a href="{{ $project->git }}" class="project-card__link mt-0" target="_blank"><i
-                                                class="fa fa-gitlab"></i> GitLab</a>
-                                    @endif
-                                @endif
-                                @if($project->url)
-                                    <a href="{{ $project->url }}" class="project-card__link mx-1 mt-0" target="_blank"><i
-                                            class="fa fa-globe"></i> Live</a>
-                                @endif
-                            </div>
-
-                        </div>
+            @forelse($projects as $project)
+                <div x-on:click="project = {{ $project }}" class="row project-card" data-toggle="modal" data-target="{{ $project->details ? '#portfolioModal' : '' }}" data-portfolio-tag="web-sites">
+                    <div class="col-md-6 col-lg-5 project-card__img">
+                        <img src="{{ getImage(json_decode($project->images)[0]) }}" alt="{{ $project->name }}">
                     </div>
-                @empty
-                @endforelse
+                    <div class="col-md-6 col-lg-7 project-card__info">
+                        <h3 class="project-card__title">{{ $project->name }}</h3>
+                        @if(strlen($project->details) < 300)
+                            <p class="project-card__description">{{ nl2br($project->details) }}</p>
+                        @endif
+                        <p class="project-card__stack">Used stack:</p>
+                        <ul class="tags">
+                            @forelse(explode(',', $project->tags) as $tag)
+                                <li>{{ trim($tag) }}</li>
+                            @empty
+                            @endforelse
+                        </ul>
+                        @if($project->git)
+                            @if (str_contains($project->git, 'github'))
+                                <a href="{{ $project->git }}" class="project-card__link" target="_blank"><i
+                                        class="fa fa-github"></i> GitHub</a>
+                            @elseif(str_contains($project->git, 'gitlab'))
+                                <a href="{{ $project->git }}" class="project-card__link" target="_blank"><i
+                                        class="fa fa-gitlab"></i> GitLab</a>
+                            @endif
+                        @endif
+                        @if($project->url)
+                            <a href="{{ $project->url }}" class="project-card__link mx-1" target="_blank"><i
+                                    class="fa fa-globe"></i> Live</a>
+                        @endif
+                    </div>
+                </div>
+            @empty
+            @endforelse
 
                 <!-- Portfolio Modal -->
                 <div class="modal fade portfolio-modal" id="portfolioModal" tabindex="-1" role="dialog"
@@ -360,8 +354,6 @@
                     </div>
                 </div>
                 <!-- Portfolio Modal -->
-            </div>
-
         </div>
     </section>
     <!--Portfolio-->
@@ -448,13 +440,9 @@
             -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
             filter: grayscale(100%);
         }
-
-        .project-card:hover {
-            box-shadow: none;
-        }
-
-        .project-card:hover .project-card__info {
-            box-shadow: 0 1px 31px rgb(0 0 0 / 9%);
+        .profile_image:hover {
+            -webkit-filter: none; /* Safari 6.0 - 9.0 */
+            filter: none;
         }
     </style>
 @endpush

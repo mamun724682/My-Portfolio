@@ -206,7 +206,7 @@
                                             <input class="form-control"
                                                    type="password"
                                                    id="password"
-                                                   name="password" placeholder="{{ __('New password') }}">
+                                                   name="password" placeholder="{{ __('New password') }}" autocomplete="new-password">
                                             <label for="password">Password</label>
                                         </div>
                                         @error('password')
