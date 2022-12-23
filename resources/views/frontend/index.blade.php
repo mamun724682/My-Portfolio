@@ -358,6 +358,25 @@
     </section>
     <!--Portfolio-->
 
+    <!--Git-->
+    @if(isset(json_decode($user->git_info)->heading))
+        <section id="git" class="container section">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 id="portfolio_header" class="section__title">{{ json_decode($user->git_info)->heading ?? 'My Git' }}_</h2>
+                    <h6>{{ json_decode($user->git_info)->subheading ?? '' }}</h6>
+                </div>
+            </div>
+            <div class="portfolio-cards">
+                <div class="calendar">
+                    <img src="https://github.githubassets.com/images/spinners/octocat-spinner-128.gif" class="spinner"/>
+                    <p class="spinner-text monospace">Crunching <a href="https://github.com/mamun724682">@Mamun724682</a>'s contributions just for you.</p>
+                </div>
+            </div>
+        </section>
+    @endif
+    <!--Git-->
+
     <!--Contact-->
     <div class="background" style="background-image: url(frontend/img/img_bg_main.jpg)">
         <div id="contact" class="container section">
@@ -445,8 +464,22 @@
             filter: none;
         }
     </style>
+
+{{--    Git Calendar--}}
+    @if(isset(json_decode($user->git_info)->heading))
+        <link rel="stylesheet" href="https://unpkg.com/github-calendar@latest/dist/github-calendar-responsive.css"/>
+    @endif
 @endpush
 
 @push('js')
     <script src="//unpkg.com/alpinejs" defer></script>
+
+    {{--    Git Calendar--}}
+    @if(isset(json_decode($user->git_info)->heading))
+        <script src="https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js"></script>
+        <script>
+            // or enable responsive functionality
+            GitHubCalendar(".calendar", "mamun724682", { responsive: true, global_stats: false, tooltips: true });
+        </script>
+    @endif
 @endpush
