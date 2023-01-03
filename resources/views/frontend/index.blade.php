@@ -206,7 +206,8 @@
         <div class="row">
             <div class="col-md-10">
                 <h2 id="resume_header"
-                    class="section__title mb-1">{{ json_decode($user->skill_info)->heading ?? 'Professional Skills' }}_</h2>
+                    class="section__title mb-1">{{ json_decode($user->skill_info)->heading ?? 'Professional Skills' }}
+                    _</h2>
                 <h6>{{ json_decode($user->skill_info)->subheading ?? '' }}</h6>
             </div>
         </div>
@@ -249,7 +250,8 @@
     <section id="portfolio" class="container section">
         <div class="row">
             <div class="col-md-12">
-                <h2 id="portfolio_header" class="section__title">{{ json_decode($user->portfolio_info)->heading ?? 'My Portfolio' }}_</h2>
+                <h2 id="portfolio_header"
+                    class="section__title">{{ json_decode($user->portfolio_info)->heading ?? 'My Portfolio' }}_</h2>
                 <h6>{{ json_decode($user->portfolio_info)->subheading ?? '' }}</h6>
             </div>
         </div>
@@ -268,7 +270,8 @@
         <div class="portfolio-cards" x-data="{project: ''}">
 
             @forelse($projects as $project)
-                <div x-on:click="project = {{ $project }}" class="row project-card" data-toggle="modal" data-target="{{ $project->details ? '#portfolioModal' : '' }}" data-portfolio-tag="web-sites">
+                <div x-on:click="project = {{ $project }}" class="row project-card" data-toggle="modal"
+                     data-target="{{ $project->details ? '#portfolioModal' : '' }}" data-portfolio-tag="web-sites">
                     <div class="col-md-6 col-lg-5 project-card__img">
                         <img src="{{ getImage(json_decode($project->images)[0]) }}" alt="{{ $project->name }}">
                     </div>
@@ -302,58 +305,59 @@
             @empty
             @endforelse
 
-                <!-- Portfolio Modal -->
-                <div class="modal fade portfolio-modal" id="portfolioModal" tabindex="-1" role="dialog"
-                     aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+            <!-- Portfolio Modal -->
+            <div class="modal fade portfolio-modal" id="portfolioModal" tabindex="-1" role="dialog"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body col-md-11 col-lg-9 ml-auto mr-auto">
+                            <p class="portfolio-modal__title" x-text="project.name"></p>
+                            <template x-if="project">
+                                <img class="portfolio-modal__img"
+                                     x-bind:src="'/storage/'+JSON.parse(project?.images)[0]"
+                                     alt="Senior software engineer portfolio">
+                            </template>
+
+                            <template x-for="detail in project?.details?.split(/\r?\n/)">
+                                <p class="portfolio-modal__description" x-text="detail"></p>
+                            </template>
+
+
+                            <div class="portfolio-modal__link">
+
+                                <template x-if="project.git && project.git.includes('github')">
+                                    <a x-bind:href="project.git" target="_blank"><i
+                                            class="fa fa-github"></i> GitHub</a>
+                                </template>
+                                <template x-if="project.git && project.git.includes('gitlab')">
+                                    <a x-bind:href="project.git" target="_blank"><i
+                                            class="fa fa-gitlab"></i> GitHub</a>
+                                </template>
+                                <template x-if="project.url">
+                                    <a x-bind:href="project.url" target="_blank"><i
+                                            class="fa fa-globe"></i> Live</a>
+                                </template>
                             </div>
-                            <div class="modal-body col-md-11 col-lg-9 ml-auto mr-auto">
-                                <p class="portfolio-modal__title" x-text="project.name"></p>
-                                <template x-if="project">
-                                    <img class="portfolio-modal__img" x-bind:src="'/storage/'+JSON.parse(project?.images)[0]"
-                                         alt="Senior software engineer portfolio">
-                                </template>
+                            <div class="portfolio-modal__stack">
+                                <p class="portfolio-modal__stack-title">Used stack:</p>
+                                <ul class="tags">
 
-                                <template x-for="detail in project?.details?.split(/\r?\n/)">
-                                    <p class="portfolio-modal__description" x-text="detail"></p>
-                                </template>
-
-
-                                <div class="portfolio-modal__link">
-
-                                    <template x-if="project.git && project.git.includes('github')">
-                                        <a x-bind:href="project.git" target="_blank"><i
-                                                class="fa fa-github"></i> GitHub</a>
+                                    <template x-for="tag in project?.tags?.split(',')">
+                                        <li x-text="tag"></li>
                                     </template>
-                                    <template x-if="project.git && project.git.includes('gitlab')">
-                                        <a x-bind:href="project.git" target="_blank"><i
-                                                class="fa fa-gitlab"></i> GitHub</a>
-                                    </template>
-                                    <template x-if="project.url">
-                                        <a x-bind:href="project.url" target="_blank"><i
-                                                class="fa fa-globe"></i> Live</a>
-                                    </template>
-                                </div>
-                                <div class="portfolio-modal__stack">
-                                    <p class="portfolio-modal__stack-title">Used stack:</p>
-                                    <ul class="tags">
 
-                                        <template x-for="tag in project?.tags?.split(',')">
-                                            <li x-text="tag"></li>
-                                        </template>
-
-                                    </ul>
-                                </div>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Portfolio Modal -->
+            </div>
+            <!-- Portfolio Modal -->
         </div>
     </section>
     <!--Portfolio-->
@@ -363,16 +367,27 @@
         <section id="git" class="container section">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 id="portfolio_header" class="section__title">{{ json_decode($user->git_info)->heading ?? 'My Git' }}_</h2>
+                    <h2 id="portfolio_header"
+                        class="section__title">{{ json_decode($user->git_info)->heading ?? 'My Git' }}_</h2>
                     <h6>{{ json_decode($user->git_info)->subheading ?? '' }}</h6>
                 </div>
             </div>
-            <div class="portfolio-cards">
+            <div class="portfolio-cards mb-2">
+                <a href="https://github.com/mamun724682" target="_blank"><u>GitHub</u></a>
                 <div class="calendar">
                     <img src="https://github.githubassets.com/images/spinners/octocat-spinner-128.gif" class="spinner"/>
-                    <p class="spinner-text monospace">Crunching <a href="https://github.com/mamun724682">@Mamun724682</a>'s contributions just for you.</p>
+                    <p class="spinner-text monospace">Crunching <a
+                            href="https://github.com/mamun724682">@Mamun724682</a>'s contributions just for you.</p>
                 </div>
             </div>
+            <div class="portfolio-cards">
+                <a href="https://gitlab.com/abdullahalmamun" target="_blank"><u>GitLab</u></a>
+                <div class="calendar">
+                    {{--                    <img src="{{ asset('frontend/img/gitlab.jpg') }}" class="w-100" alt="Gitlab">--}}
+                    <div id="gitlab_contribution_graph"></div>
+                </div>
+            </div>
+
         </section>
     @endif
     <!--Git-->
@@ -459,15 +474,19 @@
             -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
             filter: grayscale(100%);
         }
+
         .profile_image:hover {
             -webkit-filter: none; /* Safari 6.0 - 9.0 */
             filter: none;
         }
     </style>
 
-{{--    Git Calendar--}}
+    {{--    Git Calendar--}}
     @if(isset(json_decode($user->git_info)->heading))
         <link rel="stylesheet" href="https://unpkg.com/github-calendar@latest/dist/github-calendar-responsive.css"/>
+
+
+        <link rel="stylesheet" href="{{ asset('frontend/plugin/contribution_graph/gitlab_contribution_graph.css') }}"/>
     @endif
 @endpush
 
@@ -476,10 +495,30 @@
 
     {{--    Git Calendar--}}
     @if(isset(json_decode($user->git_info)->heading))
+        {{--        Github--}}
         <script src="https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js"></script>
         <script>
             // or enable responsive functionality
-            GitHubCalendar(".calendar", "mamun724682", { responsive: true, global_stats: false, tooltips: true });
+            GitHubCalendar(".calendar", "mamun724682", {responsive: true, global_stats: false, tooltips: true});
+        </script>
+
+        {{--        Gitlab--}}
+        <script src="{{ asset('frontend/plugin/contribution_graph/gitlab_contribution_graph.js') }}"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#gitlab_contribution_graph').github_graph({
+                    //Generate random entries from 50-> 200 entries
+                    data: @json($gitlab_contributions),
+                    colors: [
+                        {count: 0, color: '#dddbdb'},
+                        {count: 1, color: '#39dd34'},
+                        {count: 3, color: '#45a045'},
+                        {count: 7, color: '#047526'},
+                        {count: 9, color: '#0a4208'}
+                    ],
+                    texts: ['contribution', 'contributions'],
+                });
+            });
         </script>
     @endif
 @endpush
