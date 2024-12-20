@@ -45,6 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::apiResource('experiences', ExperienceController::class);
     Route::apiResource('projects', ProjectController::class);
     Route::apiResource('contacts', ContactController::class)->only(['index', 'destroy']);
+
+    Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 });
 
 Route::post('contacts', [ContactController::class, 'store']);

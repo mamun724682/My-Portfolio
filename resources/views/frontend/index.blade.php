@@ -133,7 +133,7 @@
 
     <hr>
 
-    <!--Resume-->
+    <!--Experience-->
     <section id="resume" class="container section">
         <div class="row">
             <div class="col-md-10">
@@ -166,7 +166,7 @@
                             @endphp
                             <div>
                                 @foreach($details as $detail)
-                                    <p>{{{ $detail }}}</p>
+                                    <p>{!! $detail !!}</p>
                                 @endforeach
                             </div>
                         @endif

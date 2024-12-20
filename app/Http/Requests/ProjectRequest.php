@@ -25,7 +25,7 @@ class ProjectRequest extends FormRequest
     {
         return [
             'name'     => 'required|string',
-            'images'   => 'required|array',
+            'images'   => 'nullable|array',
             'images.*' => 'required|image',
             'tags'     => 'required|string',
             'git'      => 'nullable|url',

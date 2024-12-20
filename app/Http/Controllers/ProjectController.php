@@ -54,6 +54,26 @@ class ProjectController extends Controller
             $data = $request->validated() + ['status' => true];
         }
 
+        if (count($data['images']) >= 1) {
+            $oldImages = json_decode($project->images);
+            if ($oldImages){
+                foreach ($oldImages as $imagePath) {
+                    $this->fileUploadService->delete($imagePath);
+                }
+            }
+
+            $images = [];
+            foreach ($data['images'] as $image) {
+                $images[] = $this->fileUploadService->uploadFile(
+                    file: $image,
+                    upload_path: Project::PROJECT_IMAGES_PATH,
+                    set_file_name: 'original',
+                );
+            }
+            unset($data['images']);
+            $data['images'] = json_encode($images);
+        }
+
         $project->update($data);
 
         sendFlash('Project updated successfully');
